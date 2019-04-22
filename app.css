@@ -1,0 +1,287 @@
+body {
+  font-size: 24px;
+  font-family: futura, sans-serif;
+  background-color: #fff;
+  color: #666;
+  margin-bottom: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+p {
+  margin-top: 0;
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 1s;
+  display: none;
+}
+
+.visible {
+  opacity: 1;
+  transition: opacity 2s;
+}
+
+#status-message {
+  background-color: #ffffee;
+  margin: 1em;
+  padding: 1em;
+}
+
+button {
+  text-transform: uppercase;
+  color: #444;
+  font-size: 0.8em;
+  cursor: pointer;
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  border-width: 1px;
+  border-color: #aaa;
+  border-style: solid;
+  font-family: futura;
+  min-width: 44px;
+  box-shadow: #444 0 0 4px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #666;
+  /*! border-radius: 0.5em; */
+  margin: 0.5em;
+  width: 100%;
+  min-width: 320px;
+  max-width: 40em;
+  padding: 1em;
+  box-shadow: 4px 4px 0px 0px #666;
+}
+
+.step svg,input {
+  align-self: center;
+}
+
+.step input {
+  font-size: 2em;
+  width: 80%;
+  min-width: 10em;
+}
+
+.instruction {
+  font-style: italic;
+  margin: 1em;
+  text-align: center;
+}
+
+.instruction ol,ul {
+  text-align: left;
+}
+
+.vertex-count-label,.triangle-side-count-label,.triangular-number-result-label {
+  font-weight: bold;
+  font-size: larger;
+}
+
+svg text {
+  font-size: 6px;
+  fill: #333;
+  stroke: none;
+}
+
+.graph-vertex {
+  fill: #999;
+  stroke: none;
+}
+
+.graph-edge {
+  stroke-width: 0.1;
+}
+
+#big-intro-graph-board .graph-edge {
+  stroke-width: 0.01;
+}
+
+#big-intro-graph-board {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#triangular-number-board {
+}
+
+#edge-step .graph-edge{
+  stroke-width: 1;
+}
+
+.compare-panels-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.compare-panels-container > div {
+  width: 320px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.graph-panel {
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-caption-with-svg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.side-caption-with-svg :first-child {
+  width: 50%;
+}
+
+.side-caption-with-svg > svg {
+  min-width: 320px;
+  min-height: 320px;
+  flex-grow: 1;
+  max-width: 480px;
+  max-height: 480px;
+}
+
+.variable {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.key-point {
+  text-align: center;
+  background-color: #c0feb4;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
+.exhortation {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.important-term {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+#adjustable-graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step table {
+  border-top: 0;
+  width: 100%;
+  /*! border-collapse: collapse; */
+  margin-bottom: 1em;
+  border-bottom: 0;
+}
+
+.step table thead {
+  font-weight: bold;
+}
+
+.step table td {
+  border-bottom: solid 4px white;
+  text-align: center;
+  padding: 0.25em;
+  width: 25%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.band-1 {
+  background-color: #3a948a;
+}
+.band-2 {
+  background-color: #b2d92c;
+}
+.band-3 {
+  background-color: #3a948a;
+}
+.band-4 {
+  background-color: #b2d92c;
+}
+.band-5 {
+  background-color: #3a948a;
+}
+.band-6 {
+  background-color: #b2d92c;
+}
+.band-7 {
+  background-color: #3a948a;
+}
+.band-8 {
+  background-color: #b2d92c;
+}
+.band-9 {
+  background-color: #3a948a;
+}
+.band-10 {
+  background-color: #b2d92c;
+}
+
+#v-e-relationship-step tbody td {
+  color: white;
+}
+
+#v-e-relationship-step table .complete-graph-board .graph-edge {
+  stroke-width: 4;
+}
+
+#edge-example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#edge-example-container .complete-graph-board {
+  align-self: center;
+}
+
+.random-graph-board {
+  /*! border: 2px dashed #aaa; */
+  margin: 4px;
+}
+
+.complete-graph-setting-link {
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.step table tr {
+  display: flex;
+  /*! justify-content: center; */
+}
+
+.step table td.yield-sign {
+  width: 1em;
+}
+
+.step table td.graph-cell {
+  border-bottom: solid 4px #555;
+}
+
+@media all and (max-height: 568px) {
+  body {
+    font-size: 18px;
+  }
+}
+

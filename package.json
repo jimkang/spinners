@@ -1,0 +1,45 @@
+{
+  "name": "spinners",
+  "version": "1.0.0",
+  "description": "Spinners!",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jimkang/spinners.git"
+  },
+  "keywords": [
+    "graph theory"
+  ],
+  "author": "Jim Kang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimkang/spinners/issues"
+  },
+  "homepage": "https://github.com/jimkang/spinners",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.5.0",
+    "uglify-es": "^3.1.9"
+  },
+  "dependencies": {
+    "accessor": "^2.0.0",
+    "basic-2d-math": "^1.0.0",
+    "d3-array": "^2.0.3",
+    "d3-hierarchy": "^1.1.8",
+    "d3-scale-chromatic": "^1.3.3",
+    "d3-selection": "^1.3.2",
+    "handle-error-web": "^1.0.1",
+    "idmaker": "^0.1.1",
+    "lodash.curry": "^4.1.1",
+    "lodash.flatten": "^4.4.0",
+    "probable": "^2.1.2",
+    "route-state": "^1.1.2",
+    "seedrandom": "^3.0.1",
+    "standard-bail": "^2.0.1"
+  }
+}
