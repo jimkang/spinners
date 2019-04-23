@@ -1,35 +1,44 @@
-var { Tablenest, r, s, f } = require('tablenest');
+var { Tablenest, r, f } = require('tablenest');
+var images = require('./images');
+var RandomId = require('@jimkang/randomid');
 
-var idChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+var literalSpinnerImages = [
+  [2, images.redFidgetSpinner],
+  [1, images.yellowFidgetSpinner]
+];
+
+var ammoniteImages = [[3, images.ammonite], [2, images.inkAmmonite]];
 
 function SpinnerDefs({ random }) {
   var tablenest = Tablenest({ random });
+  var randomId = RandomId({ random });
+
+  var getId = f(() => 'spinner-' + randomId(4));
 
   var literalSpinner = r({
-    id: s`spinner-{idChars}`,
+    id: getId,
     style: 'spinner',
     image: r`literalSpinnerImages`,
     r: f((result, p) => 5 + p.roll(20)),
-    duration: f((result, p) => `${0.2 + p.roll(10)}s`),
-    // TODO: Clean this up.
-    idChars: f(
-      (result, p) =>
-        p.pickFromArray(idChars) +
-        p.pickFromArray(idChars) +
-        p.pickFromArray(idChars) +
-        p.pickFromArray(idChars)
-    )
+    duration: f((result, p) => `${0.2 + p.roll(10)}s`)
   });
 
-  var literalSpinnerImages = [
-    [2, 'media/Yellow_Fidget_Spinner.png'],
-    [1, 'media/fidget-spinner-2452983_1280.png']
-  ];
+  var ammoniteSpinner = r({
+    id: getId,
+    style: 'spinner',
+    image: r`ammoniteImages`,
+    r: f((result, p) => 10 + p.roll(15)),
+    duration: f((result, p) => `${p.rollDie(50) / 5}s`)
+  });
 
   return {
     default: tablenest({
       root: [[1, literalSpinner]],
       literalSpinnerImages
+    }),
+    ammonites: tablenest({
+      root: [[1, ammoniteSpinner]],
+      ammoniteImages
     })
   };
 }

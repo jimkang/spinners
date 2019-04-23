@@ -36,7 +36,7 @@ function diameter(spinner) {
 }
 
 function getImage(spinner) {
-  return spinner.data.image;
+  return spinner.data.image.url;
 }
 
 function getLeft(spinner) {

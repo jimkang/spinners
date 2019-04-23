@@ -1,7 +1,8 @@
 var handleError = require('handle-error-web');
 var SpinnerFlow = require('./flows/spinner-flow');
 var RouteState = require('route-state');
-//var range = require('d3-array').range;
+var LayoutDefs = require('./layout-defs');
+var seedrandom = require('seedrandom');
 
 var spinnerFlowKit;
 
@@ -15,7 +16,7 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed }) {
+function followRoute({ seed, layout }) {
   if (!seed) {
     routeState.addToRoute({ seed: new Date().toISOString() });
     return;
@@ -25,7 +26,14 @@ function followRoute({ seed }) {
     spinnerFlowKit = SpinnerFlow({ seed });
   }
 
-  spinnerFlowKit.go({});
+  if (!layout) {
+    let layoutDefs = LayoutDefs({
+      random: seedrandom(seed)
+    });
+    layout = layoutDefs.roll().layout;
+  }
+
+  spinnerFlowKit.go({ layout });
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
