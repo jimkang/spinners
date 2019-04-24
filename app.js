@@ -3,6 +3,7 @@ var SpinnerFlow = require('./flows/spinner-flow');
 var RouteState = require('route-state');
 var LayoutDefs = require('./layout-defs');
 var seedrandom = require('seedrandom');
+var wireControls = require('./dom/wire-controls');
 
 var spinnerFlowKit;
 
@@ -18,7 +19,7 @@ var routeState = RouteState({
 
 function followRoute({ seed, layout }) {
   if (!seed) {
-    routeState.addToRoute({ seed: new Date().toISOString() });
+    seedWithDate();
     return;
   }
 
@@ -33,7 +34,13 @@ function followRoute({ seed, layout }) {
     layout = layoutDefs.roll().layout;
   }
 
+  wireControls({ refresh: seedWithDate });
+
   spinnerFlowKit.go({ layout });
+}
+
+function seedWithDate() {
+  routeState.addToRoute({ seed: new Date().toISOString() });
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {

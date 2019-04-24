@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@jimkang/randomid": "^1.0.0",
-    "accessor": "^2.0.0",
+    "accessor": "^3.0.0",
     "basic-2d-math": "^1.0.0",
     "d3-array": "^2.0.3",
     "d3-hierarchy": "^1.1.8",

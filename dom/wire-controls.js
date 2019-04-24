@@ -1,14 +1,14 @@
 var listenersInit = false;
 
-var sillyNameButton = document.getElementById('silly-name-button');
+var refreshButton = document.getElementById('refresh-button');
 
-function wireControls({ makeSillyName }) {
+function wireControls({ refresh }) {
   if (listenersInit) {
     return;
   }
   listenersInit = true;
 
-  sillyNameButton.addEventListener('click', makeSillyName);
+  refreshButton.addEventListener('click', refresh);
 }
 
 module.exports = wireControls;

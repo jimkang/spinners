@@ -31,6 +31,7 @@ function SpinnerDefs({ random }) {
     duration: f((result, p) => `${p.rollDie(50) / 5}s`)
   });
 
+  // TODO: Multilayered layouts.
   return {
     default: tablenest({
       root: [[1, literalSpinner]],

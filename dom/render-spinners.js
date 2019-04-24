@@ -1,14 +1,17 @@
 var d3 = require('d3-selection');
-var accessor = require('accessor')();
+var accessor = require('accessor');
 
 var spinnerRoot = d3.select('#spinner-root');
 
 function renderSpinners({ spinnerData }) {
   var spinners = spinnerRoot
     .selectAll('.spinner')
-    .data(spinnerData, accessor());
+    .data(spinnerData, accessor({ path: 'data/id' }));
   spinners.exit().remove();
-  var newSpinners = spinners.enter().append('image');
+  var newSpinners = spinners
+    .enter()
+    .append('image')
+    .classed('spinner', true);
   newSpinners
     .append('animateTransform')
     .attr('attributeName', 'transform')
@@ -22,21 +25,17 @@ function renderSpinners({ spinnerData }) {
     .attr('y', getTop)
     .attr('width', diameter)
     .attr('height', diameter)
-    .attr('xlink:href', getImage);
+    .attr('xlink:href', accessor({ path: 'data/image/url' }));
 
   updatableSpinners
     .select('animateTransform')
     .attr('from', getAnimateStartRotation)
     .attr('to', getAnimateEndRotation)
-    .attr('dur', getAnimationDuration);
+    .attr('dur', accessor({ path: 'data/duration' }));
 }
 
 function diameter(spinner) {
   return spinner.r * 2;
-}
-
-function getImage(spinner) {
-  return spinner.data.image.url;
 }
 
 function getLeft(spinner) {
@@ -53,10 +52,6 @@ function getAnimateStartRotation(spinner) {
 
 function getAnimateEndRotation(spinner) {
   return `360 ${spinner.x} ${spinner.y}`;
-}
-
-function getAnimationDuration(spinner) {
-  return spinner.data.duration;
 }
 
 module.exports = renderSpinners;

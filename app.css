@@ -4,11 +4,12 @@ body {
   background-color: #fff;
   color: #666;
   margin-bottom: 2em;
-  margin-left: 2em;
-  margin-right: 2em;
+  /*! margin-left: 2em; */
+  /*! margin-right: 2em; */
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 p {
