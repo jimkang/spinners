@@ -28,5 +28,26 @@ module.exports = {
     source: 'https://pixabay.com/vectors/extinct-fossil-invertebrate-1296604/',
     attribution:
       'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1296604">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1296604">Pixabay</a>'
+  },
+  officeClockFace: {
+    name: 'Analog Clock',
+    url: 'media/analog-clock-face.svg',
+    source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
+  },
+  officeClockHourHand: {
+    name: 'Analog Clock',
+    url: 'media/analog-clock-hour-hand.svg',
+    source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
+  },
+  officeClockMinuteHand: {
+    name: 'Analog Clock',
+    url: 'media/analog-clock-minute-hand.svg',
+    source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
   }
 };

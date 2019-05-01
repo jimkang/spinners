@@ -6,7 +6,7 @@ module.exports = {
   layers: [
     [1, r([r`layer`, r`layer`])],
     [2, r([r`layer`])],
-    [1, r([r`layer`, r`layer`, r`layer`])],
+    [2, r([r`layer`, r`layer`, r`layer`])],
     [
       1,
       r([
@@ -21,11 +21,22 @@ module.exports = {
         r`layer`,
         r`layer`
       ])
-    ]
+    ],
+    [1, r([r`clockFaceLayer`, r`clockHourHandLayer`, r`clockMinuteHandLayer`])]
   ],
   typeOrder: [
     [1, l(['default', 'ammonites'])],
-    [1, l(['ammonites', 'default'])]
+    [1, l(['ammonites', 'default'])],
+    [
+      1,
+      l([
+        'ammonites',
+        'clockFaces',
+        'clockHourHands',
+        'clockMinuteHands',
+        'default'
+      ])
+    ]
   ],
   typeMix: [
     [1, f(o => range(o.size).map(() => o.types[0]))], // One type
@@ -33,16 +44,18 @@ module.exports = {
     [
       2,
       f((o, p) =>
-        range(o.size).map(() => (p.roll(5) === 0 ? o.types[0] : o.types[1]))
+        range(o.size).map(() =>
+          p.roll(5) === 0 ? o.types[0] : p.pickFromArray(o.types.slice(1))
+        )
       )
     ],
     // Even mix
-    [
-      1,
-      f((o, p) =>
-        range(o.size).map(() => (p.roll(2) === 0 ? o.types[0] : o.types[1]))
-      )
-    ]
+    [1, f((o, p) => range(o.size).map(() => p.pickFromArray(o.types)))]
   ],
-  layer: [[1, r`typeMix`]]
+  layer: [[1, r`typeMix`]],
+  clockFaceLayer: [[1, f(o => range(o.size).map(() => 'clockFaces'))]],
+  clockHourHandLayer: [[1, f(o => range(o.size).map(() => 'clockHourHands'))]],
+  clockMinuteHandLayer: [
+    [1, f(o => range(o.size).map(() => 'clockMinuteHands'))]
+  ]
 };
