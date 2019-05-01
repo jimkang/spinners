@@ -1,9 +1,10 @@
 var handleError = require('handle-error-web');
 var SpinnerFlow = require('./flows/spinner-flow');
 var RouteState = require('route-state');
-var LayoutDefs = require('./layout-defs');
+var layoutDef = require('./layout-def');
 var seedrandom = require('seedrandom');
 var wireControls = require('./dom/wire-controls');
+var { Tablenest } = require('tablenest');
 
 var spinnerFlowKit;
 
@@ -28,10 +29,9 @@ function followRoute({ seed, layout }) {
   }
 
   if (!layout) {
-    let layoutDefs = LayoutDefs({
-      random: seedrandom(seed)
-    });
-    layout = layoutDefs.roll().layout;
+    let tablenest = Tablenest({ random: seedrandom(seed) });
+    let layoutTable = tablenest(layoutDef);
+    layout = layoutTable.roll().layout;
   }
 
   wireControls({ refresh: seedWithDate });
