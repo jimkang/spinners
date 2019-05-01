@@ -18,7 +18,7 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed, layout }) {
+function followRoute({ seed, layers }) {
   if (!seed) {
     seedWithDate();
     return;
@@ -28,15 +28,18 @@ function followRoute({ seed, layout }) {
     spinnerFlowKit = SpinnerFlow({ seed });
   }
 
-  if (!layout) {
+  if (!layers) {
     let tablenest = Tablenest({ random: seedrandom(seed) });
     let layoutTable = tablenest(layoutDef);
-    layout = layoutTable.roll().layout;
+    let result = layoutTable.roll();
+
+    // TODO: tablenest needs to preserve the array-ness of a def.
+    layers = convertToArray(result.layers);
   }
 
   wireControls({ refresh: seedWithDate });
 
-  spinnerFlowKit.go({ layout });
+  spinnerFlowKit.go({ layers });
 }
 
 function seedWithDate() {
@@ -45,4 +48,12 @@ function seedWithDate() {
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
   handleError(error);
+}
+
+function convertToArray(obj) {
+  var array = [];
+  for (var i = 0; obj[i]; ++i) {
+    array[i] = obj[i];
+  }
+  return array;
 }

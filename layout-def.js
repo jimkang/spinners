@@ -2,14 +2,25 @@ var { r, f, l, d } = require('tablenest');
 var range = require('d3-array').range;
 
 module.exports = {
-  root: [
+  root: [[1, r({ size: d`2d16`, types: r`typeOrder`, layers: r`layers` })]],
+  layers: [
+    [1, r([r`layer`, r`layer`])],
+    [2, r([r`layer`])],
+    [1, r([r`layer`, r`layer`, r`layer`])],
     [
       1,
-      r({
-        size: d`2d16`, // f((o, p) => p.rollDie(16) + p.rollDie(16)),
-        types: r`typeOrder`,
-        layout: r`typeMix`
-      })
+      r([
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`,
+        r`layer`
+      ])
     ]
   ],
   typeOrder: [
@@ -32,5 +43,6 @@ module.exports = {
         range(o.size).map(() => (p.roll(2) === 0 ? o.types[0] : o.types[1]))
       )
     ]
-  ]
+  ],
+  layer: [[1, r`typeMix`]]
 };

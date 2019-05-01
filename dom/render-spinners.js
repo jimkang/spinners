@@ -1,9 +1,8 @@
 var d3 = require('d3-selection');
 var accessor = require('accessor');
 
-var spinnerRoot = d3.select('#spinner-root');
-
-function renderSpinners({ spinnerData }) {
+function renderSpinners({ spinnerData, layerNumber }) {
+  var spinnerRoot = d3.select('#layer-' + layerNumber);
   var spinners = spinnerRoot
     .selectAll('.spinner')
     .data(spinnerData, accessor({ path: 'data/id' }));

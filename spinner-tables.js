@@ -9,7 +9,7 @@ var literalSpinnerImages = [
 
 var ammoniteImages = [[3, images.ammonite], [2, images.inkAmmonite]];
 
-function SpinnerDefs({ random }) {
+function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
   var randomId = RandomId({ random });
 
@@ -31,7 +31,6 @@ function SpinnerDefs({ random }) {
     duration: f((result, p) => `${p.rollDie(50) / 5}s`)
   });
 
-  // TODO: Multilayered layouts.
   return {
     default: tablenest({
       root: [[1, literalSpinner]],
@@ -44,4 +43,4 @@ function SpinnerDefs({ random }) {
   };
 }
 
-module.exports = SpinnerDefs;
+module.exports = SpinnerTables;
