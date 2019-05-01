@@ -1,11 +1,11 @@
 var renderSpinners = require('../dom/render-spinners');
 var seedrandom = require('seedrandom');
-var SpinnerDefs = require('../spinner-defs');
+var SpinnerTables = require('../spinner-tables');
 var hierarchy = require('d3-hierarchy');
 
 function SpinnerFlow({ seed }) {
   var random = seedrandom(seed);
-  var spinnerDefs = SpinnerDefs({ random });
+  var spinnerTables = SpinnerTables({ random });
   var pack = hierarchy.pack().size([100, 100]);
 
   return {
@@ -40,7 +40,7 @@ function SpinnerFlow({ seed }) {
   }
 
   function makeSpinnerForKey(key) {
-    return spinnerDefs[key].roll();
+    return spinnerTables[key].roll();
   }
 }
 
