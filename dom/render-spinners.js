@@ -1,7 +1,11 @@
 var d3 = require('d3-selection');
 var accessor = require('accessor');
 
+var board = d3.select('#board');
+
 function renderSpinners({ spinnerData, layerNumber }) {
+  squarifyBoard();
+
   var spinnerRoot = d3.select('#layer-' + layerNumber);
   var spinners = spinnerRoot
     .selectAll('.spinner')
@@ -51,6 +55,11 @@ function getAnimateStartRotation(spinner) {
 
 function getAnimateEndRotation(spinner) {
   return `360 ${spinner.x} ${spinner.y}`;
+}
+
+function squarifyBoard() {
+  var boardWidth = board.node().getBoundingClientRect().width;
+  board.attr('height', boardWidth);
 }
 
 module.exports = renderSpinners;
