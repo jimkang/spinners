@@ -5,9 +5,34 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg86"
    viewBox="0 0 400 400"
-   version="1.0">
+   version="1.0"
+   sodipodi:docname="analog-clock-face.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     id="namedview277"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="2.03"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg86" />
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -114,11 +139,6 @@
          stop-color="#fff" />
     </radialGradient>
   </defs>
-  <path
-     style="fill-rule:evenodd;filter:url(#j)"
-     transform="matrix(0.72854,0,0,0.72854,553.87,-39.1)"
-     d="m -222.86,332.36 a 262.86,262.86 0 1 1 -525.71,0 262.86,262.86 0 1 1 525.71,0 z"
-     id="path36" />
   <path
      style="fill:#333333;fill-rule:evenodd;stroke-width:0.72854"
      d="m 391.50758,196.99755 a 191.50402,191.50402 0 1 1 -383.0007678,0 191.50402,191.50402 0 1 1 383.0007678,0 z"

@@ -37,13 +37,14 @@
      inkscape:window-height="1025"
      id="namedview88"
      showgrid="false"
-     inkscape:zoom="2.03"
+     inkscape:zoom="2.15"
      inkscape:cx="200"
-     inkscape:cy="239.40887"
+     inkscape:cy="200"
      inkscape:window-x="67"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg86" />
+     inkscape:current-layer="svg86"
+     inkscape:pagecheckerboard="true" />
   <defs
      id="defs34">
     <filter
@@ -138,12 +139,6 @@
          id="stop31" />
     </radialGradient>
   </defs>
-  <path
-     inkscape:connector-curvature="0"
-     style="fill:none;stroke:url(#m);stroke-width:4.14109993;stroke-linecap:round;filter:url(#i)"
-     id="path42"
-     d="m -222.86,332.36 a 262.86,262.86 0 1 1 -525.71,0 262.86,262.86 0 1 1 525.71,0 z"
-     transform="matrix(0.65491,0,0,0.65491,518.11,-21.39)" />
   <path
      style="fill-rule:evenodd"
      inkscape:connector-curvature="0"
