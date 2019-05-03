@@ -19,6 +19,8 @@ var catImages = [
   [1, images.wilyMorphBall]
 ];
 
+var pizzaImages = [[1, images.pizza]];
+
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
   var randomId = RandomId({ random });
@@ -74,6 +76,14 @@ function SpinnerTables({ random }) {
     duration: f((result, p) => `${5 + p.rollDie(25) / 5}s`)
   });
 
+  var pizzaSpinner = r({
+    id: getId,
+    style: 'spinner',
+    image: r`pizzaImages`,
+    r: f((result, p) => 5 + p.roll(20)),
+    duration: f((result, p) => `${0.2 + p.roll(10)}s`)
+  });
+
   return {
     // TODO: Abstract this in tablenest.
     default: tablenest({
@@ -99,6 +109,10 @@ function SpinnerTables({ random }) {
     cats: tablenest({
       root: [[1, catSpinner]],
       catImages
+    }),
+    pizzas: tablenest({
+      root: [[1, pizzaSpinner]],
+      pizzaImages
     })
   };
 }

@@ -65,5 +65,10 @@ module.exports = {
     name: 'Dr. Wily morph ball',
     url: 'media/wily-morph-2019-04-28.png',
     attribution: 'Photo by Jim.'
+  },
+  pizza: {
+    name: 'Pizza',
+    url: 'media/pizza.png',
+    attribution: 'TODO'
   }
 };

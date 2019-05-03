@@ -26,9 +26,13 @@ module.exports = {
   ],
   typeOrder: [
     [1, l(['default', 'ammonites'])],
-    [1, l(['ammonites', 'default'])],
+    [1, l(['ammonites', 'default', 'pizzas'])],
     [1, l(['cats', 'default', 'ammonites'])],
-    [1, l(['cats', 'clockFaces', 'clockHourHands', 'clockMinuteHands'])],
+    [1, l(['pizzas', 'ammonites', 'cats'])],
+    [
+      1,
+      l(['cats', 'clockFaces', 'clockHourHands', 'clockMinuteHands', 'pizzas'])
+    ],
     [
       1,
       l([
@@ -37,7 +41,8 @@ module.exports = {
         'clockHourHands',
         'clockMinuteHands',
         'default',
-        'cats'
+        'cats',
+        'pizzas'
       ])
     ]
   ],
