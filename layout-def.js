@@ -27,6 +27,8 @@ module.exports = {
   typeOrder: [
     [1, l(['default', 'ammonites'])],
     [1, l(['ammonites', 'default'])],
+    [1, l(['cats', 'default', 'ammonites'])],
+    [1, l(['cats', 'clockFaces', 'clockHourHands', 'clockMinuteHands'])],
     [
       1,
       l([
@@ -34,12 +36,13 @@ module.exports = {
         'clockFaces',
         'clockHourHands',
         'clockMinuteHands',
-        'default'
+        'default',
+        'cats'
       ])
     ]
   ],
   typeMix: [
-    [1, f(o => range(o.size).map(() => o.types[0]))], // One type
+    [3, f(o => range(o.size).map(() => o.types[0]))], // One type
     // Mostly one type
     [
       2,

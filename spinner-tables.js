@@ -13,6 +13,8 @@ var clockFaceImages = [[1, images.officeClockFace]];
 var clockHourHandImages = [[1, images.officeClockHourHand]];
 var clockMinuteHandImages = [[1, images.officeClockMinuteHand]];
 
+var catImages = [[1, images.bonusMorphBall]];
+
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
   var randomId = RandomId({ random });
@@ -60,6 +62,14 @@ function SpinnerTables({ random }) {
     duration: f((o, p) => p.rollDie(20) / 10) // TODO: Make this work in dicecup: d`d6/10`
   });
 
+  var catSpinner = r({
+    id: getId,
+    style: 'spinner',
+    image: r`catImages`,
+    r: d`d6+5`,
+    duration: f((result, p) => `${5 + p.rollDie(25) / 5}s`)
+  });
+
   return {
     // TODO: Abstract this in tablenest.
     default: tablenest({
@@ -81,6 +91,10 @@ function SpinnerTables({ random }) {
     clockMinuteHands: tablenest({
       root: [[1, clockMinuteHandSpinner]],
       clockMinuteHandImages
+    }),
+    cats: tablenest({
+      root: [[1, catSpinner]],
+      catImages
     })
   };
 }

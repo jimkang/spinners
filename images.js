@@ -49,5 +49,11 @@ module.exports = {
     source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
     attribution:
       'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
+  },
+  bonusMorphBall: {
+    name: 'Bonus Cat morph ball',
+    url: 'media/bonus-morph.png',
+    source: 'https://smidgeo.com/notes/deathmtn/deathmtn-BFijKNVY.html',
+    attribution: 'Photo by Jim.'
   }
 };
