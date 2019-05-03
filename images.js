@@ -55,5 +55,15 @@ module.exports = {
     url: 'media/bonus-morph.png',
     source: 'https://smidgeo.com/notes/deathmtn/deathmtn-BFijKNVY.html',
     attribution: 'Photo by Jim.'
+  },
+  bonusMorphBall2: {
+    name: 'Bonus Cat morph ball 2',
+    url: 'media/bonus-morph-2019-04-28.png',
+    attribution: 'Photo by Jim.'
+  },
+  wilyMorphBall: {
+    name: 'Dr. Wily morph ball',
+    url: 'media/wily-morph-2019-04-28.png',
+    attribution: 'Photo by Jim.'
   }
 };

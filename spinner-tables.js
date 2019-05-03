@@ -13,7 +13,11 @@ var clockFaceImages = [[1, images.officeClockFace]];
 var clockHourHandImages = [[1, images.officeClockHourHand]];
 var clockMinuteHandImages = [[1, images.officeClockMinuteHand]];
 
-var catImages = [[1, images.bonusMorphBall]];
+var catImages = [
+  [1, images.bonusMorphBall],
+  [1, images.bonusMorphBall2],
+  [1, images.wilyMorphBall]
+];
 
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
