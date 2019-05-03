@@ -3,6 +3,7 @@ var renderLayers = require('../dom/render-layers');
 var seedrandom = require('seedrandom');
 var SpinnerTables = require('../spinner-tables');
 var hierarchy = require('d3-hierarchy');
+var Probable = require('probable').createProbable;
 
 function SpinnerFlow({ seed }) {
   var random = seedrandom(seed);
@@ -32,6 +33,11 @@ function SpinnerFlow({ seed }) {
       ]
     ]
   }) {
+    var probable = Probable({ random });
+    document.body.style = `background-color: ${
+      probable.roll(2) === 0 ? 'black' : 'white'
+    }`;
+
     renderLayers({ layerCount: layers.length });
     layers.forEach(buildSpinnersForLayer);
   }
