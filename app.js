@@ -19,8 +19,6 @@ var routeState = RouteState({
 })();
 
 function followRoute({ seed, layers }) {
-  var theLayers = layers;
-
   if (!seed) {
     seedWithDate();
     return;
@@ -30,19 +28,18 @@ function followRoute({ seed, layers }) {
     spinnerFlowKit = SpinnerFlow({ seed });
   }
 
-  if (!theLayers) {
+  if (!layers) {
     let tablenest = Tablenest({ random: seedrandom(seed) });
     let layoutTable = tablenest(layoutDef);
     let result = layoutTable.roll();
 
-    // Mobile Safari won't allow you to assign to `layers`.
     // TODO: tablenest needs to preserve the array-ness of a def.
-    theLayers = convertToArray(result.layers);
+    layers = convertToArray(result.layers);
   }
 
   wireControls({ refresh: seedWithDate });
 
-  spinnerFlowKit.go({ layers: theLayers });
+  spinnerFlowKit.go({ layers });
 }
 
 function seedWithDate() {

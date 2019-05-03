@@ -34,9 +34,8 @@ function SpinnerFlow({ seed }) {
     ]
   }) {
     var probable = Probable({ random });
-    document.body.style = `background-color: ${
-      probable.roll(2) === 0 ? 'black' : 'white'
-    }`;
+    document.body.style.backgroundColor =
+      probable.roll(2) === 0 ? 'black' : 'white';
 
     renderLayers({ layerCount: layers.length });
     layers.forEach(buildSpinnersForLayer);
