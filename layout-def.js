@@ -2,7 +2,7 @@ var { r, f, l, d } = require('tablenest');
 var range = require('d3-array').range;
 
 module.exports = {
-  root: [[1, r({ size: d`2d16`, types: r`typeOrder`, layers: r`layers` })]],
+  root: [[1, r({ size: d`d32`, types: r`typeOrder`, layers: r`layers` })]],
   layers: [
     [1, r([r`layer`, r`layer`])],
     [8, r([r`layer`])],
