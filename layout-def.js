@@ -5,7 +5,7 @@ module.exports = {
   root: [[1, r({ size: d`2d16`, types: r`typeOrder`, layers: r`layers` })]],
   layers: [
     [1, r([r`layer`, r`layer`])],
-    [2, r([r`layer`])],
+    [8, r([r`layer`])],
     [2, r([r`layer`, r`layer`, r`layer`])],
     [
       1,
@@ -17,12 +17,10 @@ module.exports = {
         r`layer`,
         r`layer`,
         r`layer`,
-        r`layer`,
-        r`layer`,
         r`layer`
       ])
     ],
-    [1, r([r`clockFaceLayer`, r`clockHourHandLayer`, r`clockMinuteHandLayer`])]
+    [3, r([r`clockFaceLayer`, r`clockHourHandLayer`, r`clockMinuteHandLayer`])]
   ],
   typeOrder: [
     [1, l(['default', 'ammonites'])],
