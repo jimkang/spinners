@@ -2,7 +2,22 @@ var { r, f, l, d } = require('tablenest');
 var range = require('d3-array').range;
 
 module.exports = {
-  root: [[1, r({ size: d`d32`, types: r`typeOrder`, layers: r`layers` })]],
+  root: [
+    [1, r({ size: d`d32`, types: r`typeOrder`, layers: r`layers` })],
+    [
+      10,
+      r({
+        size: d`d32`,
+        types: r`typeOrder`,
+        layers: r([
+          r`clockFaceLayer`,
+          r`clockHourHandLayer`,
+          r`clockMinuteHandLayer`
+        ]),
+        syncPositionsAcrossLayers: true
+      })
+    ]
+  ],
   layers: [
     [1, r([r`layer`, r`layer`])],
     [8, r([r`layer`])],
@@ -19,8 +34,7 @@ module.exports = {
         r`layer`,
         r`layer`
       ])
-    ],
-    [3, r([r`clockFaceLayer`, r`clockHourHandLayer`, r`clockMinuteHandLayer`])]
+    ]
   ],
   typeOrder: [
     [1, l(['default', 'ammonites'])],
