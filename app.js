@@ -28,6 +28,8 @@ function followRoute({ seed, layers }) {
     spinnerFlowKit = SpinnerFlow({ seed });
   }
 
+  var syncPositionsAcrossLayers = false;
+
   if (!layers) {
     let tablenest = Tablenest({ random: seedrandom(seed) });
     let layoutTable = tablenest(layoutDef);
@@ -35,11 +37,12 @@ function followRoute({ seed, layers }) {
 
     // TODO: tablenest needs to preserve the array-ness of a def.
     layers = convertToArray(result.layers);
+    syncPositionsAcrossLayers = result.syncPositionsAcrossLayers;
   }
 
   wireControls({ refresh: seedWithDate });
 
-  spinnerFlowKit.go({ layers });
+  spinnerFlowKit.go({ layers, syncPositionsAcrossLayers });
 }
 
 function seedWithDate() {

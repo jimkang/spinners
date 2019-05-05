@@ -3,7 +3,7 @@ var accessor = require('accessor');
 
 var board = d3.select('#board');
 
-function renderSpinners({ spinnerData, layerNumber }) {
+function renderSpinners(spinnerData, layerNumber) {
   squarifyBoard();
 
   var spinnerRoot = d3.select('#layer-' + layerNumber);

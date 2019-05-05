@@ -3,9 +3,17 @@ var range = require('d3-array').range;
 
 module.exports = {
   root: [
-    [1, r({ size: d`d32`, types: r`typeOrder`, layers: r`layers` })],
     [
-      10,
+      5,
+      r({
+        size: d`d32`,
+        types: r`typeOrder`,
+        layers: r`layers`,
+        syncPositionsAcrossLayers: f((o, p) => p.roll(3) === 0)
+      })
+    ],
+    [
+      1,
       r({
         size: d`d32`,
         types: r`typeOrder`,
@@ -19,8 +27,8 @@ module.exports = {
     ]
   ],
   layers: [
-    [1, r([r`layer`, r`layer`])],
     [8, r([r`layer`])],
+    [3, r([r`layer`, r`layer`])],
     [2, r([r`layer`, r`layer`, r`layer`])],
     [
       1,
