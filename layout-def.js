@@ -64,18 +64,21 @@ module.exports = {
     ]
   ],
   typeMix: [
-    [3, f(o => range(o.size).map(() => o.types[0]))], // One type
+    // One type
+    [5, f(o => range(o.size).map(() => o.types[0]))],
+    // Two types
+    [5, f((o, p) => range(o.size).map(() => p.pick(o.types.slice(0, 2))))],
     // Mostly one type
     [
       2,
       f((o, p) =>
         range(o.size).map(() =>
-          p.roll(5) === 0 ? o.types[0] : p.pickFromArray(o.types.slice(1))
+          p.roll(5) === 0 ? o.types[0] : p.pick(o.types.slice(1))
         )
       )
     ],
     // Even mix
-    [1, f((o, p) => range(o.size).map(() => p.pickFromArray(o.types)))]
+    [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
   ],
   layer: r`typeMix`,
   clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),

@@ -37,10 +37,10 @@
     "handle-error-web": "^1.0.1",
     "lodash.curry": "^4.1.1",
     "lodash.flatten": "^4.4.0",
-    "probable": "^2.1.2",
+    "probable": "^2.1.4",
     "route-state": "^1.1.2",
     "seedrandom": "^3.0.1",
     "standard-bail": "^2.0.1",
-    "tablenest": "^3.0.3"
+    "tablenest": "^3.0.4"
   }
 }
