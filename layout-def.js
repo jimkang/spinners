@@ -80,10 +80,8 @@ module.exports = {
     // Even mix
     [1, f((o, p) => range(o.size).map(() => p.pickFromArray(o.types)))]
   ],
-  layer: [[1, r`typeMix`]],
-  clockFaceLayer: [[1, f(o => range(o.size).map(() => 'clockFaces'))]],
-  clockHourHandLayer: [[1, f(o => range(o.size).map(() => 'clockHourHands'))]],
-  clockMinuteHandLayer: [
-    [1, f(o => range(o.size).map(() => 'clockMinuteHands'))]
-  ]
+  layer: r`typeMix`,
+  clockFaceLayer: f(o => range(o.size).map(() => 'clockFaces')),
+  clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHands')),
+  clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHands'))
 };

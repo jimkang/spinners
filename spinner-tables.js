@@ -9,9 +9,9 @@ var literalSpinnerImages = [
 
 var ammoniteImages = [[3, images.ammonite], [2, images.inkAmmonite]];
 
-var clockFaceImages = [[1, images.officeClockFace]];
-var clockHourHandImages = [[1, images.officeClockHourHand]];
-var clockMinuteHandImages = [[1, images.officeClockMinuteHand]];
+var clockFaceImages = images.officeClockFace;
+var clockHourHandImages = images.officeClockHourHand;
+var clockMinuteHandImages = images.officeClockMinuteHand;
 
 var catImages = [
   [32, images.bonusMorphBall],
@@ -21,7 +21,7 @@ var catImages = [
   [32, images.wilyMorphBall2]
 ];
 
-var pizzaImages = [[1, images.pizza]];
+var pizzaImages = images.pizza;
 
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
@@ -45,7 +45,6 @@ function SpinnerTables({ random }) {
     duration: f((result, p) => `${p.rollDie(50) / 5}s`)
   });
 
-  // TODO: Coordinate centers with other layers.
   var clockFaceSpinner = r({
     id: getId,
     style: 'spinner',
@@ -87,33 +86,32 @@ function SpinnerTables({ random }) {
   });
 
   return {
-    // TODO: Abstract this in tablenest.
     default: tablenest({
-      root: [[1, literalSpinner]],
+      root: literalSpinner,
       literalSpinnerImages
     }),
     ammonites: tablenest({
-      root: [[1, ammoniteSpinner]],
+      root: ammoniteSpinner,
       ammoniteImages
     }),
     clockFaces: tablenest({
-      root: [[1, clockFaceSpinner]],
+      root: clockFaceSpinner,
       clockFaceImages
     }),
     clockHourHands: tablenest({
-      root: [[1, clockHourHandSpinner]],
+      root: clockHourHandSpinner,
       clockHourHandImages
     }),
     clockMinuteHands: tablenest({
-      root: [[1, clockMinuteHandSpinner]],
+      root: clockMinuteHandSpinner,
       clockMinuteHandImages
     }),
     cats: tablenest({
-      root: [[1, catSpinner]],
+      root: catSpinner,
       catImages
     }),
     pizzas: tablenest({
-      root: [[1, pizzaSpinner]],
+      root: pizzaSpinner,
       pizzaImages
     })
   };
