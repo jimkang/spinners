@@ -20,16 +20,16 @@ function SpinnerFlow({ seed }) {
   function goSpinnerFlow({
     layers = [
       [
-        'default',
-        'default',
-        'default',
-        'default',
-        'default',
-        'default',
-        'default',
-        'default',
-        'default',
-        'default'
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner',
+        'literalSpinner'
       ]
     ],
     syncPositionsAcrossLayers

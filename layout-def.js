@@ -45,24 +45,21 @@ module.exports = {
     ]
   ],
   typeOrder: [
-    [1, l(['default', 'ammonites'])],
-    [1, l(['ammonites', 'default', 'pizzas'])],
-    [1, l(['cats', 'default', 'ammonites'])],
-    [1, l(['pizzas', 'ammonites', 'cats'])],
-    [
-      1,
-      l(['cats', 'clockFaces', 'clockHourHands', 'clockMinuteHands', 'pizzas'])
-    ],
+    [1, l(['literalSpinner', 'ammonite'])],
+    [1, l(['ammonite', 'literalSpinner', 'pizza'])],
+    [1, l(['cat', 'literalSpinner', 'ammonite'])],
+    [1, l(['pizza', 'ammonite', 'cat'])],
+    [1, l(['cat', 'clockFace', 'clockHourHand', 'clockMinuteHand', 'pizza'])],
     [
       1,
       l([
-        'ammonites',
-        'clockFaces',
-        'clockHourHands',
-        'clockMinuteHands',
-        'default',
-        'cats',
-        'pizzas'
+        'ammonite',
+        'clockFace',
+        'clockHourHand',
+        'clockMinuteHand',
+        'literalSpinner',
+        'cat',
+        'pizza'
       ])
     ]
   ],
@@ -81,7 +78,7 @@ module.exports = {
     [1, f((o, p) => range(o.size).map(() => p.pickFromArray(o.types)))]
   ],
   layer: r`typeMix`,
-  clockFaceLayer: f(o => range(o.size).map(() => 'clockFaces')),
-  clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHands')),
-  clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHands'))
+  clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
+  clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
+  clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand'))
 };
