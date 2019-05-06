@@ -32,6 +32,10 @@ function SpinnerTables({ random }) {
       id: getId,
       image: r`literalSpinnerImages`,
       r: f((result, p) => 5 + p.roll(20)),
+      // The duration of the rotation will be 1/speed seconds.
+      // e.g. speed 60 => 1/60 s duration. speed 0.5 => 2s duration.
+      // speed 5 => 0.2 s duration
+      speed: d`d50x0.1`,
       duration: f((result, p) => `${0.2 + p.roll(10)}s`)
     }),
     ammonite: r({

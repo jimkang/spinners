@@ -34,7 +34,7 @@ function renderSpinners(spinnerData, layerNumber) {
     .select('animateTransform')
     .attr('from', getAnimateStartRotation)
     .attr('to', getAnimateEndRotation)
-    .attr('dur', accessor({ path: 'data/duration' }));
+    .attr('dur', getDuration);
 }
 
 function diameter(spinner) {
@@ -55,6 +55,14 @@ function getAnimateStartRotation(spinner) {
 
 function getAnimateEndRotation(spinner) {
   return `360 ${spinner.x} ${spinner.y}`;
+}
+
+function getDuration(d) {
+  if (d.data.speed) {
+    return 1.0 / d.data.speed;
+  } else {
+    return d.data.duration;
+  }
 }
 
 function squarifyBoard() {
