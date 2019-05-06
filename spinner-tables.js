@@ -14,9 +14,11 @@ var clockHourHandImages = [[1, images.officeClockHourHand]];
 var clockMinuteHandImages = [[1, images.officeClockMinuteHand]];
 
 var catImages = [
-  [1, images.bonusMorphBall],
-  [1, images.bonusMorphBall2],
-  [1, images.wilyMorphBall]
+  [32, images.bonusMorphBall],
+  [32, images.bonusMorphBall2],
+  [1, images.bonusMorphBall3],
+  [28, images.wilyMorphBall],
+  [32, images.wilyMorphBall2]
 ];
 
 var pizzaImages = [[1, images.pizza]];

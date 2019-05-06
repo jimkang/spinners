@@ -8,6 +8,9 @@ TRANSFORM_SWITCH = -t [ babelify --presets [ es2015 ] ]
 pushall: sync
 	git push origin master
 
+deploy:
+	make build && git commit -a -m"Build" && make pushall
+
 run:
 	wzrd app.js:index.js -- \
 		-d \

@@ -61,9 +61,19 @@ module.exports = {
     url: 'media/bonus-morph-2019-04-28.png',
     attribution: 'Photo by Jim.'
   },
+  bonusMorphBall3: {
+    name: 'Bonus Cat morph ball 3',
+    url: 'media/bonus-2019-05-05.png',
+    attribution: 'Photo by Jim.'
+  },
   wilyMorphBall: {
     name: 'Dr. Wily morph ball',
     url: 'media/wily-morph-2019-04-28.png',
+    attribution: 'Photo by Jim.'
+  },
+  wilyMorphBall2: {
+    name: 'Dr. Wily morph ball 2',
+    url: 'media/wily-2019-05-05.png',
     attribution: 'Photo by Jim.'
   },
   pizza: {
