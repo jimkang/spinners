@@ -24,5 +24,5 @@ prettier:
 
 sync:
 	rsync -a $(HOMEDIR)/ $(USER)@$(SERVER):/$(APPDIR) --exclude node_modules/ \
-		--omit-dir-times --no-perms
+		--exclude art/ --omit-dir-times --no-perms
 
