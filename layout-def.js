@@ -65,23 +65,35 @@ module.exports = {
   ],
   typeMix: [
     // One type
-    [5, f(o => range(o.size).map(() => o.types[0]))],
+    [5, f(o => addRecursers(range(o.size).map(() => o.types[0])))],
     // Two types
-    [5, f((o, p) => range(o.size).map(() => p.pick(o.types.slice(0, 2))))],
+    [
+      5,
+      f((o, p) =>
+        addRecursers(range(o.size).map(() => p.pick(o.types.slice(0, 2))))
+      )
+    ],
     // Mostly one type
     [
       2,
       f((o, p) =>
-        range(o.size).map(() =>
-          p.roll(5) === 0 ? o.types[0] : p.pick(o.types.slice(1))
+        addRecursers(
+          range(o.size).map(() =>
+            p.roll(5) === 0 ? o.types[0] : p.pick(o.types.slice(1))
+          )
         )
       )
     ],
     // Even mix
-    [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
+    [1, f((o, p) => addRecursers(range(o.size).map(() => p.pick(o.types))))]
   ],
   layer: r`typeMix`,
   clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
   clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
   clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand'))
 };
+
+function addRecursers(spinners) {
+  spinners.push('expander');
+  return spinners;
+}

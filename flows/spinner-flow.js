@@ -70,7 +70,12 @@ function SpinnerFlow({ seed }) {
   }
 
   function makeSpinnerForKey(key) {
-    return spinnerTables[key].roll();
+    if (key === 'expander') {
+      // TODO. Get sub-layout!
+      return spinnerTables['cat'].roll();
+    } else {
+      return spinnerTables[key].roll();
+    }
   }
 }
 
