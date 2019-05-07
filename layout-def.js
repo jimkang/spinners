@@ -27,8 +27,8 @@ module.exports = {
     ]
   ],
   layers: [
-    [8, r([r`layer`])],
-    [3, r([r`layer`, r`layer`])],
+    [16, r([r`layer`])],
+    [5, r([r`layer`, r`layer`])],
     [2, r([r`layer`, r`layer`, r`layer`])],
     [
       1,

@@ -5,16 +5,20 @@ var RandomId = require('@jimkang/randomid');
 // The duration of the rotation will be 1/speed seconds.
 // e.g. speed 60 => 1/60 s duration. speed 0.5 => 2s duration.
 // speed 5 => 0.2 s duration
-var speedTable = [
-  [1, d`d4x0.2`],
-  [1, d`d4x0.4`],
-  [1, d`d4x0.6`],
-  //[1, d`d10x0.2`],
-  //[1, d`d10x0.4`],
-  //[1, d`d10x0.6`],
-  //[1, d`d10x0.8`],
-  [1, d`d10`]
-];
+var speedTables = {
+  relaxed: [[1, d`d4x0.1`], [1, d`d4x0.2`]],
+  anySpeed: [
+    [16, d`d4x0.1`],
+    [32, d`d4x0.2`],
+    [8, d`d4x0.4`],
+    [2, d`d4x0.6`],
+    [1, d`d10x0.2`],
+    [1, d`d10x0.4`],
+    [1, d`d10x0.6`],
+    [1, d`d10x0.8`],
+    [1, d`d10`]
+  ]
+};
 
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
@@ -25,7 +29,8 @@ function SpinnerTables({ random }) {
   return {
     literalSpinner: makeSpinnerTable({
       radius: d`d20+4`,
-      images: [[2, images.redFidgetSpinner], [1, images.yellowFidgetSpinner]]
+      images: [[2, images.redFidgetSpinner], [1, images.yellowFidgetSpinner]],
+      speedKey: 'anySpeed'
     }),
     ammonite: makeSpinnerTable({
       radius: d`d15+9`,
@@ -37,11 +42,13 @@ function SpinnerTables({ random }) {
     }),
     clockHourHand: makeSpinnerTable({
       radius: d`d6+5`,
-      images: images.officeClockHourHand
+      images: images.officeClockHourHand,
+      speedKey: 'anySpeed'
     }),
     clockMinuteHand: makeSpinnerTable({
       radius: d`d6+5`,
-      images: images.officeClockMinuteHand
+      images: images.officeClockMinuteHand,
+      speedKey: 'anySpeed'
     }),
     cat: makeSpinnerTable({
       radius: d`d6+5`,
@@ -55,11 +62,12 @@ function SpinnerTables({ random }) {
     }),
     pizza: makeSpinnerTable({
       radius: d`d20+5`,
-      images: images.pizza
+      images: images.pizza,
+      speedKey: 'anySpeed'
     })
   };
 
-  function makeSpinnerTable({ radius, images }) {
+  function makeSpinnerTable({ radius, images, speedKey = 'relaxed' }) {
     return tablenest({
       root: r({
         id: getId,
@@ -68,7 +76,7 @@ function SpinnerTables({ random }) {
         speed: r`speed`
       }),
       images,
-      speed: speedTable
+      speed: speedTables[speedKey]
     });
   }
 }
