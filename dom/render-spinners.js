@@ -44,8 +44,8 @@ function renderSpinners({
     .filter(isAPlainSpinner)
     .select('image')
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
-    .attr('x', negativeR)
-    .attr('y', negativeR)
+    .attr('x', 0)
+    .attr('y', 0)
     .attr('width', diameter)
     .attr('height', diameter);
 
@@ -53,8 +53,8 @@ function renderSpinners({
 
   updatableSpinners
     .select('animateTransform')
-    .attr('from', '0 0 0')
-    .attr('to', '360 0 0')
+    .attr('from', getAnimateStartRotation)
+    .attr('to', getAnimateEndRotation)
     .attr('dur', getDuration);
 
   function renderSublayout(spinner) {
@@ -72,8 +72,8 @@ function renderSpinners({
       layerCount: 1, //layers.length,
       parentSelection: sublayoutContainer,
       scale: diameter(spinner) / 100,
-      offsetX: negativeR(spinner),
-      offsetY: negativeR(spinner)
+      offsetX: 0,
+      offsetY: 0
     });
     for (
       var i = spinnerDataForLayers.length - 1;
@@ -106,10 +106,6 @@ function getTop(spinner) {
   return spinner.y - spinner.r;
 }
 
-function negativeR(spinner) {
-  return -spinner.r;
-}
-
 function getDuration(d) {
   if (d.data.speed) {
     return 1.0 / d.data.speed;
@@ -129,6 +125,14 @@ function isAPlainSpinner(s) {
 
 function spinnerHasASublayout(s) {
   return pathExists(s, ['data', 'sublayout', 'layers']);
+}
+
+function getAnimateStartRotation(spinner) {
+  return `0 ${spinner.r} ${spinner.r}`;
+}
+
+function getAnimateEndRotation(spinner) {
+  return `360 ${spinner.r} ${spinner.r}`;
 }
 
 module.exports = renderSpinners;
