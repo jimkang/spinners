@@ -1,6 +1,7 @@
 var d3 = require('d3-selection');
 var accessor = require('accessor');
 var pathExists = require('object-path-exists');
+var renderLayers = require('./render-layers');
 
 var board = d3.select('#board');
 
@@ -8,7 +9,7 @@ function renderSpinners({
   spinnerData,
   layerNumber,
   parentSelection = d3,
-  isASublayout = false
+  currentlyWithinASublayout = false
 }) {
   squarifyBoard();
 
@@ -57,12 +58,29 @@ function renderSpinners({
     .attr('dur', getDuration);
 
   function renderSublayout(spinner) {
-    if (isASublayout) {
+    if (currentlyWithinASublayout) {
       // TODO: Some sort of non-recursive representation of the sublayout.
       return;
     }
 
-    console.log(spinner.data.sublayout);
+    var { layers, spinnerDataForLayers } = spinner.data.sublayout;
+
+    var sublayoutContainer = d3.select(this);
+    renderLayers({
+      layerCount: layers.length,
+      parentSelection: sublayoutContainer,
+      scale: diameter(spinner) / 100,
+      offsetX: negativeR(spinner),
+      offsetY: negativeR(spinner)
+    });
+    for (var i = 0; i < spinnerDataForLayers.length; ++i) {
+      renderSpinners({
+        spinnerData: spinnerDataForLayers[i],
+        layerNumber: i,
+        parentSelection: sublayoutContainer,
+        currentlyWithinASublayout: true
+      });
+    }
   }
 }
 
