@@ -1,7 +1,7 @@
 spinners
 ==================
 
-Spinners!
+[Spinners!](https://jimkang.com/spinners)
 
 Installation
 ------------
