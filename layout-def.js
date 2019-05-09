@@ -6,7 +6,7 @@ module.exports = {
     [
       5,
       r({
-        size: d`d32`,
+        size: r`size`,
         types: r`typeOrder`,
         layers: r`layers`,
         syncPositionsAcrossLayers: f((o, p) => p.roll(3) === 0)
@@ -15,7 +15,7 @@ module.exports = {
     [
       1,
       r({
-        size: d`d32`,
+        size: r`size`,
         types: r`typeOrder`,
         layers: r([
           r`clockFaceLayer`,
@@ -88,6 +88,7 @@ module.exports = {
     [1, f((o, p) => addRecursers(range(o.size).map(() => p.pick(o.types))))]
   ],
   layer: r`typeMix`,
+  size: [[8, d`2d6`], [4, d`d10`], [1, d`d20`]],
   clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
   clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
   clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand'))

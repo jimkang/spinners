@@ -63,17 +63,23 @@ function renderSpinners({
       return;
     }
 
-    var { layers, spinnerDataForLayers } = spinner.data.sublayout;
+    var { /* layers,*/ spinnerDataForLayers } = spinner.data.sublayout;
 
     var sublayoutContainer = d3.select(this);
+
+    // Render only one of the layers to avoid being overwhelming.
     renderLayers({
-      layerCount: layers.length,
+      layerCount: 1, //layers.length,
       parentSelection: sublayoutContainer,
       scale: diameter(spinner) / 100,
       offsetX: negativeR(spinner),
       offsetY: negativeR(spinner)
     });
-    for (var i = 0; i < spinnerDataForLayers.length; ++i) {
+    for (
+      var i = spinnerDataForLayers.length - 1;
+      i < spinnerDataForLayers.length;
+      ++i
+    ) {
       renderSpinners({
         spinnerData: spinnerDataForLayers[i],
         layerNumber: i,
