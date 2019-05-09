@@ -5,6 +5,7 @@ var layoutDef = require('./layout-def');
 var seedrandom = require('seedrandom');
 var wireControls = require('./dom/wire-controls');
 var { Tablenest } = require('tablenest');
+var convertToArray = require('./convert-to-array');
 
 var spinnerFlowKit;
 
@@ -51,12 +52,4 @@ function seedWithDate() {
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
   handleError(error);
-}
-
-function convertToArray(obj) {
-  var array = [];
-  for (var i = 0; obj[i]; ++i) {
-    array[i] = obj[i];
-  }
-  return array;
 }

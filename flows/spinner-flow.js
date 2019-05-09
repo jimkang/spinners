@@ -2,13 +2,19 @@ var renderSpinners = require('../dom/render-spinners');
 var renderLayers = require('../dom/render-layers');
 var seedrandom = require('seedrandom');
 var SpinnerTables = require('../spinner-tables');
+var layoutDef = require('../layout-def');
 var hierarchy = require('d3-hierarchy');
 var Probable = require('probable').createProbable;
+var { Tablenest } = require('tablenest');
+var RandomId = require('@jimkang/randomid');
+var convertToArray = require('../convert-to-array');
+var curry = require('lodash.curry');
 
 function SpinnerFlow({ seed }) {
   var random = seedrandom(seed);
   var spinnerTables = SpinnerTables({ random });
   var pack = hierarchy.pack().size([100, 100]);
+  var randomId = RandomId({ random });
 
   return {
     getSeed() {
@@ -39,28 +45,42 @@ function SpinnerFlow({ seed }) {
       probable.roll(3) > 0 ? 'black' : 'white';
 
     renderLayers({ layerCount: layers.length });
+    var spinnerDataForLayers = getSpinnerDataForLayers({
+      syncPositionsAcrossLayers,
+      layers,
+      currentDepth: 0
+    });
+    spinnerDataForLayers.forEach(callRenderSpinners);
+  }
 
+  function getSpinnerDataForLayers({
+    syncPositionsAcrossLayers,
+    layers,
+    currentDepth
+  }) {
     var spinnerDataForLayers;
     if (syncPositionsAcrossLayers && layers.length > 0) {
-      let baseLayerSpinners = buildSpinnersForLayer(layers[0]);
+      let baseLayerSpinners = buildSpinnersForLayer(currentDepth, layers[0]);
       spinnerDataForLayers = [baseLayerSpinners];
       for (let i = 1; i < layers.length; ++i) {
         spinnerDataForLayers.push(
           wrapInPositionObjects({
             src: baseLayerSpinners,
-            spinnerData: layers[i].map(makeSpinnerForKey),
+            spinnerData: layers[i].map(curry(makeSpinnerForKey)(currentDepth)),
             layerIndex: i
           })
         );
       }
     } else {
-      spinnerDataForLayers = layers.map(buildSpinnersForLayer);
+      spinnerDataForLayers = layers.map(
+        curry(buildSpinnersForLayer)(currentDepth)
+      );
     }
-    spinnerDataForLayers.forEach(renderSpinners);
+    return spinnerDataForLayers;
   }
 
-  function buildSpinnersForLayer(layer) {
-    var spinners = layer.map(makeSpinnerForKey);
+  function buildSpinnersForLayer(currentDepth, layer) {
+    var spinners = layer.map(curry(makeSpinnerForKey)(currentDepth));
     var tree = hierarchy.hierarchy({
       id: 'root',
       children: spinners
@@ -69,12 +89,29 @@ function SpinnerFlow({ seed }) {
     return pack(tree).children;
   }
 
-  function makeSpinnerForKey(key) {
+  function makeSpinnerForKey(currentDepth, key) {
+    var spinner = spinnerTables[key].roll();
     if (key === 'expander') {
-      // TODO. Get sub-layout!
-      return spinnerTables['cat'].roll();
-    } else {
-      return spinnerTables[key].roll();
+      addSublayoutToSpinner({ spinner, currentDepth });
+    }
+    return spinner;
+  }
+
+  function addSublayoutToSpinner({ spinner, currentDepth }) {
+    let subSeed = randomId(8);
+    let tablenest = Tablenest({ random: seedrandom(subSeed) });
+    let layoutTable = tablenest(layoutDef);
+    let result = layoutTable.roll();
+    // TODO: tablenest needs to preserve the array-ness of a def.
+    let layers = convertToArray(result.layers);
+    spinner.sublayout = { layers };
+    // Avoid recursing infinitely.
+    if (currentDepth < 1) {
+      spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers({
+        layers,
+        syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
+        currentDepth: currentDepth + 1
+      });
     }
   }
 }
@@ -98,6 +135,12 @@ function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
     posObjs.push(posObj);
   }
   return posObjs;
+}
+
+// Calling renderSpinners via forEach will end up passing it
+// the array of spinners as the third param, which is undesirable.
+function callRenderSpinners(spinnerData, layerNumber) {
+  renderSpinners({ spinnerData, layerNumber });
 }
 
 module.exports = SpinnerFlow;

@@ -64,6 +64,13 @@ function SpinnerTables({ random }) {
       radius: d`d20+5`,
       images: images.pizza,
       speedKey: 'anySpeed'
+    }),
+    expander: makeSpinnerTable({
+      radius: d`d6+5`,
+      images: [
+        // Placeholder.
+        [32, images.wilyMorphBall2]
+      ]
     })
   };
 

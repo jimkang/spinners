@@ -1,44 +1,77 @@
 var d3 = require('d3-selection');
 var accessor = require('accessor');
+var pathExists = require('object-path-exists');
 
 var board = d3.select('#board');
 
-function renderSpinners(spinnerData, layerNumber) {
+function renderSpinners({
+  spinnerData,
+  layerNumber,
+  parentSelection = d3,
+  isASublayout = false
+}) {
   squarifyBoard();
 
-  var spinnerRoot = d3.select('#layer-' + layerNumber);
+  var spinnerRoot = parentSelection.select('.layer-' + layerNumber);
   var spinners = spinnerRoot
     .selectAll('.spinner')
     .data(spinnerData, accessor({ path: 'data/id' }));
   spinners.exit().remove();
   var newSpinners = spinners
     .enter()
-    .append('image')
+    .append('g')
     .classed('spinner', true);
+
+  newSpinners.filter(isAPlainSpinner).append('image');
+
   newSpinners
     .append('animateTransform')
     .attr('attributeName', 'transform')
     .attr('attributeType', 'XML')
     .attr('type', 'rotate')
+    .attr('additive', 'sum')
+    // Important for not cancelling out the translate transform:
     .attr('repeatCount', 'indefinite');
 
   var updatableSpinners = newSpinners.merge(spinners);
   updatableSpinners
-    .attr('x', getLeft)
-    .attr('y', getTop)
+    .attr('transform', getTransform)
     .attr('width', diameter)
-    .attr('height', diameter)
-    .attr('xlink:href', accessor({ path: 'data/image/url' }));
+    .attr('height', diameter);
+
+  updatableSpinners
+    .filter(isAPlainSpinner)
+    .select('image')
+    .attr('xlink:href', accessor({ path: 'data/image/url' }))
+    .attr('x', negativeR)
+    .attr('y', negativeR)
+    .attr('width', diameter)
+    .attr('height', diameter);
+
+  updatableSpinners.filter(spinnerHasASublayout).each(renderSublayout);
 
   updatableSpinners
     .select('animateTransform')
-    .attr('from', getAnimateStartRotation)
-    .attr('to', getAnimateEndRotation)
+    .attr('from', '0 0 0')
+    .attr('to', '360 0 0')
     .attr('dur', getDuration);
+
+  function renderSublayout(spinner) {
+    if (isASublayout) {
+      // TODO: Some sort of non-recursive representation of the sublayout.
+      return;
+    }
+
+    console.log(spinner.data.sublayout);
+  }
 }
 
 function diameter(spinner) {
   return spinner.r * 2;
+}
+
+function getTransform(spinner) {
+  return `translate(${getLeft(spinner)}, ${getTop(spinner)})`;
 }
 
 function getLeft(spinner) {
@@ -49,12 +82,8 @@ function getTop(spinner) {
   return spinner.y - spinner.r;
 }
 
-function getAnimateStartRotation(spinner) {
-  return `0 ${spinner.x} ${spinner.y}`;
-}
-
-function getAnimateEndRotation(spinner) {
-  return `360 ${spinner.x} ${spinner.y}`;
+function negativeR(spinner) {
+  return -spinner.r;
 }
 
 function getDuration(d) {
@@ -68,6 +97,14 @@ function getDuration(d) {
 function squarifyBoard() {
   var boardWidth = board.node().getBoundingClientRect().width;
   board.attr('height', boardWidth);
+}
+
+function isAPlainSpinner(s) {
+  return s.data.sublayout === undefined;
+}
+
+function spinnerHasASublayout(s) {
+  return pathExists(s, ['data', 'sublayout', 'layers']);
 }
 
 module.exports = renderSpinners;
