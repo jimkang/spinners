@@ -9,6 +9,7 @@ var { Tablenest } = require('tablenest');
 var RandomId = require('@jimkang/randomid');
 var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
+var cloneDeep = require('lodash.clonedeep');
 
 function SpinnerFlow({ seed }) {
   var random = seedrandom(seed);
@@ -48,76 +49,91 @@ function SpinnerFlow({ seed }) {
     var spinnerDataForLayers = getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
       layers,
-      currentDepth: 0
+      currentDepth: 0,
+      probable
     });
     spinnerDataForLayers.forEach(callRenderSpinners);
-  }
 
-  function getSpinnerDataForLayers({
-    syncPositionsAcrossLayers,
-    layers,
-    currentDepth
-  }) {
-    var spinnerDataForLayers;
-    if (syncPositionsAcrossLayers && layers.length > 0) {
-      let baseLayerSpinners = buildSpinnersForLayer(currentDepth, layers[0]);
-      spinnerDataForLayers = [baseLayerSpinners];
-      for (let i = 1; i < layers.length; ++i) {
-        spinnerDataForLayers.push(
-          wrapInPositionObjects({
-            src: baseLayerSpinners,
-            spinnerData: layers[i].map(curry(makeSpinnerForKey)(currentDepth)),
-            layerIndex: i
-          })
+    function getSpinnerDataForLayers({
+      syncPositionsAcrossLayers,
+      layers,
+      currentDepth
+    }) {
+      var spinnerDataForLayers;
+      if (syncPositionsAcrossLayers && layers.length > 0) {
+        let baseLayerSpinners = buildSpinnersForLayer(currentDepth, layers[0]);
+        spinnerDataForLayers = [baseLayerSpinners];
+        for (let i = 1; i < layers.length; ++i) {
+          spinnerDataForLayers.push(
+            wrapInPositionObjects({
+              src: baseLayerSpinners,
+              spinnerData: layers[i].map(
+                curry(makeSpinnerForKey)(currentDepth)
+              ),
+              layerIndex: i
+            })
+          );
+        }
+      } else {
+        spinnerDataForLayers = layers.map(
+          curry(buildSpinnersForLayer)(currentDepth)
         );
       }
-    } else {
-      spinnerDataForLayers = layers.map(
-        curry(buildSpinnersForLayer)(currentDepth)
-      );
+      return spinnerDataForLayers;
     }
-    return spinnerDataForLayers;
-  }
 
-  function buildSpinnersForLayer(currentDepth, layer) {
-    var spinners = layer.map(curry(makeSpinnerForKey)(currentDepth));
-    var tree = hierarchy.hierarchy({
-      id: 'root',
-      children: spinners
-    });
-    tree.sum(getArea);
-    return pack(tree).children;
-  }
-
-  function makeSpinnerForKey(currentDepth, key) {
-    var spinner = spinnerTables[key].roll();
-    if (key === 'expander') {
-      addSublayoutToSpinner({ spinner, currentDepth });
-    }
-    return spinner;
-  }
-
-  function addSublayoutToSpinner({ spinner, currentDepth }) {
-    let subSeed = randomId(8);
-    let tablenest = Tablenest({ random: seedrandom(subSeed) });
-    let layoutTable = tablenest(layoutDef);
-    let result;
-    let layers;
-    do {
-      result = layoutTable.roll();
-      // TODO: tablenest needs to preserve the array-ness of a def.
-      layers = convertToArray(result.layers);
-      // No clocks in top layers of sublayouts for now. They look weird.
-    } while (layers[layers.length - 1].indexOf('clockFace') !== -1);
-
-    spinner.sublayout = { layers };
-    // Avoid recursing infinitely.
-    if (currentDepth < 1) {
-      spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers({
-        layers,
-        syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
-        currentDepth: currentDepth + 1
+    function buildSpinnersForLayer(currentDepth, layer) {
+      var spinners = layer.map(curry(makeSpinnerForKey)(currentDepth));
+      var tree = hierarchy.hierarchy({
+        id: 'root',
+        children: spinners
       });
+      tree.sum(getArea);
+      return pack(tree).children;
+    }
+
+    function makeSpinnerForKey(currentDepth, key) {
+      var spinner = spinnerTables[key].roll();
+      if (key === 'expander') {
+        addSublayoutToSpinner({ spinner, currentDepth });
+      }
+      return spinner;
+    }
+
+    function addSublayoutToSpinner({ spinner, currentDepth }) {
+      let subSeed = randomId(8);
+      let tablenest = Tablenest({ random: seedrandom(subSeed) });
+      let layoutTable = tablenest(layoutDef);
+      let result;
+      let layers;
+      do {
+        result = layoutTable.roll();
+        // TODO: tablenest needs to preserve the array-ness of a def.
+        layers = convertToArray(result.layers);
+        // No clocks in top layers of sublayouts for now. They look weird.
+      } while (layers[layers.length - 1].indexOf('clockFace') !== -1);
+
+      spinner.sublayout = { layers };
+      // Avoid recursing infinitely.
+      if (currentDepth < 1) {
+        spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers({
+          layers,
+          syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
+          currentDepth: currentDepth + 1
+        });
+        // Copy and enlarge one spinner to mostly cover the rest.
+        let topSpinners =
+          spinner.sublayout.spinnerDataForLayers[
+            spinner.sublayout.spinnerDataForLayers.length - 1
+          ];
+        let coverSpinner = cloneDeep(probable.pick(topSpinners));
+        coverSpinner.data.id = coverSpinner.data.id + '-embiggened';
+        coverSpinner.data.cover = true;
+        coverSpinner.r = 50;
+        coverSpinner.x = 50;
+        coverSpinner.y = 50;
+        topSpinners.push(coverSpinner);
+      }
     }
   }
 }
