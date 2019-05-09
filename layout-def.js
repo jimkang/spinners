@@ -50,6 +50,7 @@ module.exports = {
     [1, l(['cat', 'literalSpinner', 'ammonite'])],
     [1, l(['pizza', 'ammonite', 'cat'])],
     [1, l(['cat', 'clockFace', 'clockHourHand', 'clockMinuteHand', 'pizza'])],
+    [1, l(['expander'])],
     [
       1,
       l([
@@ -59,42 +60,31 @@ module.exports = {
         'clockMinuteHand',
         'literalSpinner',
         'cat',
-        'pizza'
+        'pizza',
+        'expander'
       ])
     ]
   ],
   typeMix: [
     // One type
-    [5, f(o => addRecursers(range(o.size).map(() => o.types[0])))],
+    [5, f(o => range(o.size).map(() => o.types[0]))],
     // Two types
-    [
-      5,
-      f((o, p) =>
-        addRecursers(range(o.size).map(() => p.pick(o.types.slice(0, 2))))
-      )
-    ],
+    [5, f((o, p) => range(o.size).map(() => p.pick(o.types.slice(0, 2))))],
     // Mostly one type
     [
       2,
       f((o, p) =>
-        addRecursers(
-          range(o.size).map(() =>
-            p.roll(5) === 0 ? o.types[0] : p.pick(o.types.slice(1))
-          )
+        range(o.size).map(() =>
+          p.roll(5) === 0 ? o.types[0] : p.pick(o.types.slice(1))
         )
       )
     ],
     // Even mix
-    [1, f((o, p) => addRecursers(range(o.size).map(() => p.pick(o.types))))]
+    [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
   ],
   layer: r`typeMix`,
-  size: [[8, d`2d6`], [4, d`d10`], [1, d`d20`]],
+  size: [[8, d`3d6`], [4, d`d10`], [1, d`d30`]],
   clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
   clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
   clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand'))
 };
-
-function addRecursers(spinners) {
-  spinners.push('expander');
-  return spinners;
-}

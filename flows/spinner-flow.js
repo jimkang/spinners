@@ -101,9 +101,15 @@ function SpinnerFlow({ seed }) {
     let subSeed = randomId(8);
     let tablenest = Tablenest({ random: seedrandom(subSeed) });
     let layoutTable = tablenest(layoutDef);
-    let result = layoutTable.roll();
-    // TODO: tablenest needs to preserve the array-ness of a def.
-    let layers = convertToArray(result.layers);
+    let result;
+    let layers;
+    do {
+      result = layoutTable.roll();
+      // TODO: tablenest needs to preserve the array-ness of a def.
+      layers = convertToArray(result.layers);
+      // No clocks in top layers of sublayouts for now. They look weird.
+    } while (layers[layers.length - 1].indexOf('clockFace') !== -1);
+
     spinner.sublayout = { layers };
     // Avoid recursing infinitely.
     if (currentDepth < 1) {
