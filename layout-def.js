@@ -75,7 +75,11 @@ module.exports = {
       2,
       f((o, p) =>
         range(o.size).map(() =>
-          p.roll(5) === 0 ? o.types[0] : p.pick(o.types.slice(1))
+          p.roll(5) === 0
+            ? o.types[0]
+            : o.types.length > 1
+            ? p.pick(o.types.slice(1))
+            : o.types[0]
         )
       )
     ],
