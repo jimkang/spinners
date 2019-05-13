@@ -9,7 +9,8 @@ module.exports = {
         size: r`size`,
         types: r`typeOrder`,
         layers: r`layers`,
-        syncPositionsAcrossLayers: f((o, p) => p.roll(3) === 0)
+        syncPositionsAcrossLayers: f((o, p) => p.roll(3) === 0),
+        layoutStyle: r`layoutStyle`
       })
     ],
     [
@@ -76,9 +77,7 @@ module.exports = {
       f((o, p) =>
         range(o.size).map(() =>
           p.roll(5) === 0
-            ? o.types[0]
-            : o.types.length > 1
-            ? p.pick(o.types.slice(1))
+            ? pickFromAfterFirstIfPossible(o.types, p.pick)
             : o.types[0]
         )
       )
@@ -90,5 +89,13 @@ module.exports = {
   size: [[8, d`3d6`], [4, d`d10`], [1, d`d30`]],
   clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
   clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
-  clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand'))
+  clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand')),
+  layoutStyle: [[3, 'pack'], [100, 'orbit']]
 };
+
+function pickFromAfterFirstIfPossible(array, pick) {
+  if (array.length > 1) {
+    return pick(array.slice(1));
+  }
+  return array[0];
+}
