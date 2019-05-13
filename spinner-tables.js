@@ -26,32 +26,33 @@ function SpinnerTables({ random }) {
 
   var getId = f(() => 'spinner-' + randomId(4));
 
+  // Radius is relative to all of the other spinners' radii.
   return {
     literalSpinner: makeSpinnerTable({
-      radius: d`d20+4`,
+      radius: d`d4`,
       images: [[2, images.redFidgetSpinner], [1, images.yellowFidgetSpinner]],
       speedKey: 'anySpeed'
     }),
     ammonite: makeSpinnerTable({
-      radius: d`d15+9`,
+      radius: d`d2+2`,
       images: [[3, images.ammonite], [2, images.inkAmmonite]]
     }),
     clockFace: makeSpinnerTable({
-      radius: d`d6+5`,
+      radius: d`d2+1`,
       images: images.officeClockFace
     }),
     clockHourHand: makeSpinnerTable({
-      radius: d`d6+5`,
+      radius: d`d2+1`,
       images: images.officeClockHourHand,
       speedKey: 'anySpeed'
     }),
     clockMinuteHand: makeSpinnerTable({
-      radius: d`d6+5`,
+      radius: d`d2+1`,
       images: images.officeClockMinuteHand,
       speedKey: 'anySpeed'
     }),
     cat: makeSpinnerTable({
-      radius: d`d6+5`,
+      radius: d`d3+1`,
       images: [
         [32, images.bonusMorphBall],
         [32, images.bonusMorphBall2],
@@ -61,12 +62,12 @@ function SpinnerTables({ random }) {
       ]
     }),
     pizza: makeSpinnerTable({
-      radius: d`d20+5`,
+      radius: d`d4`,
       images: images.pizza,
       speedKey: 'anySpeed'
     }),
     expander: makeSpinnerTable({
-      radius: d`d6+5`,
+      radius: d`d2`,
       images: [
         // Placeholder.
         [32, images.wilyMorphBall2]
