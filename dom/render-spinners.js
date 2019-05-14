@@ -24,10 +24,11 @@ function renderSpinners({
     .append('g')
     .classed('spinner', true);
 
-  newSpinners.filter(isAPlainSpinner).append('image');
+  var rotationGroups = newSpinners.append('g').classed('rotation-group', true);
+  rotationGroups.filter(isAPlainSpinner).append('image');
 
   addRotationTransform({
-    spinnersSel: newSpinners,
+    spinnersSel: rotationGroups,
     className: 'rotation-transform'
   });
   if (layoutStyle === 'orbit') {
@@ -45,6 +46,7 @@ function renderSpinners({
 
   updatableSpinners
     .filter(isAPlainSpinner)
+    .select('.rotation-group')
     .select('image')
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
     .attr('x', 0)
