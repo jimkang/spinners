@@ -9,7 +9,8 @@ function renderSpinners({
   spinnerData,
   layerNumber,
   parentSelection = d3,
-  currentlyWithinASublayout = false
+  currentlyWithinASublayout = false,
+  layoutStyle
 }) {
   squarifyBoard();
 
@@ -25,14 +26,16 @@ function renderSpinners({
 
   newSpinners.filter(isAPlainSpinner).append('image');
 
-  newSpinners
-    .append('animateTransform')
-    .attr('attributeName', 'transform')
-    .attr('attributeType', 'XML')
-    .attr('type', 'rotate')
-    .attr('additive', 'sum')
-    // Important for not cancelling out the translate transform:
-    .attr('repeatCount', 'indefinite');
+  addRotationTransform({
+    spinnersSel: newSpinners,
+    className: 'rotation-transform'
+  });
+  if (layoutStyle === 'orbit') {
+    addRotationTransform({
+      spinnersSel: newSpinners,
+      className: 'revolution-transform'
+    });
+  }
 
   var updatableSpinners = newSpinners.merge(spinners);
   updatableSpinners
@@ -52,10 +55,17 @@ function renderSpinners({
   updatableSpinners.filter(spinnerHasASublayout).each(renderSublayout);
 
   updatableSpinners
-    .select('animateTransform')
+    .select('.rotation-transform')
     .attr('from', getAnimateStartRotation)
     .attr('to', getAnimateEndRotation)
     .attr('dur', getDuration);
+  if (layoutStyle === 'orbit') {
+    updatableSpinners
+      .select('.revolution-transform')
+      .attr('from', '0 0 0')
+      .attr('to', '360 0 0')
+      .attr('dur', 10); //getDuration);
+  }
 
   function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
@@ -133,6 +143,20 @@ function getAnimateStartRotation(spinner) {
 
 function getAnimateEndRotation(spinner) {
   return `360 ${spinner.r} ${spinner.r}`;
+}
+
+function addRotationTransform({ spinnersSel, className }) {
+  return (
+    spinnersSel
+      .append('animateTransform')
+      .attr('attributeName', 'transform')
+      .attr('attributeType', 'XML')
+      .attr('type', 'rotate')
+      .attr('additive', 'sum')
+      // Important for not cancelling out the translate transform:
+      .attr('repeatCount', 'indefinite')
+      .classed(className, true)
+  );
 }
 
 module.exports = renderSpinners;
