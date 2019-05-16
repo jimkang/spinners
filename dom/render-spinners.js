@@ -2,8 +2,10 @@ var d3 = require('d3-selection');
 var accessor = require('accessor');
 var pathExists = require('object-path-exists');
 var renderLayers = require('./render-layers');
+var curry = require('lodash.curry');
 
 var board = d3.select('#board');
+var orbitPathRoot = board.select('#orbit-paths');
 
 function renderSpinners({
   spinnerData,
@@ -22,7 +24,9 @@ function renderSpinners({
   var newSpinners = spinners
     .enter()
     .append('g')
-    .classed('spinner', true);
+    .classed('spinner', true)
+    .attr('width', 100)
+    .attr('height', 100);
 
   var rotationGroups = newSpinners.append('g').classed('rotation-group', true);
   rotationGroups.filter(isAPlainSpinner).append('image');
@@ -32,18 +36,17 @@ function renderSpinners({
     className: 'rotation-transform'
   });
   if (layoutStyle === 'orbit') {
-    addRotationTransform({
-      spinnersSel: newSpinners,
-      className: 'revolution-transform'
-    });
+    let orbitAnimations = newSpinners
+      .append('animateMotion')
+      .classed('orbit-animation', true)
+      .attr('dur', '10s')
+      .attr('repeatCount', 'indefinite');
+    orbitAnimations
+      .append('mpath')
+      .attr('xlink:href', s => `#${getOrbitIdForSpinner(s)}`);
   }
 
   var updatableSpinners = newSpinners.merge(spinners);
-  updatableSpinners
-    .attr('transform', getTransform)
-    .attr('width', diameter)
-    .attr('height', diameter);
-
   updatableSpinners
     .filter(isAPlainSpinner)
     .select('.rotation-group')
@@ -54,6 +57,24 @@ function renderSpinners({
     .attr('width', diameter)
     .attr('height', diameter);
 
+  if (layoutStyle === 'orbit') {
+    let paths = orbitPathRoot
+      .selectAll('.orbit-path')
+      .data(
+        spinnerData.map(
+          curry(makeOrbitForSpinner)({ clockwise: true, cx: 50, cy: 50 })
+        ),
+        accessor()
+      );
+    paths.exit().remove();
+    paths
+      .enter()
+      .append('path')
+      .merge(paths)
+      .attr('id', accessor())
+      .attr('d', accessor('d'));
+  }
+
   updatableSpinners.filter(spinnerHasASublayout).each(renderSublayout);
 
   updatableSpinners
@@ -61,13 +82,18 @@ function renderSpinners({
     .attr('from', getAnimateStartRotation)
     .attr('to', getAnimateEndRotation)
     .attr('dur', getDuration);
-  if (layoutStyle === 'orbit') {
-    updatableSpinners
-      .select('.revolution-transform')
-      .attr('from', '0 0 0')
-      .attr('to', '360 0 0')
-      .attr('dur', 10); //getDuration);
+
+  if (layoutStyle !== 'orbit') {
+    updatableSpinners.attr('transform', getTransform);
   }
+  updatableSpinners
+    .select('.rotation-group')
+    .attr('width', diameter)
+    .attr('height', diameter);
+  //if (layoutStyle === 'orbit') {
+  //  updatableSpinners.attr('transform', 'translate(50, 50)');
+  //} else {
+  //}
 
   function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
@@ -147,18 +173,120 @@ function getAnimateEndRotation(spinner) {
   return `360 ${spinner.r} ${spinner.r}`;
 }
 
-function addRotationTransform({ spinnersSel, className }) {
+function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
   return (
     spinnersSel
       .append('animateTransform')
       .attr('attributeName', 'transform')
       .attr('attributeType', 'XML')
-      .attr('type', 'rotate')
+      .attr('type', type)
       .attr('additive', 'sum')
       // Important for not cancelling out the translate transform:
       .attr('repeatCount', 'indefinite')
       .classed(className, true)
   );
+}
+
+function getOrbitIdForSpinner(spinner) {
+  return `orbit-${spinner.data.id}`;
+}
+
+function makeOrbitForSpinner(
+  { clockwise, cx, cy },
+  spinner,
+  orbitIndex,
+  spinners
+) {
+  return {
+    id: getOrbitIdForSpinner(spinner),
+    d: makePathDataForOrbit(clockwise, cx, cy, spinner, orbitIndex, spinners)
+  };
+}
+
+function makePathDataForOrbit(
+  clockwise,
+  cx,
+  cy,
+  spinner,
+  orbitIndex,
+  spinners
+) {
+  var orbitR = spinner.orbitR;
+  var startAngle = ((2 * Math.PI) / spinners.length) * orbitIndex;
+  var startPoint = positionOnCircle(cx, cy, startAngle, orbitR);
+
+  // var debugColor = ['red', 'orange', 'yellow', 'green', 'blue'][orbitIndex];
+  // this.addDebugCircleD3(startPoint, debugColor);
+
+  var rx = orbitR;
+  var ry = orbitR;
+  var xAxisRotation = 0;
+  var largeArcFlag = 1;
+  var sweepFlag = clockwise ? 1 : 0;
+
+  var vectorToOpposite = {
+    x: -2 * (startPoint.x - cx),
+    y: -2 * (startPoint.y - cy)
+  };
+
+  // this.addDebugCircleD3({
+  //   x: startPoint.x + vectorToOpposite.x,
+  //   y: startPoint.y + vectorToOpposite.y
+  // },
+  // debugColor);
+
+  // Example data path:
+  // <path d="M0,400
+  //          a200,200 0 1 0 400,0
+  //          a200,200 0 1 0 -400,0"
+  //       fill="green" stroke="blue" stroke-width="5" id="redOrbit" />
+
+  var path =
+    // Move command
+    'M' +
+    startPoint.x +
+    ',' +
+    startPoint.y +
+    ' ' +
+    // First arc command
+    'a' +
+    rx +
+    ',' +
+    ry +
+    ' ' +
+    xAxisRotation +
+    ' ' +
+    largeArcFlag +
+    ' ' +
+    sweepFlag +
+    ' ' +
+    vectorToOpposite.x +
+    ',' +
+    vectorToOpposite.y +
+    ' ' +
+    // Second arc command
+    'a' +
+    rx +
+    ',' +
+    ry +
+    ' ' +
+    xAxisRotation +
+    ' ' +
+    largeArcFlag +
+    ' ' +
+    sweepFlag +
+    ' ' +
+    -vectorToOpposite.x +
+    ',' +
+    -vectorToOpposite.y;
+
+  return path;
+}
+
+function positionOnCircle(cx, cy, angle, radius) {
+  var y = radius * Math.sin(angle);
+  var x = radius * Math.cos(angle);
+  return { x: cx + x, y: cy + y };
 }
 
 module.exports = renderSpinners;

@@ -61,11 +61,13 @@ function SpinnerFlow({ seed }) {
       currentDepth
     }) {
       var spinnerDataForLayers;
+      let buildSpinners = buildSpinnersForPackLayer;
+      if (layoutStyle === 'orbit') {
+        buildSpinners = buildSpinnersForOrbitLayer;
+      }
+
       if (syncPositionsAcrossLayers && layers.length > 0) {
-        let baseLayerSpinners = buildSpinnersForPackLayer(
-          currentDepth,
-          layers[0]
-        );
+        let baseLayerSpinners = buildSpinners(currentDepth, layers[0]);
         spinnerDataForLayers = [baseLayerSpinners];
         for (let i = 1; i < layers.length; ++i) {
           spinnerDataForLayers.push(
@@ -119,6 +121,7 @@ function SpinnerFlow({ seed }) {
 
       return {
         data: spinner,
+        orbitR: (50 / keys.length) * i,
         x: 50 + (50 / keys.length) * i,
         y: 50,
         r: spinner.r
