@@ -90,7 +90,7 @@ module.exports = {
   clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
   clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
   clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand')),
-  layoutStyle: [[3, 'pack'], [100, 'orbit']]
+  layoutStyle: [[3, 'pack'], [1, 'orbit']]
 };
 
 function pickFromAfterFirstIfPossible(array, pick) {
