@@ -7,9 +7,9 @@ function makeOrbitForSpinner(spinner, orbitIndex, spinners) {
 
 function makePathDataForOrbit(spinner, orbitIndex, spinners) {
   var orbitR = spinner.data.orbitR;
-  var cx = spinner.data.orbitCenterX;
-  var cy = spinner.data.orbitCenterY;
-  var clockwise = spinner.data.orbitClockwise;
+  var cx = spinner.data.orbitCenter.x;
+  var cy = spinner.data.orbitCenter.y;
+  var clockwise = spinner.data.orbitDirection === 'clockwise';
 
   var startAngle = ((2 * Math.PI) / spinners.length) * orbitIndex;
   var startPoint = positionOnCircle(cx, cy, startAngle, orbitR);

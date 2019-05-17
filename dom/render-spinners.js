@@ -2,7 +2,6 @@ var d3 = require('d3-selection');
 var accessor = require('accessor');
 var pathExists = require('object-path-exists');
 var renderLayers = require('./render-layers');
-var curry = require('lodash.curry');
 var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
 
 var board = d3.select('#board');
@@ -40,7 +39,7 @@ function renderSpinners({
     let orbitAnimations = newSpinners
       .append('animateMotion')
       .classed('orbit-animation', true)
-      .attr('dur', '10s')
+      .attr('dur', getOrbitDuration)
       .attr('repeatCount', 'indefinite');
     orbitAnimations
       .append('mpath')
@@ -141,6 +140,14 @@ function getDuration(d) {
     return 1.0 / d.data.speed;
   } else {
     return d.data.duration;
+  }
+}
+
+function getOrbitDuration(d) {
+  if (d.data.orbitSpeed) {
+    return 1.0 / d.data.orbitSpeed;
+  } else {
+    return 10;
   }
 }
 

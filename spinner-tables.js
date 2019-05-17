@@ -4,7 +4,7 @@ var RandomId = require('@jimkang/randomid');
 
 // The duration of the rotation will be 1/speed seconds.
 // e.g. speed 60 => 1/60 s duration. speed 0.5 => 2s duration.
-// speed 5 => 0.2 s duration
+// speed 5 => 0.2s duration
 var speedTables = {
   relaxed: [[1, d`d4x0.1`], [1, d`d4x0.2`]],
   anySpeed: [
@@ -19,6 +19,17 @@ var speedTables = {
     [1, d`d10`]
   ]
 };
+
+var orbitCenterTable = [
+  [10, { x: 50, y: 50 }],
+  [1, { x: 25, y: 50 }],
+  [1, { x: 75, y: 50 }],
+  [1, { x: 50, y: 25 }],
+  [1, { x: 50, y: 75 }],
+  [5, r({ x: d`d50+25`, y: d`d50+25` })]
+];
+
+var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
 
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
@@ -81,10 +92,16 @@ function SpinnerTables({ random }) {
         id: getId,
         image: r`images`,
         r: radius,
-        speed: r`speed`
+        speed: r`speed`,
+        // Orbit only comes into play if the layout style is orbit.
+        orbitCenter: r`orbitCenter`,
+        orbitSpeed: d`d6x0.025`,
+        orbitDirection: r`orbitDirection`
       }),
       images,
-      speed: speedTables[speedKey]
+      speed: speedTables[speedKey],
+      orbitCenter: orbitCenterTable,
+      orbitDirection: orbitDirectionTable
     });
   }
 }
