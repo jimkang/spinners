@@ -9,7 +9,7 @@ var { Tablenest } = require('tablenest');
 var RandomId = require('@jimkang/randomid');
 var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
-var cloneDeep = require('lodash.clonedeep');
+//var cloneDeep = require('lodash.clonedeep');
 
 function SpinnerFlow({ seed }) {
   var random = seedrandom(seed);
@@ -58,11 +58,13 @@ function SpinnerFlow({ seed }) {
     function getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
       layers,
-      currentDepth
+      currentDepth,
+      sublayoutStyle
     }) {
+      var useOrbits = layoutStyle === 'orbit' || sublayoutStyle === 'orbit';
       var spinnerDataForLayers;
       let buildSpinners = buildSpinnersForPackLayer;
-      if (layoutStyle === 'orbit') {
+      if (useOrbits) {
         buildSpinners = buildSpinnersForOrbitLayer;
       }
 
@@ -82,7 +84,7 @@ function SpinnerFlow({ seed }) {
         }
       } else {
         let buildSpinners = buildSpinnersForPackLayer;
-        if (layoutStyle === 'orbit') {
+        if (useOrbits) {
           buildSpinners = buildSpinnersForOrbitLayer;
         }
         spinnerDataForLayers = layers.map(curry(buildSpinners)(currentDepth));
@@ -114,8 +116,6 @@ function SpinnerFlow({ seed }) {
 
     function makeOrbitingSpinnerForKey(currentDepth, key, i, keys) {
       var spinner = makeSpinnerForKey(currentDepth, key);
-      // Keeping it naive: One spinner per orbit, constant distance
-      // between orbits.
       spinner.orbitR = (50 / keys.length) * i;
 
       return {
@@ -127,6 +127,12 @@ function SpinnerFlow({ seed }) {
     }
 
     function addSublayoutToSpinner({ spinner, currentDepth }) {
+      // Avoid recursing infinitely.
+      if (currentDepth > 0) {
+        return;
+      }
+
+      console.log('adding sublayout', currentDepth);
       let subSeed = randomId(8);
       let tablenest = Tablenest({ random: seedrandom(subSeed) });
       let layoutTable = tablenest(layoutDef);
@@ -139,14 +145,18 @@ function SpinnerFlow({ seed }) {
         // No clocks in top layers of sublayouts for now. They look weird.
       } while (layers[layers.length - 1].indexOf('clockFace') !== -1);
 
-      spinner.sublayout = { layers };
-      // Avoid recursing infinitely.
-      if (currentDepth < 1) {
-        spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers({
-          layers,
-          syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
-          currentDepth: currentDepth + 1
-        });
+      // Make all sublayouts use orbit style for now.
+      spinner.sublayout = {
+        layers,
+        sublayoutStyle: 'orbit',
+        syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
+        layoutStyle: result.layoutStyle,
+        currentDepth: currentDepth + 1
+      };
+      spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers(
+        spinner.sublayout
+      );
+      /*
         // Copy and enlarge one spinner to mostly cover the rest.
         let topSpinners =
           spinner.sublayout.spinnerDataForLayers[
@@ -159,7 +169,7 @@ function SpinnerFlow({ seed }) {
         coverSpinner.x = 50;
         coverSpinner.y = 50;
         topSpinners.push(coverSpinner);
-      }
+        */
     }
   }
 }

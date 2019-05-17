@@ -92,7 +92,10 @@ function renderSpinners({
       return;
     }
 
-    var { /* layers,*/ spinnerDataForLayers } = spinner.data.sublayout;
+    var {
+      /* layers,*/ spinnerDataForLayers,
+      sublayoutStyle
+    } = spinner.data.sublayout;
 
     var sublayoutContainer = d3.select(this);
 
@@ -113,7 +116,8 @@ function renderSpinners({
         spinnerData: spinnerDataForLayers[i],
         layerNumber: i,
         parentSelection: sublayoutContainer,
-        currentlyWithinASublayout: true
+        currentlyWithinASublayout: true,
+        layoutStyle: sublayoutStyle
       });
     }
   }
