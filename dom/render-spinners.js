@@ -61,12 +61,7 @@ function renderSpinners({
   if (layoutStyle === 'orbit') {
     let paths = orbitPathRoot
       .selectAll('.orbit-path')
-      .data(
-        spinnerData.map(
-          curry(makeOrbitForSpinner)({ clockwise: true, cx: 50, cy: 50 })
-        ),
-        accessor()
-      );
+      .data(spinnerData.map(makeOrbitForSpinner), accessor());
     paths.exit().remove();
     paths
       .enter()
@@ -91,10 +86,6 @@ function renderSpinners({
     .select('.rotation-group')
     .attr('width', diameter)
     .attr('height', diameter);
-  //if (layoutStyle === 'orbit') {
-  //  updatableSpinners.attr('transform', 'translate(50, 50)');
-  //} else {
-  //}
 
   function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
@@ -181,8 +172,8 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
       .attr('attributeName', 'transform')
       .attr('attributeType', 'XML')
       .attr('type', type)
-      .attr('additive', 'sum')
       // Important for not cancelling out the translate transform:
+      .attr('additive', 'sum')
       .attr('repeatCount', 'indefinite')
       .classed(className, true)
   );

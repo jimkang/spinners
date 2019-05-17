@@ -1,24 +1,16 @@
-function makeOrbitForSpinner(
-  { clockwise, cx, cy },
-  spinner,
-  orbitIndex,
-  spinners
-) {
+function makeOrbitForSpinner(spinner, orbitIndex, spinners) {
   return {
     id: getOrbitIdForSpinner(spinner),
-    d: makePathDataForOrbit(clockwise, cx, cy, spinner, orbitIndex, spinners)
+    d: makePathDataForOrbit(spinner, orbitIndex, spinners)
   };
 }
 
-function makePathDataForOrbit(
-  clockwise,
-  cx,
-  cy,
-  spinner,
-  orbitIndex,
-  spinners
-) {
-  var orbitR = spinner.orbitR;
+function makePathDataForOrbit(spinner, orbitIndex, spinners) {
+  var orbitR = spinner.data.orbitR;
+  var cx = spinner.data.orbitCenterX;
+  var cy = spinner.data.orbitCenterY;
+  var clockwise = spinner.data.orbitClockwise;
+
   var startAngle = ((2 * Math.PI) / spinners.length) * orbitIndex;
   var startPoint = positionOnCircle(cx, cy, startAngle, orbitR);
 

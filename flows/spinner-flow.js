@@ -116,12 +116,13 @@ function SpinnerFlow({ seed }) {
       var spinner = makeSpinnerForKey(currentDepth, key);
       // Keeping it naive: One spinner per orbit, constant distance
       // between orbits.
-      spinner.revolutionCenterX = 50;
-      spinner.revolutionCenterY = 50;
+      spinner.orbitCenterX = 50;
+      spinner.orbitCenterY = 50;
+      spinner.orbitR = (50 / keys.length) * i;
+      spinner.orbitClockwise = probable.roll(2) === 0;
 
       return {
         data: spinner,
-        orbitR: (50 / keys.length) * i,
         x: 50 + (50 / keys.length) * i,
         y: 50,
         r: spinner.r
