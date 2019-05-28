@@ -24,36 +24,21 @@ function SpinnerFlow({ seed }) {
     go: goSpinnerFlow
   };
 
-  function goSpinnerFlow({
-    layers = [
-      [
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner',
-        'literalSpinner'
-      ]
-    ],
-    layoutStyle,
-    syncPositionsAcrossLayers
-  }) {
+  function goSpinnerFlow({ layers, layoutStyle, syncPositionsAcrossLayers }) {
     var probable = Probable({ random });
     document.body.style.backgroundColor =
       probable.roll(3) > 0 ? 'black' : 'white';
 
-    renderLayers({ layerCount: layers.length });
+    renderLayers({ layerData: layers });
     var spinnerDataForLayers = getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
       layers,
       currentDepth: 0,
       probable
     });
-    spinnerDataForLayers.forEach(curry(callRenderSpinners)(layoutStyle));
+    spinnerDataForLayers.forEach(
+      curry(callRenderSpinners)(layoutStyle, layers)
+    );
 
     function getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
@@ -75,7 +60,7 @@ function SpinnerFlow({ seed }) {
           spinnerDataForLayers.push(
             wrapInPositionObjects({
               src: baseLayerSpinners,
-              spinnerData: layers[i].map(
+              spinnerData: layers[i].spinnerTypes.map(
                 curry(makeSpinnerForKey)(currentDepth)
               ),
               layerIndex: i
@@ -93,7 +78,9 @@ function SpinnerFlow({ seed }) {
     }
 
     function buildSpinnersForPackLayer(currentDepth, layer) {
-      var spinners = layer.map(curry(makeSpinnerForKey)(currentDepth));
+      var spinners = layer.spinnerTypes.map(
+        curry(makeSpinnerForKey)(currentDepth)
+      );
       var tree = hierarchy.hierarchy({
         id: 'root',
         children: spinners
@@ -103,7 +90,9 @@ function SpinnerFlow({ seed }) {
     }
 
     function buildSpinnersForOrbitLayer(currentDepth, layer) {
-      return layer.map(curry(makeOrbitingSpinnerForKey)(currentDepth));
+      return layer.spinnerTypes.map(
+        curry(makeOrbitingSpinnerForKey)(currentDepth)
+      );
     }
 
     function makeSpinnerForKey(currentDepth, key) {
@@ -143,7 +132,9 @@ function SpinnerFlow({ seed }) {
         // TODO: tablenest needs to preserve the array-ness of a def.
         layers = convertToArray(result.layers);
         // No clocks in top layers of sublayouts for now. They look weird.
-      } while (layers[layers.length - 1].indexOf('clockFace') !== -1);
+      } while (
+        layers[layers.length - 1].spinnerTypes.indexOf('clockFace') !== -1
+      );
 
       // Make all sublayouts use orbit style for now.
       spinner.sublayout = {
@@ -190,6 +181,7 @@ function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
     if (maxR < posObj.data.r) {
       posObj.data.r = maxR;
     }
+
     posObjs.push(posObj);
   }
   return posObjs;
@@ -197,8 +189,12 @@ function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
 
 // Calling renderSpinners directly via forEach will end up passing it
 // the array of spinners as the third param, which is undesirable.
-function callRenderSpinners(layoutStyle, spinnerData, layerNumber) {
-  renderSpinners({ spinnerData, layoutStyle, layerNumber });
+function callRenderSpinners(layoutStyle, layers, spinnerDataForLayer, i) {
+  renderSpinners({
+    spinnerData: spinnerDataForLayer,
+    layer: layers[i],
+    layoutStyle
+  });
 }
 
 module.exports = SpinnerFlow;

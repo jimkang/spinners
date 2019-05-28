@@ -1,32 +1,30 @@
 var d3 = require('d3-selection');
-var range = require('d3-array').range;
+var accessor = require('accessor');
 
 var board = d3.select('#board');
 
 function renderLayers({
-  layerCount,
+  layerData,
   parentSelection = board,
   scale,
   offsetX,
   offsetY
 }) {
-  var layers = parentSelection.selectAll('.layer').data(range(layerCount));
+  var layers = parentSelection.selectAll('.layer').data(layerData, accessor());
   layers.exit().remove();
   var newLayers = layers
     .enter()
     .append('g')
     .merge(layers)
-    .attr('class', getLayerId);
+    .attr('id', accessor())
+    .classed('layer', true);
+
   if (!isNaN(scale) && !isNaN(offsetX) && !isNaN(offsetY)) {
     newLayers.attr(
       'transform',
       `translate(${offsetX}, ${offsetY}) scale(${scale})`
     );
   }
-}
-
-function getLayerId(d, i) {
-  return 'layer layer-' + i;
 }
 
 module.exports = renderLayers;

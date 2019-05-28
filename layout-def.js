@@ -1,5 +1,10 @@
 var { r, f, l, d } = require('tablenest');
 var range = require('d3-array').range;
+var RandomId = require('@jimkang/randomid');
+// TODO: Use seed for randomId.
+var randomId = RandomId({ random: Math.random });
+
+var getId = f(() => 'layer-' + randomId(4));
 
 module.exports = {
   root: [
@@ -85,11 +90,20 @@ module.exports = {
     // Even mix
     [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
   ],
-  layer: r`typeMix`,
+  layer: r({ id: getId, spinnerTypes: r`typeMix` }),
   size: [[8, d`3d6`], [4, d`d10`], [1, d`d30`]],
-  clockFaceLayer: f(o => range(o.size).map(() => 'clockFace')),
-  clockHourHandLayer: f(o => range(o.size).map(() => 'clockHourHand')),
-  clockMinuteHandLayer: f(o => range(o.size).map(() => 'clockMinuteHand')),
+  clockFaceLayer: r({
+    id: getId,
+    spinnerTypes: f(o => range(o.size).map(() => 'clockFace'))
+  }),
+  clockHourHandLayer: r({
+    id: getId,
+    spinnerTypes: f(o => range(o.size).map(() => 'clockHourHand'))
+  }),
+  clockMinuteHandLayer: r({
+    id: getId,
+    spinnerTypes: f(o => range(o.size).map(() => 'clockMinuteHand'))
+  }),
   layoutStyle: [[3, 'pack'], [1, 'orbit']]
 };
 
