@@ -43,7 +43,9 @@ function seedWithDate() {
 }
 
 function onSublayoutClick(spinner) {
-  console.log('spinner clicked:', spinner);
+  console.log('spinner clicked with sublayout:', spinner.data.sublayout);
+
+  routeState.addToRoute({ seed: spinner.data.sublayout.seed });
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {

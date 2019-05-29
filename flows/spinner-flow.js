@@ -120,7 +120,7 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
         return;
       }
 
-      console.log('adding sublayout', currentDepth);
+      //console.log('adding sublayout', currentDepth);
       let subSeed = randomId(8);
       let layoutTable = LayoutTable({ random: seedrandom(subSeed) });
       let result;
@@ -140,7 +140,8 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
         sublayoutStyle: 'orbit',
         syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
         layoutStyle: result.layoutStyle,
-        currentDepth: currentDepth + 1
+        currentDepth: currentDepth + 1,
+        seed: subSeed
       };
       spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers(
         spinner.sublayout
