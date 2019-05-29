@@ -53,6 +53,11 @@ button {
   fill: none;
 }
 
+.click-target {
+  cursor: pointer;
+  fill: transparent;
+}
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;

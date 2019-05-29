@@ -25,6 +25,7 @@ function renderSpinners({
     .enter()
     .append('g')
     .classed('spinner', true)
+    .classed('sublayout', spinnerHasASublayout)
     .attr('width', 100)
     .attr('height', 100);
 
@@ -99,6 +100,7 @@ function renderSpinners({
     } = spinner.data.sublayout;
 
     var sublayoutContainer = d3.select(this);
+    addClickTarget({ root: sublayoutContainer, spinner });
 
     // Render only one of the layers to avoid being overwhelming.
     var layer = layers[layers.length - 1];
@@ -164,7 +166,7 @@ function squarifyBoard() {
 }
 
 function isAPlainSpinner(s) {
-  return s.data.sublayout === undefined;
+  return !pathExists(s, ['data', 'sublayout', 'layers']);
 }
 
 function spinnerHasASublayout(s) {
@@ -191,6 +193,26 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
       .attr('repeatCount', 'indefinite')
       .classed(className, true)
   );
+}
+
+function addClickTarget({ root, spinner }) {
+  var target = root.select('.click-target');
+  if (target.empty()) {
+    target = root
+      .append('circle')
+      .datum(spinner)
+      .classed('click-target', true);
+  }
+  target
+    .attr('r', spinner.r)
+    .attr('cx', spinner.r)
+    .attr('cy', spinner.r);
+
+  target.on('click', onSublayoutClick);
+}
+
+function onSublayoutClick(spinner) {
+  console.log('spinner clicked:', spinner);
 }
 
 module.exports = renderSpinners;
