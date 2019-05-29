@@ -2,10 +2,9 @@ var renderSpinners = require('../dom/render-spinners');
 var renderLayers = require('../dom/render-layers');
 var seedrandom = require('seedrandom');
 var SpinnerTables = require('../spinner-tables');
-var layoutDef = require('../layout-def');
+var LayoutTable = require('../layout-table');
 var hierarchy = require('d3-hierarchy');
 var Probable = require('probable').createProbable;
-var { Tablenest } = require('tablenest');
 var RandomId = require('@jimkang/randomid');
 var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
@@ -123,8 +122,7 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
 
       console.log('adding sublayout', currentDepth);
       let subSeed = randomId(8);
-      let tablenest = Tablenest({ random: seedrandom(subSeed) });
-      let layoutTable = tablenest(layoutDef);
+      let layoutTable = LayoutTable({ random: seedrandom(subSeed) });
       let result;
       let layers;
       do {

@@ -1,10 +1,9 @@
 var handleError = require('handle-error-web');
 var SpinnerFlow = require('./flows/spinner-flow');
 var RouteState = require('route-state');
-var layoutDef = require('./layout-def');
+var LayoutTable = require('./layout-table');
 var seedrandom = require('seedrandom');
 var wireControls = require('./dom/wire-controls');
-var { Tablenest } = require('tablenest');
 var convertToArray = require('./convert-to-array');
 
 var spinnerFlowKit;
@@ -29,8 +28,7 @@ function followRoute({ seed }) {
     spinnerFlowKit = SpinnerFlow({ seed, onSublayoutClick });
   }
 
-  var tablenest = Tablenest({ random: seedrandom(seed) });
-  var layoutTable = tablenest(layoutDef);
+  var layoutTable = LayoutTable({ random: seedrandom(seed) });
   var { layers, syncPositionsAcrossLayers, layoutStyle } = layoutTable.roll();
   // TODO: tablenest needs to preserve the array-ness of a def.
   layers = convertToArray(layers);
