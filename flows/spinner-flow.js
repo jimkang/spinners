@@ -11,7 +11,7 @@ var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
 //var cloneDeep = require('lodash.clonedeep');
 
-function SpinnerFlow({ seed }) {
+function SpinnerFlow({ seed, onSublayoutClick }) {
   var random = seedrandom(seed);
   var spinnerTables = SpinnerTables({ random });
   var pack = hierarchy.pack().size([100, 100]);
@@ -163,6 +163,17 @@ function SpinnerFlow({ seed }) {
         */
     }
   }
+
+  // Calling renderSpinners directly via forEach will end up passing it
+  // the array of spinners as the third param, which is undesirable.
+  function callRenderSpinners(layoutStyle, layers, spinnerDataForLayer, i) {
+    renderSpinners({
+      spinnerData: spinnerDataForLayer,
+      layer: layers[i],
+      layoutStyle,
+      onSublayoutClick
+    });
+  }
 }
 
 function getArea(spinner) {
@@ -185,16 +196,6 @@ function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
     posObjs.push(posObj);
   }
   return posObjs;
-}
-
-// Calling renderSpinners directly via forEach will end up passing it
-// the array of spinners as the third param, which is undesirable.
-function callRenderSpinners(layoutStyle, layers, spinnerDataForLayer, i) {
-  renderSpinners({
-    spinnerData: spinnerDataForLayer,
-    layer: layers[i],
-    layoutStyle
-  });
 }
 
 module.exports = SpinnerFlow;

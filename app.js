@@ -26,7 +26,7 @@ function followRoute({ seed }) {
   }
 
   if (!spinnerFlowKit || spinnerFlowKit.getSeed() !== seed) {
-    spinnerFlowKit = SpinnerFlow({ seed });
+    spinnerFlowKit = SpinnerFlow({ seed, onSublayoutClick });
   }
 
   var tablenest = Tablenest({ random: seedrandom(seed) });
@@ -42,6 +42,10 @@ function followRoute({ seed }) {
 
 function seedWithDate() {
   routeState.addToRoute({ seed: new Date().toISOString() });
+}
+
+function onSublayoutClick(spinner) {
+  console.log('spinner clicked:', spinner);
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {

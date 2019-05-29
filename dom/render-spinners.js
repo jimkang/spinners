@@ -12,7 +12,8 @@ function renderSpinners({
   layer,
   parentSelection = d3,
   currentlyWithinASublayout = false,
-  layoutStyle
+  layoutStyle,
+  onSublayoutClick
 }) {
   squarifyBoard();
 
@@ -100,7 +101,7 @@ function renderSpinners({
     } = spinner.data.sublayout;
 
     var sublayoutContainer = d3.select(this);
-    addClickTarget({ root: sublayoutContainer, spinner });
+    addClickTarget({ root: sublayoutContainer, spinner, onSublayoutClick });
 
     // Render only one of the layers to avoid being overwhelming.
     var layer = layers[layers.length - 1];
@@ -195,7 +196,7 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
   );
 }
 
-function addClickTarget({ root, spinner }) {
+function addClickTarget({ root, spinner, onSublayoutClick }) {
   var target = root.select('.click-target');
   if (target.empty()) {
     target = root
@@ -209,10 +210,6 @@ function addClickTarget({ root, spinner }) {
     .attr('cy', spinner.r);
 
   target.on('click', onSublayoutClick);
-}
-
-function onSublayoutClick(spinner) {
-  console.log('spinner clicked:', spinner);
 }
 
 module.exports = renderSpinners;
