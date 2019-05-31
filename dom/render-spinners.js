@@ -3,6 +3,7 @@ var accessor = require('accessor');
 var pathExists = require('object-path-exists');
 var renderLayers = require('./render-layers');
 var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
+var ep = require('errorback-promise');
 
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
@@ -89,7 +90,7 @@ function renderSpinners({
     .attr('width', diameter)
     .attr('height', diameter);
 
-  function renderSublayout(spinner) {
+  async function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
       // TODO: Some sort of non-recursive representation of the sublayout.
       return;
@@ -106,7 +107,7 @@ function renderSpinners({
 
     // Render only one of the layers to avoid being overwhelming.
     var layer = layers[layers.length - 1];
-    renderLayers({
+    await ep(renderLayers, {
       layerData: [layer],
       parentSelection: sublayoutContainer,
       scale: diameter(spinner) / 100,

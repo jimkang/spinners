@@ -9,6 +9,7 @@ var RandomId = require('@jimkang/randomid');
 var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
 //var cloneDeep = require('lodash.clonedeep');
+var ep = require('errorback-promise');
 
 function SpinnerFlow({ seed, onSublayoutClick }) {
   var random = seedrandom(seed);
@@ -23,12 +24,16 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
     go: goSpinnerFlow
   };
 
-  function goSpinnerFlow({ layers, layoutStyle, syncPositionsAcrossLayers }) {
+  async function goSpinnerFlow({
+    layers,
+    layoutStyle,
+    syncPositionsAcrossLayers
+  }) {
     var probable = Probable({ random });
     document.body.style.backgroundColor =
       probable.roll(3) > 0 ? 'black' : 'white';
 
-    renderLayers({ layerData: layers });
+    await ep(renderLayers, { layerData: layers });
     var spinnerDataForLayers = getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
       layers,

@@ -1,17 +1,18 @@
 var d3 = require('d3-selection');
+require('d3-transition');
 var accessor = require('accessor');
 var findWhere = require('lodash.findwhere');
 
 var board = d3.select('#board');
 var transformPartRegex = /(\w+)\(([\d, .\w]+)\)/g;
 
-function renderLayers({
-  layerData,
-  parentSelection = board,
-  scale,
-  offsetX,
-  offsetY
-}) {
+const promoteTransitionTime = 5000;
+
+function renderLayers(
+  { layerData, parentSelection = board, scale = 1.0, offsetX = 0, offsetY = 0 },
+  done
+) {
+  var destTransform = `translate(${offsetX}, ${offsetY}) scale(${scale})`;
   // If one of the new layers is a former sublayout layer,
   // remove the current layers, but preserve the former sublayout layer
   // as a new top-level layer.
@@ -27,22 +28,35 @@ function renderLayers({
     // Move the transform so that it is centered.
     promotedSublayoutTransform = centerTransform(promotedSublayoutTransform);
     promotedNode.setAttribute('transform', promotedSublayoutTransform);
+
+    // Remove the other top-level layers.
+    parentSelection
+      .selectAll(`#board > .layer:not(#${promotedSublayoutLayerDatum.id})`)
+      .remove();
+    // Transition promoted layer to normal size.
+    d3.select(promotedNode)
+      .transition()
+      .duration(promoteTransitionTime)
+      .attr('transform', destTransform);
+    setTimeout(normalRenderLayers, promoteTransitionTime);
+  } else {
+    setTimeout(normalRenderLayers, 0);
   }
 
-  var layers = parentSelection.selectAll('.layer').data(layerData, accessor());
-  layers.exit().remove();
-  var newLayers = layers
-    .enter()
-    .append('g')
-    .merge(layers)
-    .attr('id', accessor())
-    .classed('layer', true);
+  function normalRenderLayers() {
+    var layers = parentSelection
+      .selectAll('.layer')
+      .data(layerData, accessor());
+    layers.exit().remove();
+    var newLayers = layers.enter().append('g');
 
-  if (!isNaN(scale) && !isNaN(offsetX) && !isNaN(offsetY)) {
-    newLayers.attr(
-      'transform',
-      `translate(${offsetX}, ${offsetY}) scale(${scale})`
-    );
+    newLayers
+      .merge(layers)
+      .attr('id', accessor())
+      .classed('layer', true)
+      .attr('transform', destTransform);
+
+    done();
   }
 
   function findLayerInSublayouts(layerDatum) {
