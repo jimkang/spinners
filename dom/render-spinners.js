@@ -10,18 +10,19 @@ var orbitPathRoot = board.select('#orbit-paths');
 function renderSpinners({
   spinnerData,
   layer,
-  parentSelection = d3,
   currentlyWithinASublayout = false,
   layoutStyle,
   onSublayoutClick
 }) {
   squarifyBoard();
 
-  var spinnerRoot = parentSelection.select('#' + layer.id);
+  var spinnerRoot = d3.select('#' + layer.id);
   var spinners = spinnerRoot
     .selectAll('.spinner')
     .data(spinnerData, accessor({ path: 'data/id' }));
+
   spinners.exit().remove();
+
   var newSpinners = spinners
     .enter()
     .append('g')
@@ -120,8 +121,7 @@ function renderSpinners({
     ) {
       renderSpinners({
         spinnerData: spinnerDataForLayers[i],
-        layer: layers[i],
-        parentSelection: sublayoutContainer,
+        layer,
         currentlyWithinASublayout: true,
         layoutStyle: sublayoutStyle
       });
@@ -211,5 +211,11 @@ function addClickTarget({ root, spinner, onSublayoutClick }) {
 
   target.on('click', onSublayoutClick);
 }
+
+// function checkSublayoutLayers() {
+//   var sublayoutLayers = d3.selectAll('.sublayout > .layer');
+//   var slData = sublayoutLayers.data();
+//   console.log('sublayout layer data:', slData);
+// }
 
 module.exports = renderSpinners;
