@@ -1,4 +1,5 @@
 var d3 = require('d3-selection');
+require('d3-transition');
 var accessor = require('accessor');
 var pathExists = require('object-path-exists');
 var renderLayers = require('./render-layers');
@@ -7,6 +8,8 @@ var ep = require('errorback-promise');
 
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
+
+const transitionTime = 5000;
 
 function renderSpinners({
   spinnerData,
@@ -56,6 +59,8 @@ function renderSpinners({
     .select('.rotation-group')
     .select('image')
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
+    .transition()
+    .duration(transitionTime)
     .attr('x', 0)
     .attr('y', 0)
     .attr('width', diameter)
@@ -71,6 +76,8 @@ function renderSpinners({
       .append('path')
       .merge(paths)
       .attr('id', accessor())
+      .transition()
+      .duration(transitionTime)
       .attr('d', accessor('d'));
   }
 
@@ -83,10 +90,15 @@ function renderSpinners({
     .attr('dur', getDuration);
 
   if (layoutStyle !== 'orbit') {
-    updatableSpinners.attr('transform', getTransform);
+    updatableSpinners
+      .transition()
+      .duration(transitionTime)
+      .attr('transform', getTransform);
   }
   updatableSpinners
     .select('.rotation-group')
+    .transition()
+    .duration(transitionTime)
     .attr('width', diameter)
     .attr('height', diameter);
 
