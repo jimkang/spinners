@@ -23,16 +23,21 @@ function renderLayers(
   var promotedNode;
   if (promotedSublayoutLayerDatum) {
     promotedNode = document.getElementById(promotedSublayoutLayerDatum.id);
-    promotedSublayoutTransform = promotedNode.getAttribute('transform');
+    var promotedNodeParent = promotedNode.parentElement;
+
     parentSelection.node().appendChild(promotedNode);
-    // Move the transform so that it is centered.
-    promotedSublayoutTransform = centerTransform(promotedSublayoutTransform);
+    // Move the transform so that it is in the same apparent position it was in before.
+    promotedSublayoutTransform = combineTransforms({
+      tStringWithTranslate: promotedNodeParent.getAttribute('transform'),
+      tStringWithScale: promotedNode.getAttribute('transform')
+    });
     promotedNode.setAttribute('transform', promotedSublayoutTransform);
 
     // Remove the other top-level layers.
     parentSelection
       .selectAll(`#board > .layer:not(#${promotedSublayoutLayerDatum.id})`)
       .remove();
+
     // Transition promoted layer to normal size.
     d3.select(promotedNode)
       .transition()
@@ -68,6 +73,19 @@ function renderLayers(
   }
 }
 
+// Warning: Not a robust general function; I mean, just look at it.
+function combineTransforms({ tStringWithScale, tStringWithTranslate }) {
+  var t1 = transformStringToObject(tStringWithScale);
+  var t2 = transformStringToObject(tStringWithTranslate);
+  return transformObjectToString(
+    {
+      scale: t1.scale,
+      translate: t2.translate
+    },
+    ['translate', 'scale']
+  );
+}
+/*
 // TODO: True centering. This only centers the top left corner.
 function centerTransform(transformString) {
   var transform = transformStringToObject(transformString);
@@ -81,6 +99,7 @@ function centerTransform(transformString) {
     return n / transform.scale;
   }
 }
+*/
 
 // TODO: Break this out into own package.
 function transformStringToObject(transformString) {
@@ -95,20 +114,19 @@ function transformStringToObject(transformString) {
   return transform;
 }
 
-// TODO: Allow order of transforms to be set.
-function transformObjectToString(t) {
+function transformObjectToString(
+  t,
+  opsOrder = ['scale', 'translate', 'rotate']
+) {
   var s = '';
-  if (t.scale) {
-    s += `scale(${Array.isArray(t.scale) ? t.scale.join(', ') : t.scale}) `;
-  }
-  if (t.translate) {
-    s += `translate(${t.translate.join(', ')}) `;
-  }
-  if (t.rotate) {
-    // TODO: Handle units.
-    s += `rotate(${t.rotate})`;
-  }
+  opsOrder.forEach(addOpToString);
   return s;
+
+  function addOpToString(op) {
+    if (t[op]) {
+      s += `${op}(${Array.isArray(t[op]) ? t[op].join(', ') : t[op]}) `;
+    }
+  }
 }
 
 module.exports = renderLayers;

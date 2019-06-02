@@ -9,7 +9,7 @@ var ep = require('errorback-promise');
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
 
-const transitionTime = 5000;
+const transitionTime = 2000;
 
 function renderSpinners({
   spinnerData,
