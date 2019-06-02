@@ -12,6 +12,17 @@ body {
   flex-direction: column;
 }
 
+.dark {
+  background-color: black;
+  transition: 3s background-color;
+}
+
+.light {
+  background-color: white;
+  transition: 3s background-color;
+}
+
+
 p {
   margin-top: 0;
 }

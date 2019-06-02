@@ -30,8 +30,9 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
     syncPositionsAcrossLayers
   }) {
     var probable = Probable({ random });
-    document.body.style.backgroundColor =
-      probable.roll(3) > 0 ? 'black' : 'white';
+    var darkBG = probable.roll(3) > 0;
+    document.body.classList[darkBG ? 'add' : 'remove']('dark');
+    document.body.classList[darkBG ? 'remove' : 'add']('light');
 
     var renderLayerResult = await ep(renderLayers, { layerData: layers });
     if (renderLayerResult.error) {
