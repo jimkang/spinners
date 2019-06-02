@@ -33,10 +33,16 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
     document.body.style.backgroundColor =
       probable.roll(3) > 0 ? 'black' : 'white';
 
-    await ep(renderLayers, { layerData: layers });
+    var renderLayerResult = await ep(renderLayers, { layerData: layers });
+    if (renderLayerResult.error) {
+      console.error(renderLayerResult.error, renderLayerResult.error.stack);
+      return;
+    }
     var spinnerDataForLayers = getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
-      layers,
+      layers: layers.filter(
+        curry(layersDoNotMatch)(renderLayerResult.values[0])
+      ),
       currentDepth: 0,
       probable
     });
@@ -200,6 +206,19 @@ function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
     posObjs.push(posObj);
   }
   return posObjs;
+}
+
+function layersDoNotMatch(l1, l2) {
+  if (!l1) {
+    return true;
+  }
+  if (!l2) {
+    return true;
+  }
+  if (l1.id !== l2.id) {
+    return true;
+  }
+  return false;
 }
 
 module.exports = SpinnerFlow;

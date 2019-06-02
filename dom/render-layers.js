@@ -53,15 +53,20 @@ function renderLayers(
       .selectAll('.layer')
       .data(layerData, accessor());
     layers.exit().remove();
-    var newLayers = layers.enter().append('g');
+    var newLayers = layers
+      .enter()
+      .append('g')
+      .classed('layer', true);
 
     newLayers
       .merge(layers)
+      // Skip changing attributes on the promoted layer from the
+      // sublayout. It's already set up.
+      .filter(notPromoted)
       .attr('id', accessor())
-      .classed('layer', true)
       .attr('transform', destTransform);
 
-    done();
+    done(null, promotedSublayoutLayerDatum);
   }
 
   function findLayerInSublayouts(layerDatum) {
@@ -70,6 +75,12 @@ function renderLayers(
       let sublayoutLayerData = sublayoutLayers.data();
       return findWhere(sublayoutLayerData, { id: layerDatum.id });
     }
+  }
+
+  function notPromoted(d) {
+    return (
+      !promotedSublayoutLayerDatum || d.id !== promotedSublayoutLayerDatum.id
+    );
   }
 }
 
