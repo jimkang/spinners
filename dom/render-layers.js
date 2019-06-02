@@ -7,6 +7,7 @@ var board = d3.select('#board');
 var transformPartRegex = /(\w+)\(([\d, .\w]+)\)/g;
 
 const promoteTransitionTime = 5000;
+const normalTransitionTime = 5000;
 
 function renderLayers(
   { layerData, parentSelection = board, scale = 1.0, offsetX = 0, offsetY = 0 },
@@ -56,7 +57,12 @@ function renderLayers(
     var newLayers = layers
       .enter()
       .append('g')
-      .classed('layer', true);
+      .classed('layer', true)
+      // Whoosh in from somewhere in the center of the user's view.
+      .attr(
+        'transform',
+        `${getCenterOfViewTranslate(parentSelection.node())} scale(0.1)`
+      );
 
     newLayers
       .merge(layers)
@@ -64,6 +70,8 @@ function renderLayers(
       // sublayout. It's already set up.
       .filter(notPromoted)
       .attr('id', accessor())
+      .transition()
+      .duration(normalTransitionTime)
       .attr('transform', destTransform);
 
     done(null, promotedSublayoutLayerDatum);
@@ -138,6 +146,23 @@ function transformObjectToString(
       s += `${op}(${Array.isArray(t[op]) ? t[op].join(', ') : t[op]}) `;
     }
   }
+}
+
+function getCenterOfViewTranslate(parentElement) {
+  var documentToViewBox = window.screen.width / 100;
+  var documentX =
+    parentElement.clientLeft +
+    document.body.scrollLeft +
+    window.screen.width / 2;
+  var documentY =
+    parentElement.clientTop +
+    document.body.scrollTop +
+    window.screen.height / 2;
+  var viewBoxX = documentX / documentToViewBox;
+  var viewBoxY = documentY / documentToViewBox;
+  var s = `translate(${viewBoxX}, ${viewBoxY})`;
+  //console.log(s);
+  return s;
 }
 
 module.exports = renderLayers;
