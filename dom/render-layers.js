@@ -23,16 +23,19 @@ function renderLayers(
   var promotedSublayoutTransform;
   var promotedNode;
   if (promotedSublayoutLayerDatum) {
-    console.log('Promoted:', promotedSublayoutLayerDatum.id);
+    //console.log('Promoted:', promotedSublayoutLayerDatum.id);
     promotedNode = document.getElementById(promotedSublayoutLayerDatum.id);
     var promotedNodeParent = promotedNode.parentElement;
 
+    var tStringWithTranslate = getNodeTransform(promotedNodeParent);
+    var tStringWithScale = promotedNode.getAttribute('transform');
     parentSelection.node().appendChild(promotedNode);
     // Move the transform so that it is in the same apparent position it was in before.
     promotedSublayoutTransform = combineTransforms({
-      tStringWithTranslate: promotedNodeParent.getAttribute('transform'),
-      tStringWithScale: promotedNode.getAttribute('transform')
+      tStringWithScale,
+      tStringWithTranslate
     });
+    //console.log('promotedSublayoutTransform', promotedSublayoutTransform);
     promotedNode.setAttribute('transform', promotedSublayoutTransform);
 
     // Remove the other top-level layers.
@@ -93,6 +96,21 @@ function renderLayers(
   }
 }
 
+function getNodeTransform(node) {
+  var tString = node.getAttribute('transform');
+  if (!tString) {
+    let { x, y } = node.getBoundingClientRect();
+    //console.log('x', x, 'y', y);
+    let [viewBoxX, viewBoxY] = clientCoordsToViewBoxCoords(
+      x + window.scrollX,
+      y + window.scrollY
+    );
+    // Just going to assume scale here.
+    tString = `translate(${viewBoxX}, ${viewBoxY}) scale(1.0)`;
+  }
+  return tString;
+}
+
 // Warning: Not a robust general function; I mean, just look at it.
 function combineTransforms({ tStringWithScale, tStringWithTranslate }) {
   var t1 = transformStringToObject(tStringWithScale);
@@ -150,7 +168,6 @@ function transformObjectToString(
 }
 
 function getCenterOfViewTranslate(parentElement) {
-  var documentToViewBox = window.screen.width / 100;
   var documentX =
     parentElement.clientLeft +
     document.body.scrollLeft +
@@ -159,11 +176,15 @@ function getCenterOfViewTranslate(parentElement) {
     parentElement.clientTop +
     document.body.scrollTop +
     window.screen.height / 2;
-  var viewBoxX = documentX / documentToViewBox;
-  var viewBoxY = documentY / documentToViewBox;
+  var [viewBoxX, viewBoxY] = clientCoordsToViewBoxCoords(documentX, documentY);
   var s = `translate(${viewBoxX}, ${viewBoxY})`;
   //console.log(s);
   return s;
+}
+
+function clientCoordsToViewBoxCoords(x, y) {
+  var documentToViewBox = window.screen.width / 100;
+  return [x / documentToViewBox, y / documentToViewBox];
 }
 
 module.exports = renderLayers;

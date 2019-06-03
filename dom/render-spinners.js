@@ -55,6 +55,7 @@ function renderSpinners({
 
   var updatableSpinners = newSpinners.merge(spinners);
   updatableSpinners
+    .attr('id', accessor({ path: 'data/id' }))
     .filter(isAPlainSpinner)
     .select('.rotation-group')
     .select('image')
