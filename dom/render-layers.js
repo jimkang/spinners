@@ -8,6 +8,7 @@ var transformPartRegex = /(\w+)\(([\d, .\w]+)\)/g;
 
 const promoteTransitionTime = 5000;
 const normalTransitionTime = 5000;
+const fadeTransitionTime = 2000;
 
 function renderLayers(
   { layerData, parentSelection = board, scale = 1.0, offsetX = 0, offsetY = 0 },
@@ -41,6 +42,9 @@ function renderLayers(
     // Remove the other top-level layers.
     parentSelection
       .selectAll(`#board > .layer:not(#${promotedSublayoutLayerDatum.id})`)
+      .transition()
+      .duration(fadeTransitionTime)
+      .style('opacity', 0)
       .remove();
 
     // Transition promoted layer to normal size.
@@ -57,7 +61,13 @@ function renderLayers(
     var layers = parentSelection
       .selectAll('.layer')
       .data(layerData, accessor());
-    layers.exit().remove();
+    layers
+      .exit()
+      .transition()
+      .duration(fadeTransitionTime)
+      .style('opacity', 0)
+      .remove();
+
     var newLayers = layers
       .enter()
       .append('g')
