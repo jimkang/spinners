@@ -23,6 +23,7 @@ function renderLayers(
   var promotedSublayoutTransform;
   var promotedNode;
   if (promotedSublayoutLayerDatum) {
+    console.log('Promoted:', promotedSublayoutLayerDatum.id);
     promotedNode = document.getElementById(promotedSublayoutLayerDatum.id);
     var promotedNodeParent = promotedNode.parentElement;
 

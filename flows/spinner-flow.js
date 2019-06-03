@@ -45,7 +45,7 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
         curry(layersDoNotMatch)(renderLayerResult.values[0])
       ),
       currentDepth: 0,
-      probable
+      layoutStyle
     });
     spinnerDataForLayers.forEach(
       curry(callRenderSpinners)(layoutStyle, layers)
@@ -55,9 +55,9 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
       syncPositionsAcrossLayers,
       layers,
       currentDepth,
-      sublayoutStyle
+      layoutStyle
     }) {
-      var useOrbits = layoutStyle === 'orbit' || sublayoutStyle === 'orbit';
+      var useOrbits = layoutStyle === 'orbit';
       var spinnerDataForLayers;
       let buildSpinners = buildSpinnersForPackLayer;
       if (useOrbits) {
@@ -137,21 +137,15 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
       let layoutTable = LayoutTable({ random: seedrandom(subSeed) });
       let result;
       let layers;
-      do {
-        result = layoutTable.roll();
-        // TODO: tablenest needs to preserve the array-ness of a def.
-        layers = convertToArray(result.layers);
-        // No clocks in top layers of sublayouts for now. They look weird.
-      } while (
-        layers[layers.length - 1].spinnerTypes.indexOf('clockFace') !== -1
-      );
+      result = layoutTable.roll();
+      // TODO: tablenest needs to preserve the array-ness of a def.
+      layers = convertToArray(result.layers);
 
       // Make all sublayouts use orbit style for now.
       spinner.sublayout = {
         layers,
-        sublayoutStyle: 'orbit',
         syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
-        layoutStyle: result.layoutStyle,
+        layoutStyle: 'orbit', //result.layoutStyle,
         currentDepth: currentDepth + 1,
         seed: subSeed
       };

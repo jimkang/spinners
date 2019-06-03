@@ -108,11 +108,7 @@ function renderSpinners({
       return;
     }
 
-    var {
-      layers,
-      spinnerDataForLayers,
-      sublayoutStyle
-    } = spinner.data.sublayout;
+    var { layers, spinnerDataForLayers, layoutStyle } = spinner.data.sublayout;
 
     var sublayoutContainer = d3.select(this);
     addClickTarget({ root: sublayoutContainer, spinner, onSublayoutClick });
@@ -136,7 +132,7 @@ function renderSpinners({
         spinnerData: spinnerDataForLayers[i],
         layer,
         currentlyWithinASublayout: true,
-        layoutStyle: sublayoutStyle
+        layoutStyle
       });
     }
   }
