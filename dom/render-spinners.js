@@ -112,7 +112,6 @@ function renderSpinners({
     var { layers, spinnerDataForLayers, layoutStyle } = spinner.data.sublayout;
 
     var sublayoutContainer = d3.select(this);
-    addClickTarget({ root: sublayoutContainer, spinner, onSublayoutClick });
 
     // Render only one of the layers to avoid being overwhelming.
     var layer = layers[layers.length - 1];
@@ -136,6 +135,9 @@ function renderSpinners({
         layoutStyle
       });
     }
+
+    // Add click target last; needs to be on top.
+    addClickTarget({ root: sublayoutContainer, spinner, onSublayoutClick });
   }
 }
 
