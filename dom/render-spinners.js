@@ -5,6 +5,7 @@ var pathExists = require('object-path-exists');
 var renderLayers = require('./render-layers');
 var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
 var ep = require('errorback-promise');
+var curry = require('lodash.curry');
 
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
@@ -16,7 +17,7 @@ function renderSpinners({
   layer,
   currentlyWithinASublayout = false,
   layoutStyle,
-  onSublayoutClick
+  onClick
 }) {
   squarifyBoard();
 
@@ -82,6 +83,10 @@ function renderSpinners({
       .attr('d', accessor('d'));
   }
 
+  // Do this after other subelements are added to ensure
+  // click-target is on top so that it can be clicked on mobile clients.
+  newSpinners.each(curry(addClickTarget)(onClick));
+
   updatableSpinners.filter(spinnerHasASublayout).each(renderSublayout);
 
   updatableSpinners
@@ -132,12 +137,12 @@ function renderSpinners({
         spinnerData: spinnerDataForLayers[i],
         layer,
         currentlyWithinASublayout: true,
-        layoutStyle
+        layoutStyle,
+        onClick
       });
     }
 
-    // Add click target last; needs to be on top.
-    addClickTarget({ root: sublayoutContainer, spinner, onSublayoutClick });
+    addClickTarget.bind(this)(onClick, spinner);
   }
 }
 
@@ -208,8 +213,11 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
   );
 }
 
-function addClickTarget({ root, spinner, onSublayoutClick }) {
-  var target = root.select('.click-target');
+function addClickTarget(onClick, spinner) {
+  var root = d3.select(this);
+  // Select only the direct .click-target descendant
+  // of this element.
+  var target = d3.select(`#${this.id} > .click-target`);
   if (target.empty()) {
     target = root
       .append('circle')
@@ -221,7 +229,7 @@ function addClickTarget({ root, spinner, onSublayoutClick }) {
     .attr('cx', spinner.r)
     .attr('cy', spinner.r);
 
-  target.on('click', onSublayoutClick);
+  target.on('click', onClick);
 }
 
 // function checkSublayoutLayers() {

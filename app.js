@@ -25,7 +25,7 @@ function followRoute({ seed }) {
   }
 
   if (!spinnerFlowKit || spinnerFlowKit.getSeed() !== seed) {
-    spinnerFlowKit = SpinnerFlow({ seed, onSublayoutClick });
+    spinnerFlowKit = SpinnerFlow({ seed, onClick });
   }
 
   var layoutTable = LayoutTable({ random: seedrandom(seed) });
@@ -42,10 +42,11 @@ function seedWithDate() {
   routeState.addToRoute({ seed: new Date().toISOString() });
 }
 
-function onSublayoutClick(spinner) {
-  console.log('spinner clicked with sublayout:', spinner.data.sublayout);
-
-  routeState.addToRoute({ seed: spinner.data.sublayout.seed });
+function onClick(spinner) {
+  console.log('spinner clicked:', spinner.data);
+  if (spinner.data.sublayout) {
+    routeState.addToRoute({ seed: spinner.data.sublayout.seed });
+  }
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {

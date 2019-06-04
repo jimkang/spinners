@@ -11,7 +11,7 @@ var curry = require('lodash.curry');
 //var cloneDeep = require('lodash.clonedeep');
 var ep = require('errorback-promise');
 
-function SpinnerFlow({ seed, onSublayoutClick }) {
+function SpinnerFlow({ seed, onClick }) {
   var random = seedrandom(seed);
   var spinnerTables = SpinnerTables({ random });
   var pack = hierarchy.pack().size([100, 100]);
@@ -176,7 +176,7 @@ function SpinnerFlow({ seed, onSublayoutClick }) {
       spinnerData: spinnerDataForLayer,
       layer: layers[i],
       layoutStyle,
-      onSublayoutClick
+      onClick
     });
   }
 }
