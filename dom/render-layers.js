@@ -78,11 +78,13 @@ function renderLayers(
         `${getCenterOfViewTranslate(parentSelection.node())} scale(0.1)`
       );
 
-    newLayers
+    var updateLayers = newLayers
       .merge(layers)
       // Skip changing attributes on the promoted layer from the
       // sublayout. It's already set up.
-      .filter(notPromoted)
+      .filter(notPromoted);
+
+    updateLayers
       .attr('id', accessor())
       .transition()
       .duration(normalTransitionTime)

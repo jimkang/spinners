@@ -108,9 +108,7 @@ function SpinnerFlow({ seed, onClick }) {
 
     function makeSpinnerForKey(currentDepth, key) {
       var spinner = spinnerTables[key].roll();
-      if (key === 'expander') {
-        addSublayoutToSpinner({ spinner, currentDepth });
-      }
+      addSublayoutToSpinner({ spinner, currentDepth });
       return spinner;
     }
 
@@ -129,10 +127,10 @@ function SpinnerFlow({ seed, onClick }) {
     function addSublayoutToSpinner({ spinner, currentDepth }) {
       // Avoid recursing infinitely.
       if (currentDepth > 0) {
+        console.log('skipping');
         return;
       }
 
-      //console.log('adding sublayout', currentDepth);
       let subSeed = randomId(8);
       let layoutTable = LayoutTable({ random: seedrandom(subSeed) });
       let result;
@@ -152,20 +150,6 @@ function SpinnerFlow({ seed, onClick }) {
       spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers(
         spinner.sublayout
       );
-      /*
-        // Copy and enlarge one spinner to mostly cover the rest.
-        let topSpinners =
-          spinner.sublayout.spinnerDataForLayers[
-            spinner.sublayout.spinnerDataForLayers.length - 1
-          ];
-        let coverSpinner = cloneDeep(probable.pick(topSpinners));
-        coverSpinner.data.id = coverSpinner.data.id + '-embiggened';
-        coverSpinner.data.cover = true;
-        coverSpinner.r = 50;
-        coverSpinner.x = 50;
-        coverSpinner.y = 50;
-        topSpinners.push(coverSpinner);
-        */
     }
   }
 

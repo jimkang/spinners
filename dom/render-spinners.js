@@ -1,7 +1,6 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var accessor = require('accessor');
-var pathExists = require('object-path-exists');
 var renderLayers = require('./render-layers');
 var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
 var ep = require('errorback-promise');
@@ -32,7 +31,7 @@ function renderSpinners({
     .enter()
     .append('g')
     .classed('spinner', true)
-    .classed('sublayout', spinnerHasASublayout)
+    .classed('sublayout', accessor({ path: 'data/displaysSublayout' }))
     .attr('width', 100)
     .attr('height', 100);
 
@@ -87,7 +86,9 @@ function renderSpinners({
   // click-target is on top so that it can be clicked on mobile clients.
   newSpinners.each(curry(addClickTarget)(onClick));
 
-  updatableSpinners.filter(spinnerHasASublayout).each(renderSublayout);
+  updatableSpinners
+    .filter(accessor({ path: 'data/displaysSublayout' }))
+    .each(renderSublayout);
 
   updatableSpinners
     .select('.rotation-transform')
@@ -184,11 +185,7 @@ function squarifyBoard() {
 }
 
 function isAPlainSpinner(s) {
-  return !pathExists(s, ['data', 'sublayout', 'layers']);
-}
-
-function spinnerHasASublayout(s) {
-  return pathExists(s, ['data', 'sublayout', 'layers']);
+  return !s.data.displaysSublayout;
 }
 
 function getAnimateStartRotation(spinner) {

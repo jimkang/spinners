@@ -5,6 +5,7 @@ var LayoutTable = require('./layout-table');
 var seedrandom = require('seedrandom');
 var wireControls = require('./dom/wire-controls');
 var convertToArray = require('./convert-to-array');
+var RandomId = require('@jimkang/randomid');
 
 var spinnerFlowKit;
 
@@ -28,7 +29,9 @@ function followRoute({ seed }) {
     spinnerFlowKit = SpinnerFlow({ seed, onClick });
   }
 
-  var layoutTable = LayoutTable({ random: seedrandom(seed) });
+  var random = seedrandom(seed);
+  var randomId = RandomId({ random });
+  var layoutTable = LayoutTable({ random });
   var { layers, syncPositionsAcrossLayers, layoutStyle } = layoutTable.roll();
   // TODO: tablenest needs to preserve the array-ness of a def.
   layers = convertToArray(layers);
@@ -36,17 +39,22 @@ function followRoute({ seed }) {
   wireControls({ refresh: seedWithDate });
 
   spinnerFlowKit.go({ layers, syncPositionsAcrossLayers, layoutStyle });
+
+  function onClick(spinner) {
+    console.log('spinner clicked:', spinner.data);
+    // TODO: Check to see if this should actually expand.
+    var nextSeed;
+    if (spinner.data.sublayout) {
+      nextSeed = spinner.data.sublayout.seed;
+    } else {
+      nextSeed = randomId(4);
+    }
+    routeState.addToRoute({ seed: nextSeed });
+  }
 }
 
 function seedWithDate() {
   routeState.addToRoute({ seed: new Date().toISOString() });
-}
-
-function onClick(spinner) {
-  console.log('spinner clicked:', spinner.data);
-  if (spinner.data.sublayout) {
-    routeState.addToRoute({ seed: spinner.data.sublayout.seed });
-  }
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {

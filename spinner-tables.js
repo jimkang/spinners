@@ -76,13 +76,6 @@ function SpinnerTables({ random }) {
       radius: d`d4`,
       images: images.pizza,
       speedKey: 'anySpeed'
-    }),
-    expander: makeSpinnerTable({
-      radius: d`d2`,
-      images: [
-        // Placeholder.
-        [32, images.wilyMorphBall2]
-      ]
     })
   };
 
@@ -96,12 +89,14 @@ function SpinnerTables({ random }) {
         // Orbit only comes into play if the layout style is orbit.
         orbitCenter: r`orbitCenter`,
         orbitSpeed: d`d6x0.025`,
-        orbitDirection: r`orbitDirection`
+        orbitDirection: r`orbitDirection`,
+        displaysSublayout: r`displaysSublayout`
       }),
       images,
       speed: speedTables[speedKey],
       orbitCenter: orbitCenterTable,
-      orbitDirection: orbitDirectionTable
+      orbitDirection: orbitDirectionTable,
+      displaysSublayout: [[1, true], [2, false]]
     });
   }
 }
