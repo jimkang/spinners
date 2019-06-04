@@ -127,7 +127,7 @@ function SpinnerFlow({ seed, onClick }) {
     function addSublayoutToSpinner({ spinner, currentDepth }) {
       // Avoid recursing infinitely.
       if (currentDepth > 0) {
-        console.log('skipping');
+        //console.log('skipping');
         return;
       }
 

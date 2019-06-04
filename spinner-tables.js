@@ -1,4 +1,4 @@
-var { Tablenest, r, f, d } = require('tablenest');
+var { Tablenest, r, f, d, l } = require('tablenest');
 var images = require('./images');
 var RandomId = require('@jimkang/randomid');
 
@@ -30,6 +30,11 @@ var orbitCenterTable = [
 ];
 
 var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
+
+var alterationScheduleTable = [
+  [5, l(['moveToNextSeed'])],
+  [5, l(['changeRadius', 'changeRadius', 'moveToNextSeed'])]
+];
 
 function SpinnerTables({ random }) {
   var tablenest = Tablenest({ random });
@@ -90,12 +95,14 @@ function SpinnerTables({ random }) {
         orbitCenter: r`orbitCenter`,
         orbitSpeed: d`d6x0.025`,
         orbitDirection: r`orbitDirection`,
-        displaysSublayout: r`displaysSublayout`
+        displaysSublayout: r`displaysSublayout`,
+        alterationSchedule: r`alterationSchedule`
       }),
       images,
       speed: speedTables[speedKey],
       orbitCenter: orbitCenterTable,
       orbitDirection: orbitDirectionTable,
+      alterationSchedule: alterationScheduleTable,
       displaysSublayout: [[1, true], [2, false]]
     });
   }
