@@ -96,7 +96,8 @@ function SpinnerTables({ random }) {
         orbitSpeed: d`d6x0.025`,
         orbitDirection: r`orbitDirection`,
         displaysSublayout: r`displaysSublayout`,
-        alterationSchedule: r`alterationSchedule`
+        alterationSchedule: r`alterationSchedule`,
+        alterationIndex: 0
       }),
       images,
       speed: speedTables[speedKey],

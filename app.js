@@ -7,6 +7,8 @@ var wireControls = require('./dom/wire-controls');
 var convertToArray = require('./convert-to-array');
 var RandomId = require('@jimkang/randomid');
 
+var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
+
 var spinnerFlowKit;
 
 var routeState = RouteState({
@@ -41,15 +43,27 @@ function followRoute({ seed }) {
   spinnerFlowKit.go({ layers, syncPositionsAcrossLayers, layoutStyle });
 
   function onClick(spinner) {
-    console.log('spinner clicked:', spinner.data);
-    // TODO: Check to see if this should actually expand.
+    var sd = spinner.data;
+    console.log('spinner clicked:', sd);
     var nextSeed;
-    if (spinner.data.sublayout) {
-      nextSeed = spinner.data.sublayout.seed;
+    var alteration = sd.alterationSchedule[sd.alterationIndex];
+    if (sd.alterationIndex < sd.alterationSchedule.length - 1) {
+      sd.alterationIndex += 1;
     } else {
-      nextSeed = randomId(4);
+      sd.alterationIndex = 0;
     }
-    routeState.addToRoute({ seed: nextSeed });
+
+    if (alteration === 'moveToNextSeed') {
+      if (spinner.data.sublayout) {
+        nextSeed = spinner.data.sublayout.seed;
+      } else {
+        nextSeed = randomId(4);
+      }
+      routeState.addToRoute({ seed: nextSeed });
+    } else if (alteration === 'changeRadius') {
+      spinner.r += 2;
+      renderUpdateToSingleSpinner({ spinnerDatum: spinner });
+    }
   }
 }
 
