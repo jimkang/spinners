@@ -12,18 +12,22 @@ function makePathDataForOrbit(spinner, orbitIndex, spinners) {
   var clockwise = spinner.data.orbitDirection === 'clockwise';
   var startAngle;
   var startPoint;
+  var totalOrbitsInSystem;
 
   if (spinner.data.ephemeralOrbitData) {
-    startAngle = spinner.data.ephemeralOrbitData.startAngle;
-    startPoint = spinner.data.ephemeralOrbitData.startPoint;
+    totalOrbitsInSystem = spinner.data.ephemeralOrbitData.totalOrbitsInSystem;
+    if (isNaN(orbitIndex)) {
+      orbitIndex = spinner.data.ephemeralOrbitData.orbitIndex;
+    }
   } else if (spinners) {
-    startAngle = ((2 * Math.PI) / spinners.length) * orbitIndex;
-    startPoint = positionOnCircle(cx, cy, startAngle, orbitR);
-    spinner.data.ephemeralOrbitData = { startAngle, startPoint };
+    totalOrbitsInSystem = spinners.length;
+    spinner.data.ephemeralOrbitData = { orbitIndex, totalOrbitsInSystem };
   } else {
     return;
   }
 
+  var startAngle = ((2 * Math.PI) / totalOrbitsInSystem) * orbitIndex;
+  var startPoint = positionOnCircle(cx, cy, startAngle, orbitR);
   // var debugColor = ['red', 'orange', 'yellow', 'green', 'blue'][orbitIndex];
   // this.addDebugCircleD3(startPoint, debugColor);
 

@@ -64,10 +64,20 @@ function followRoute({ seed }) {
       routeState.addToRoute({ seed: nextSeed });
     } else if (
       alteration === 'changeOrbitOrRadius' &&
-      !isNaN(spinner.data.orbitR)
+      spinner.data.ephemeralOrbitData
     ) {
       console.log('Changing orbit.');
-      spinner.data.orbitR += 2 * probable.rollDie(10) * probable.pick([-1, 1]);
+
+      let eoData = spinner.data.ephemeralOrbitData;
+      if (eoData.orbitIndex < eoData.totalOrbitsInSystem) {
+        eoData.orbitIndex += probable.rollDie(2);
+      } else {
+        eoData.orbitIndex -= probable.rollDie(3);
+      }
+      if (eoData.orbitIndex < 0) {
+        eoData.orbitIndex = 0;
+      }
+
       updateOrbit(spinner);
     } else if (
       alteration === 'changeRadius' ||
