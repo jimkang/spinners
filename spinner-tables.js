@@ -32,8 +32,8 @@ var orbitCenterTable = [
 var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
 
 var alterationScheduleTable = [
-  [5, l(['moveToNextSeed'])],
-  [5, l(['changeRadius', 'changeRadius', 'moveToNextSeed'])]
+  //[5, l(['moveToNextSeed'])],
+  [5, l(['changeRadius', 'changeOrbitOrRadius', 'moveToNextSeed'])]
 ];
 
 function SpinnerTables({ random }) {
