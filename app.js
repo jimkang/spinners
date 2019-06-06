@@ -7,7 +7,7 @@ var wireControls = require('./dom/wire-controls');
 var convertToArray = require('./convert-to-array');
 var RandomId = require('@jimkang/randomid');
 var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
-var updateOrbit = require('./dom/update-orbit');
+//var updateOrbit = require('./dom/update-orbit');
 var Probable = require('probable').createProbable;
 
 var spinnerFlowKit;
@@ -62,6 +62,7 @@ function followRoute({ seed }) {
         nextSeed = randomId(4);
       }
       routeState.addToRoute({ seed: nextSeed });
+      /*
     } else if (
       alteration === 'changeOrbitOrRadius' &&
       spinner.data.ephemeralOrbitData
@@ -78,15 +79,26 @@ function followRoute({ seed }) {
         eoData.orbitIndex = 0;
       }
 
+      spinner.data.orbitCenter.x += (-2 + probable.roll(4)) * 5;
+      spinner.data.orbitCenter.y += (-2 + probable.roll(4)) * 5;
+
+      spinner.data.orbitSpeed += (-0.2 + 0.1 * probable.roll(4));
+
       updateOrbit(spinner);
-    } else if (
-      alteration === 'changeRadius' ||
-      alteration === 'changeOrbitOrRadius'
-    ) {
-      console.log('Updating radius.');
-      spinner.r += 10;
-      spinner.data.r = spinner.r;
       renderUpdateToSingleSpinner({ spinnerDatum: spinner });
+    */
+    } else if (alteration === 'change') {
+      if (probable.roll(2) === 0) {
+        spinner.data.speed += 0.5;
+        renderUpdateToSingleSpinner({
+          spinnerDatum: spinner,
+          interruptRotation: false
+        });
+      } else {
+        spinner.r += 10;
+        spinner.data.r = spinner.r;
+        renderUpdateToSingleSpinner({ spinnerDatum: spinner });
+      }
     }
   }
 }

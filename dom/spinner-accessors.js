@@ -30,6 +30,14 @@ function getAnimateEndRotation(spinner) {
   return `360 ${spinner.r} ${spinner.r}`;
 }
 
+function getOrbitDuration(d) {
+  if (d.data.orbitSpeed) {
+    return 1.0 / d.data.orbitSpeed;
+  } else {
+    return 10;
+  }
+}
+
 module.exports = {
   diameter,
   getTransform,
@@ -37,5 +45,6 @@ module.exports = {
   getTop,
   getDuration,
   getAnimateStartRotation,
-  getAnimateEndRotation
+  getAnimateEndRotation,
+  getOrbitDuration
 };

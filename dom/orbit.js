@@ -10,8 +10,6 @@ function makePathDataForOrbit(spinner, orbitIndex, spinners) {
   var cx = spinner.data.orbitCenter.x;
   var cy = spinner.data.orbitCenter.y;
   var clockwise = spinner.data.orbitDirection === 'clockwise';
-  var startAngle;
-  var startPoint;
   var totalOrbitsInSystem;
 
   if (spinner.data.ephemeralOrbitData) {

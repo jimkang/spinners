@@ -56,19 +56,8 @@ function LayoutTables({ random }) {
       [1, l(['ammonite', 'literalSpinner', 'pizza'])],
       [1, l(['cat', 'literalSpinner', 'ammonite'])],
       [1, l(['pizza', 'ammonite', 'cat'])],
-      [1, l(['cat', 'clockFace', 'clockHourHand', 'clockMinuteHand', 'pizza'])],
-      [
-        1,
-        l([
-          'ammonite',
-          'clockFace',
-          'clockHourHand',
-          'clockMinuteHand',
-          'literalSpinner',
-          'cat',
-          'pizza'
-        ])
-      ]
+      [1, l(['cat', 'clockFace', 'pizza'])],
+      [1, l(['ammonite', 'clockFace', 'literalSpinner', 'cat', 'pizza'])]
     ],
     typeMix: [
       // One type

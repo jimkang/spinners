@@ -10,7 +10,8 @@ var {
   getTransform,
   getDuration,
   getAnimateStartRotation,
-  getAnimateEndRotation
+  getAnimateEndRotation,
+  getOrbitDuration
 } = require('./spinner-accessors');
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
@@ -150,14 +151,6 @@ function renderSpinners({
     }
 
     addClickTarget.bind(this)(onClick, spinner);
-  }
-}
-
-function getOrbitDuration(d) {
-  if (d.data.orbitSpeed) {
-    return 1.0 / d.data.orbitSpeed;
-  } else {
-    return 10;
   }
 }
 

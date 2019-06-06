@@ -7,7 +7,8 @@ var {
   getTransform,
   getDuration,
   getAnimateStartRotation,
-  getAnimateEndRotation
+  getAnimateEndRotation,
+  getOrbitDuration
 } = require('./spinner-accessors');
 
 const transitionTime = 2000;
@@ -15,7 +16,10 @@ const transitionTime = 2000;
 // WARNING: Does not handle changes to layoutStyle!
 // Also does not rerender sublayouts.
 // TODO: Get rid of sublayout stuff entirely?
-function renderUpdateToSingleSpinner({ spinnerDatum }) {
+function renderUpdateToSingleSpinner({
+  spinnerDatum,
+  interruptRotation = true
+}) {
   var spinner = d3.select('#' + spinnerDatum.data.id);
   if (spinner.empty()) {
     return;
@@ -41,11 +45,14 @@ function renderUpdateToSingleSpinner({ spinnerDatum }) {
       .attr('height', diameter);
   }
 
-  spinner
-    .select('.rotation-transform')
-    .attr('from', getAnimateStartRotation)
-    .attr('to', getAnimateEndRotation)
-    .attr('dur', getDuration);
+  var rotationTransform = spinner.select('.rotation-transform');
+
+  if (interruptRotation) {
+    rotationTransform
+      .attr('from', getAnimateStartRotation)
+      .attr('to', getAnimateEndRotation);
+  }
+  rotationTransform.attr('dur', getDuration);
 
   if (spinnerDatum.data.displaysSublayout) {
     spinner
@@ -64,6 +71,12 @@ function renderUpdateToSingleSpinner({ spinnerDatum }) {
     .attr('r', spinnerDatum.r)
     .attr('cx', spinnerDatum.r)
     .attr('cy', spinnerDatum.r);
+
+  spinner
+    .select('.orbit-animation')
+    .transition()
+    .duration(transitionTime)
+    .attr('dur', getOrbitDuration);
 }
 
 module.exports = renderUpdateToSingleSpinner;
