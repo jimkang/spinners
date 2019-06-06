@@ -8,6 +8,7 @@ var convertToArray = require('./convert-to-array');
 var RandomId = require('@jimkang/randomid');
 var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
 var updateOrbit = require('./dom/update-orbit');
+var Probable = require('probable').createProbable;
 
 var spinnerFlowKit;
 
@@ -33,6 +34,7 @@ function followRoute({ seed }) {
 
   var random = seedrandom(seed);
   var randomId = RandomId({ random });
+  var probable = Probable({ random });
   var layoutTable = LayoutTable({ random });
   var { layers, syncPositionsAcrossLayers, layoutStyle } = layoutTable.roll();
   // TODO: tablenest needs to preserve the array-ness of a def.
@@ -64,11 +66,14 @@ function followRoute({ seed }) {
       alteration === 'changeOrbitOrRadius' &&
       !isNaN(spinner.data.orbitR)
     ) {
+      console.log('Changing orbit.');
+      spinner.data.orbitR += 2 * probable.rollDie(10) * probable.pick([-1, 1]);
       updateOrbit(spinner);
     } else if (
       alteration === 'changeRadius' ||
       alteration === 'changeOrbitOrRadius'
     ) {
+      console.log('Updating radius.');
       spinner.r += 10;
       spinner.data.r = spinner.r;
       renderUpdateToSingleSpinner({ spinnerDatum: spinner });

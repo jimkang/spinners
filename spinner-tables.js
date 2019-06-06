@@ -33,7 +33,15 @@ var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
 
 var alterationScheduleTable = [
   //[5, l(['moveToNextSeed'])],
-  [5, l(['changeRadius', 'changeOrbitOrRadius', 'moveToNextSeed'])]
+  [
+    5,
+    l([
+      'changeRadius',
+      'changeOrbitOrRadius',
+      'changeOrbitOrRadius',
+      'moveToNextSeed'
+    ])
+  ]
 ];
 
 function SpinnerTables({ random }) {
@@ -93,7 +101,7 @@ function SpinnerTables({ random }) {
         speed: r`speed`,
         // Orbit only comes into play if the layout style is orbit.
         orbitCenter: r`orbitCenter`,
-        orbitSpeed: d`d6x0.025`,
+        orbitSpeed: d`d3x0.025`,
         orbitDirection: r`orbitDirection`,
         displaysSublayout: r`displaysSublayout`,
         alterationSchedule: r`alterationSchedule`,
