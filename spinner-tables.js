@@ -32,11 +32,12 @@ var orbitCenterTable = [
 var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
 
 var alterationScheduleTable = [
-  [2, l(['moveToNextSeed'])],
-  [5, l(['change', 'change', 'moveToNextSeed'])],
-  [5, l(['change', 'change', 'change', 'moveToNextSeed'])],
+  //[2, l(['moveToNextSeed'])],
+  //[5, l(['change', 'change', 'moveToNextSeed'])],
+  [5, l(['change', 'change', 'moveToNextSeed'])]
+  /*
   [
-    2,
+    1,
     l([
       'change',
       'change',
@@ -47,7 +48,6 @@ var alterationScheduleTable = [
       'moveToNextSeed'
     ])
   ]
-  /*
     // Orbit changes need work.
     l([
       'changeOrbitOrRadius',

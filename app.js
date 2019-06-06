@@ -89,7 +89,7 @@ function followRoute({ seed }) {
     */
     } else if (alteration === 'change') {
       if (probable.roll(2) === 0) {
-        spinner.data.speed += 0.5;
+        spinner.data.speed += 1.0;
         renderUpdateToSingleSpinner({
           spinnerDatum: spinner,
           interruptRotation: false
