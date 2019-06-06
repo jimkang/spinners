@@ -53,7 +53,7 @@ function followRoute({ seed }) {
       sd.alterationIndex = 0;
     }
 
-    if (alteration === 'moveToNextSeed') {
+    if (spinner.data.displaysSublayout || alteration === 'moveToNextSeed') {
       if (spinner.data.sublayout) {
         nextSeed = spinner.data.sublayout.seed;
       } else {
