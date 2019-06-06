@@ -59,6 +59,11 @@ function renderUpdateToSingleSpinner({ spinnerDatum }) {
     .duration(transitionTime)
     .attr('width', diameter)
     .attr('height', diameter);
+
+  d3.select(`#${spinnerDatum.data.id} > .click-target`)
+    .attr('r', spinnerDatum.r)
+    .attr('cx', spinnerDatum.r)
+    .attr('cy', spinnerDatum.r);
 }
 
 module.exports = renderUpdateToSingleSpinner;

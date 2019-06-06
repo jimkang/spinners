@@ -7,7 +7,7 @@ var wireControls = require('./dom/wire-controls');
 var convertToArray = require('./convert-to-array');
 var RandomId = require('@jimkang/randomid');
 var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
-var { makeOrbitForSpinner } = require('./dom/orbit');
+var updateOrbit = require('./dom/update-orbit');
 
 var spinnerFlowKit;
 
@@ -73,13 +73,6 @@ function followRoute({ seed }) {
       spinner.data.r = spinner.r;
       renderUpdateToSingleSpinner({ spinnerDatum: spinner });
     }
-  }
-
-  function updateOrbit(spinner) {
-    spinner.data.orbitR += 10;
-    var { d, id } = makeOrbitForSpinner(spinner);
-    var pathEl = document.getElementById(id);
-    pathEl.setAttribute('d', d);
   }
 }
 
