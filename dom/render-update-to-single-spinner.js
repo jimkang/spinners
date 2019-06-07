@@ -10,6 +10,7 @@ var {
   getAnimateEndRotation,
   getOrbitDuration
 } = require('./spinner-accessors');
+var animateHalo = require('./animate-halo');
 
 const transitionTime = 2000;
 
@@ -67,10 +68,12 @@ function renderUpdateToSingleSpinner({
     .attr('width', diameter)
     .attr('height', diameter);
 
-  d3.select(`#${spinnerDatum.data.id} > .click-target`)
+  var clickTarget = d3
+    .select(`#${spinnerDatum.data.id} > .click-target`)
     .attr('r', spinnerDatum.r)
     .attr('cx', spinnerDatum.r)
     .attr('cy', spinnerDatum.r);
+  animateHalo(clickTarget, spinnerDatum.r);
 
   spinner
     .select('.orbit-animation')
