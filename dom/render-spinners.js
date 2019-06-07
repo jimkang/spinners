@@ -15,6 +15,7 @@ var {
 } = require('./spinner-accessors');
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
+var addClickTarget = require('./add-click-target');
 
 const transitionTime = 2000;
 
@@ -176,30 +177,5 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
       .classed(className, true)
   );
 }
-
-function addClickTarget(onClick, spinner) {
-  var root = d3.select(this);
-  // Select only the direct .click-target descendant
-  // of this element.
-  var target = d3.select(`#${this.id} > .click-target`);
-  if (target.empty()) {
-    target = root
-      .append('circle')
-      .datum(spinner)
-      .classed('click-target', true);
-  }
-  target
-    .attr('r', spinner.r)
-    .attr('cx', spinner.r)
-    .attr('cy', spinner.r);
-
-  target.on('click', onClick);
-}
-
-// function checkSublayoutLayers() {
-//   var sublayoutLayers = d3.selectAll('.sublayout > .layer');
-//   var slData = sublayoutLayers.data();
-//   console.log('sublayout layer data:', slData);
-// }
 
 module.exports = renderSpinners;

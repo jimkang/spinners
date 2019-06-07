@@ -69,6 +69,28 @@ button {
   fill: transparent;
 }
 
+.dark .click-target {
+  stroke: hsla(0, 0%, 100%, 0.5);
+}
+
+.light .click-target {
+  stroke: hsla(0, 0%, 0%, 0.5);
+}
+
+/*
+@keyframes halo-dark { 
+  0% { stroke-width: 1; stroke: white; }
+  40% { stroke-width: 0; stroke: black; }
+  100% { stroke-width: 1; stroke: white; }
+}
+
+@keyframes halo-light { 
+  0% { stroke-width: 1; stroke: black; }
+  40% { stroke-width: 0; stroke: white; }
+  100% { stroke-width: 1; stroke: black; }
+}
+*/
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;
