@@ -19,7 +19,8 @@ const transitionTime = 2000;
 // TODO: Get rid of sublayout stuff entirely?
 function renderUpdateToSingleSpinner({
   spinnerDatum,
-  interruptRotation = true
+  interruptRotation = true,
+  probable
 }) {
   var spinner = d3.select('#' + spinnerDatum.data.id);
   if (spinner.empty()) {
@@ -73,7 +74,12 @@ function renderUpdateToSingleSpinner({
     .attr('r', spinnerDatum.r)
     .attr('cx', spinnerDatum.r)
     .attr('cy', spinnerDatum.r);
-  animateHalo(clickTarget, spinnerDatum.r);
+
+  animateHalo({
+    target: clickTarget,
+    originalRadius: spinnerDatum.r,
+    probable
+  });
 
   spinner
     .select('.orbit-animation')

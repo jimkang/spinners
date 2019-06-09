@@ -16,6 +16,7 @@ function SpinnerFlow({ seed, onClick }) {
   var spinnerTables = SpinnerTables({ random });
   var pack = hierarchy.pack().size([100, 100]);
   var randomId = RandomId({ random });
+  var probable = Probable({ random });
 
   return {
     getSeed() {
@@ -29,7 +30,6 @@ function SpinnerFlow({ seed, onClick }) {
     layoutStyle,
     syncPositionsAcrossLayers
   }) {
-    var probable = Probable({ random });
     var darkBG = probable.roll(3) > 0;
     document.body.classList[darkBG ? 'add' : 'remove']('dark');
     document.body.classList[darkBG ? 'remove' : 'add']('light');
@@ -160,7 +160,8 @@ function SpinnerFlow({ seed, onClick }) {
       spinnerData: spinnerDataForLayer,
       layer: layers[i],
       layoutStyle,
-      onClick
+      onClick,
+      probable
     });
   }
 }

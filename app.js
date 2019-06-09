@@ -85,19 +85,20 @@ function followRoute({ seed }) {
       spinner.data.orbitSpeed += (-0.2 + 0.1 * probable.roll(4));
 
       updateOrbit(spinner);
-      renderUpdateToSingleSpinner({ spinnerDatum: spinner });
+      renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
     */
     } else if (alteration === 'change') {
       if (probable.roll(2) === 0) {
         spinner.data.speed += 1.0;
         renderUpdateToSingleSpinner({
           spinnerDatum: spinner,
-          interruptRotation: false
+          interruptRotation: false,
+          probable
         });
       } else {
         spinner.r += 10;
         spinner.data.r = spinner.r;
-        renderUpdateToSingleSpinner({ spinnerDatum: spinner });
+        renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
       }
     }
   }

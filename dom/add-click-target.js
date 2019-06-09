@@ -1,9 +1,9 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var animateHalo = require('./animate-halo');
-var circleToPath = require('./circle-to-path');
+var { circleToPath } = require('./circle-to-path');
 
-function addClickTarget(onClick, spinner) {
+function addClickTarget(onClick, probable, spinner) {
   var root = d3.select(this);
   // Select only the direct .click-target descendant
   // of this element.
@@ -16,13 +16,22 @@ function addClickTarget(onClick, spinner) {
   }
   target.attr(
     'd',
-    circleToPath({ r: spinner.r, cx: spinner.r, cy: spinner.r })
+    circleToPath({
+      r: spinner.r,
+      cx: spinner.r,
+      cy: spinner.r,
+      numberOfArcs: 6
+    })
   );
 
   target.on('click', onClick);
 
-  // TODO: If spinner.data.alterationStep ... wobble.
-  animateHalo(target, spinner.r);
+  animateHalo({
+    target,
+    originalRadius: spinner.r,
+    radiusExpansion: 4 + spinner.data.alterationIndex,
+    probable
+  });
 }
 
 module.exports = addClickTarget;

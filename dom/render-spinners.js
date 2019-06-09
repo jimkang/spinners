@@ -24,7 +24,8 @@ function renderSpinners({
   layer,
   currentlyWithinASublayout = false,
   layoutStyle,
-  onClick
+  onClick,
+  probable
 }) {
   squarifyBoard();
 
@@ -92,7 +93,7 @@ function renderSpinners({
 
   // Do this after other subelements are added to ensure
   // click-target is on top so that it can be clicked on mobile clients.
-  newSpinners.each(curry(addClickTarget)(onClick));
+  newSpinners.each(curry(addClickTarget)(onClick, probable));
 
   updatableSpinners
     .filter(accessor({ path: 'data/displaysSublayout' }))
@@ -147,11 +148,12 @@ function renderSpinners({
         layer,
         currentlyWithinASublayout: true,
         layoutStyle,
-        onClick
+        onClick,
+        probable
       });
     }
 
-    addClickTarget.bind(this)(onClick, spinner);
+    addClickTarget.bind(this)(onClick, probable, spinner);
   }
 }
 
