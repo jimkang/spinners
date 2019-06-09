@@ -10,6 +10,7 @@ var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
 //var cloneDeep = require('lodash.clonedeep');
 var ep = require('errorback-promise');
+var scheduleHalos = require('../dom/schedule-halos');
 
 function SpinnerFlow({ seed, onClick }) {
   var random = seedrandom(seed);
@@ -50,6 +51,7 @@ function SpinnerFlow({ seed, onClick }) {
     spinnerDataForLayers.forEach(
       curry(callRenderSpinners)(layoutStyle, layers)
     );
+    scheduleHalos({ probable });
 
     function getSpinnerDataForLayers({
       syncPositionsAcrossLayers,

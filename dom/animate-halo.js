@@ -38,24 +38,11 @@ function animateHalo({
 
   target
     .transition()
-    .on('end', scheduleRepeat)
     .delay(expandingDuration)
     .duration(contractingDuration)
     .attr('d', arcsToPath(expandedCircleKit))
     .attr('stroke-width', 0)
     .attr('opacity', 0);
-
-  function scheduleRepeat() {
-    var spinner = target.datum();
-    if (spinner.haloTimeoutKey) {
-      clearTimeout(target.data.haloTimeoutKey);
-    }
-    spinner.haloTimeoutKey = setTimeout(repeat, 1000 * (3 + probable.roll(50)));
-  }
-
-  function repeat() {
-    animateHalo({ target, originalRadius, radiusExpansion, probable });
-  }
 }
 
 module.exports = animateHalo;
