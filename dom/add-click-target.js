@@ -1,6 +1,7 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var animateHalo = require('./animate-halo');
+var circleToPath = require('./circle-to-path');
 
 function addClickTarget(onClick, spinner) {
   var root = d3.select(this);
@@ -9,14 +10,14 @@ function addClickTarget(onClick, spinner) {
   var target = d3.select(`#${this.id} > .click-target`);
   if (target.empty()) {
     target = root
-      .append('circle')
+      .append('path')
       .datum(spinner)
       .classed('click-target', true);
   }
-  target
-    .attr('r', spinner.r)
-    .attr('cx', spinner.r)
-    .attr('cy', spinner.r);
+  target.attr(
+    'd',
+    circleToPath({ r: spinner.r, cx: spinner.r, cy: spinner.r })
+  );
 
   target.on('click', onClick);
 
