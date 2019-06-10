@@ -47,7 +47,7 @@ function arcsToBezierPath({ center, edgeStart, arcs }) {
   return path;
 }
 
-// See diagram for derivation.
+// See diagram for derivation: https://github.com/jimkang/spinners/blob/master/meta/how-to-find-the-first-control-point.jpg
 // Lots of assumptions here, the first being that the first arc
 // starts at cx + r, cy (0 rads) on the circle.
 function getFirstControlPt({ center, firstArc, arcAngle }) {
