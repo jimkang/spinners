@@ -1,4 +1,4 @@
-function wobbleCircle({ center, edgeStart, arcs }, probable) {
+function wobbleCircle({ center, edgeStart, arcs }, probable, wobbleLevel) {
   return { center, edgeStart, arcs: arcs.map(wobbleArc) };
 
   function wobbleArc(arc, i, arcs) {
@@ -7,10 +7,10 @@ function wobbleCircle({ center, edgeStart, arcs }, probable) {
       return arc;
     }
     var newArc = Object.assign({}, arc);
-    newArc.rx = arc.rx + probable.roll(5) - 2;
-    newArc.ry = arc.ry + probable.roll(5) - 2;
-    newArc.destX = arc.destX + probable.roll(5) - 2;
-    newArc.destY = arc.destY + probable.roll(5) - 2;
+    newArc.rx = arc.rx + (probable.roll(3) - 1) * wobbleLevel * 0.33;
+    newArc.ry = newArc.rx;
+    //newArc.destX = arc.destX + (probable.roll(3) - 1) * wobbleLevel * 0.5;
+    //newArc.destY = arc.destY + (probable.roll(3) - 1) * wobbleLevel * 0.5;
     return newArc;
   }
 }

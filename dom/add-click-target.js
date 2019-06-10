@@ -1,6 +1,7 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var { circleToPath } = require('./circle-to-path');
+const numberOfArcs = require('./number-of-arcs');
 
 function addClickTarget(onClick, probable, spinner) {
   var root = d3.select(this);
@@ -20,7 +21,7 @@ function addClickTarget(onClick, probable, spinner) {
       r: spinner.r,
       cx: spinner.r,
       cy: spinner.r,
-      numberOfArcs: 6
+      numberOfArcs
     })
   );
 

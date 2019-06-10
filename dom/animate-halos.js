@@ -1,5 +1,6 @@
-var { circleToArcs, arcsToPath } = require('./circle-to-path');
+var { circleToArcs, arcsToBezierPath } = require('./circle-to-path');
 var wobbleCircle = require('./wobble-circle');
+const numberOfArcs = require('./number-of-arcs');
 
 const expandingDuration = 1400;
 const contractingDuration = 2000;
@@ -27,12 +28,16 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       r: spinner.r + radiusExpansion,
       cx: spinner.r,
       cy: spinner.r,
-      numberOfArcs: 6
+      numberOfArcs
     });
     if (spinner.data.alterationIndex > 0) {
-      originalCircleKit = wobbleCircle(originalCircleKit, probable);
+      originalCircleKit = wobbleCircle(
+        originalCircleKit,
+        probable,
+        spinner.data.alterationIndex + 1
+      );
     }
-    return arcsToPath(originalCircleKit);
+    return arcsToBezierPath(originalCircleKit);
   }
 
   function getFinalPath(spinner) {
@@ -40,12 +45,16 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       r: spinner.r,
       cx: spinner.r,
       cy: spinner.r,
-      numberOfArcs: 6
+      numberOfArcs
     });
     if (spinner.data.alterationIndex > 0) {
-      expandedCircleKit = wobbleCircle(expandedCircleKit, probable);
+      expandedCircleKit = wobbleCircle(
+        expandedCircleKit,
+        probable,
+        spinner.data.alterationIndex + 1
+      );
     }
-    return arcsToPath(expandedCircleKit);
+    return arcsToBezierPath(expandedCircleKit);
   }
 }
 

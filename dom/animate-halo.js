@@ -1,5 +1,6 @@
-var { circleToArcs, arcsToPath } = require('./circle-to-path');
+var { circleToArcs, arcsToBezierPath } = require('./circle-to-path');
 var wobbleCircle = require('./wobble-circle');
+const numberOfArcs = require('./number-of-arcs');
 
 const expandingDuration = 1400;
 const contractingDuration = 2000;
@@ -10,21 +11,29 @@ function animateHalo({
   radiusExpansion = 4,
   probable
 }) {
-  var originalCircleKit = circleToArcs({
+  var finalCircleKit = circleToArcs({
     r: originalRadius + radiusExpansion,
     cx: originalRadius,
     cy: originalRadius,
-    numberOfArcs: 6
+    numberOfArcs
   });
   var expandedCircleKit = circleToArcs({
     r: originalRadius,
     cx: originalRadius,
     cy: originalRadius,
-    numberOfArcs: 6
+    numberOfArcs
   });
   if (target.datum().data.alterationIndex > 0) {
-    originalCircleKit = wobbleCircle(originalCircleKit, probable);
-    expandedCircleKit = wobbleCircle(expandedCircleKit, probable);
+    finalCircleKit = wobbleCircle(
+      finalCircleKit,
+      probable,
+      target.datum().data.alterationIndex + 1
+    );
+    expandedCircleKit = wobbleCircle(
+      expandedCircleKit,
+      probable,
+      target.datum().data.alterationIndex + 1
+    );
   }
 
   target.interrupt();
@@ -32,7 +41,7 @@ function animateHalo({
   target
     .transition()
     .duration(expandingDuration)
-    .attr('d', arcsToPath(originalCircleKit))
+    .attr('d', arcsToBezierPath(expandedCircleKit))
     .attr('stroke-width', 0.25)
     .attr('opacity', 1.0);
 
@@ -40,7 +49,7 @@ function animateHalo({
     .transition()
     .delay(expandingDuration)
     .duration(contractingDuration)
-    .attr('d', arcsToPath(expandedCircleKit))
+    .attr('d', arcsToBezierPath(finalCircleKit))
     .attr('stroke-width', 0)
     .attr('opacity', 0);
 }
