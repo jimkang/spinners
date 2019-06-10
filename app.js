@@ -87,19 +87,17 @@ function followRoute({ seed }) {
       updateOrbit(spinner);
       renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
     */
-    } else if (alteration === 'change') {
-      if (probable.roll(2) === 0) {
-        spinner.data.speed += 1.0;
-        renderUpdateToSingleSpinner({
-          spinnerDatum: spinner,
-          interruptRotation: false,
-          probable
-        });
-      } else {
-        spinner.r += 10;
-        spinner.data.r = spinner.r;
-        renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
-      }
+    } else if (alteration === 'changeSpeed') {
+      spinner.data.speed += 1.0;
+      renderUpdateToSingleSpinner({
+        spinnerDatum: spinner,
+        interruptRotation: false,
+        probable
+      });
+    } else if (alteration === 'changeSize') {
+      spinner.r += 10;
+      spinner.data.r = spinner.r;
+      renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
     }
   }
 }

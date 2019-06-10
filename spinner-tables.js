@@ -34,7 +34,8 @@ var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
 var alterationScheduleTable = [
   //[2, l(['moveToNextSeed'])],
   //[5, l(['change', 'change', 'moveToNextSeed'])],
-  [5, l(['change', 'change', 'moveToNextSeed'])]
+  [5, l(['changeSpeed', 'changeSpeed', 'moveToNextSeed'])],
+  [5, l(['changeSize', 'changeSize', 'moveToNextSeed'])]
   /*
   [
     1,

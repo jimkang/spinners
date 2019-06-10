@@ -34,22 +34,10 @@ function LayoutTables({ random }) {
       ]
     ],
     layers: [
-      [16, r([r`layer`])],
-      [5, r([r`layer`, r`layer`])],
+      [64, r([r`layer`])],
+      [8, r([r`layer`, r`layer`])],
       [2, r([r`layer`, r`layer`, r`layer`])],
-      [
-        1,
-        r([
-          r`layer`,
-          r`layer`,
-          r`layer`,
-          r`layer`,
-          r`layer`,
-          r`layer`,
-          r`layer`,
-          r`layer`
-        ])
-      ]
+      [1, r([r`layer`, r`layer`, r`layer`, r`layer`])]
     ],
     typeOrder: [
       [1, l(['literalSpinner', 'ammonite'])],
