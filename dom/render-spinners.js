@@ -96,9 +96,7 @@ function renderSpinners({
   // click-target is on top so that it can be clicked on mobile clients.
   newSpinners.each(curry(addClickTarget)(onClick, probable));
 
-  updatableSpinners
-    .filter(accessor({ path: 'data/displaysSublayout' }))
-    .each(renderSublayout);
+  updatableSpinners.filter(shouldRenderSublayout).each(renderSublayout);
 
   updatableSpinners
     .select('.rotation-transform')
@@ -198,5 +196,9 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
 //    }
 //  }
 // }
+
+function shouldRenderSublayout(spinner) {
+  return spinner.data.displaysSublayout && spinner.data.sublayout;
+}
 
 module.exports = renderSpinners;

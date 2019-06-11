@@ -70,10 +70,11 @@ function SpinnerFlow({ seed, onClick }) {
         let baseLayerSpinners = buildSpinners(currentDepth, layers[0]);
         spinnerDataForLayers = [baseLayerSpinners];
         for (let i = 1; i < layers.length; ++i) {
+          const isClockLayer = layers[i].layerType !== 'clock';
           if (useOrbits) {
             spinnerDataForLayers.push(
               layers[i].spinnerTypes.map(
-                curry(makeOrbitingSpinnerForKey)(currentDepth)
+                curry(makeOrbitingSpinnerForKey)(currentDepth, isClockLayer)
               )
             );
           } else {
@@ -81,7 +82,7 @@ function SpinnerFlow({ seed, onClick }) {
               wrapInPositionObjects({
                 src: baseLayerSpinners,
                 spinnerData: layers[i].spinnerTypes.map(
-                  curry(makeSpinnerForKey)(currentDepth)
+                  curry(makeSpinnerForKey)(currentDepth, isClockLayer)
                 ),
                 layerIndex: i
               })
@@ -111,7 +112,7 @@ function SpinnerFlow({ seed, onClick }) {
 
     function buildSpinnersForPackLayer(currentDepth, layer) {
       var spinners = layer.spinnerTypes.map(
-        curry(makeSpinnerForKey)(currentDepth)
+        curry(makeSpinnerForKey)(currentDepth, layer.layerType !== 'clock')
       );
       var tree = hierarchy.hierarchy({
         id: 'root',
@@ -123,18 +124,29 @@ function SpinnerFlow({ seed, onClick }) {
 
     function buildSpinnersForOrbitLayer(currentDepth, layer) {
       return layer.spinnerTypes.map(
-        curry(makeOrbitingSpinnerForKey)(currentDepth)
+        curry(makeOrbitingSpinnerForKey)(
+          currentDepth,
+          layer.layerType !== 'clock'
+        )
       );
     }
 
-    function makeSpinnerForKey(currentDepth, key) {
+    function makeSpinnerForKey(currentDepth, shouldMakeSublayout, key) {
       var spinner = spinnerTables[key].roll();
-      addSublayoutToSpinner({ spinner, currentDepth });
+      if (shouldMakeSublayout) {
+        addSublayoutToSpinner({ spinner, currentDepth });
+      }
       return spinner;
     }
 
-    function makeOrbitingSpinnerForKey(currentDepth, key, i, keys) {
-      var spinner = makeSpinnerForKey(currentDepth, key);
+    function makeOrbitingSpinnerForKey(
+      currentDepth,
+      shouldMakeSublayout,
+      key,
+      i,
+      keys
+    ) {
+      var spinner = makeSpinnerForKey(currentDepth, shouldMakeSublayout, key);
       spinner.orbitR = (50 / keys.length) * i;
 
       return {
