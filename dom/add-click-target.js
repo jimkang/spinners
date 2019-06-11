@@ -5,6 +5,12 @@ const numberOfArcs = require('./number-of-arcs');
 
 function addClickTarget(onClick, probable, spinner) {
   var root = d3.select(this);
+  let imageChild = root.select('image');
+  if (imageChild.empty()) {
+    // Don't add a click target to a spinner group that's empty.
+    return;
+  }
+
   // Select only the direct .click-target descendant
   // of this element.
   var target = d3.select(`#${this.id} > .click-target`);

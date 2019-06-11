@@ -63,6 +63,7 @@ function renderSpinners({
   }
 
   var updatableSpinners = newSpinners.merge(spinners);
+
   updatableSpinners
     .attr('id', accessor({ path: 'data/id' }))
     .filter(isAPlainSpinner)
@@ -117,6 +118,15 @@ function renderSpinners({
     .duration(transitionTime)
     .attr('width', diameter)
     .attr('height', diameter);
+
+  // if (layoutStyle !== 'orbit') {
+  //   setTimeout(checkSpinnerTransforms, transitionTime + 100);
+  // }
+
+  // function checkSpinnerTransforms() {
+  //   var spinners = spinnerRoot.selectAll('.spinner');
+  //   spinners.each(checkSpinnerTransform);
+  // }
 
   async function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
@@ -179,5 +189,14 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
       .classed(className, true)
   );
 }
+
+// function checkSpinnerTransform() {
+//  if (!this.getAttribute('transform')) {
+//    var animateChild = d3.select(this).select('animateMotion');
+//    if (animateChild.empty()) {
+//      console.log(this.id, 'has no transform and no animateMotion child.');
+//    }
+//  }
+// }
 
 module.exports = renderSpinners;
