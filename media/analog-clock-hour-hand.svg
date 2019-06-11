@@ -38,7 +38,7 @@
      id="namedview88"
      showgrid="false"
      inkscape:zoom="2.15"
-     inkscape:cx="200"
+     inkscape:cx="180.93023"
      inkscape:cy="200"
      inkscape:window-x="67"
      inkscape:window-y="27"
@@ -140,7 +140,7 @@
     </radialGradient>
   </defs>
   <path
-     style="fill-rule:evenodd"
+     style="fill-rule:evenodd;fill:#333333"
      inkscape:connector-curvature="0"
      id="path48"
      d="m 250.98,110.37 -58.115,86.445 2.0929,1.2381 -11.452,14.229 10.36,6.1267 6.9474,-16.894 2.4118,1.4264 47.755,-92.572 z" />

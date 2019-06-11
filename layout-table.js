@@ -70,14 +70,17 @@ function LayoutTables({ random }) {
     size: [[8, d`3d6`], [4, d`d10`], [1, d`d30`]],
     clockFaceLayer: r({
       id: getId,
+      layerType: 'clock',
       spinnerTypes: f(o => range(o.size).map(() => 'clockFace'))
     }),
     clockHourHandLayer: r({
       id: getId,
+      layerType: 'clock',
       spinnerTypes: f(o => range(o.size).map(() => 'clockHourHand'))
     }),
     clockMinuteHandLayer: r({
       id: getId,
+      layerType: 'clock',
       spinnerTypes: f(o => range(o.size).map(() => 'clockMinuteHand'))
     }),
     layoutStyle: [[3, 'pack'], [1, 'orbit']]

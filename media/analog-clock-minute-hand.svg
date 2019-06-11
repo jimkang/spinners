@@ -5,6 +5,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
@@ -37,8 +38,8 @@
      inkscape:window-height="1025"
      id="namedview88"
      showgrid="false"
-     inkscape:zoom="2.15"
-     inkscape:cx="200"
+     inkscape:zoom="7.390625"
+     inkscape:cx="178.82452"
      inkscape:cy="200"
      inkscape:window-x="67"
      inkscape:window-y="27"
@@ -106,11 +107,15 @@
     </radialGradient>
     <radialGradient
        id="o"
-       cx="-257.14"
+       cx="-257.14001"
        cy="353"
        r="52.319"
        gradientTransform="matrix(0.20513968,-0.03889507,0.02377789,0.12540899,245.75822,149.7548)"
-       gradientUnits="userSpaceOnUse">
+       gradientUnits="userSpaceOnUse"
+       fx="-257.14001"
+       fy="353"
+       fr="0"
+       spreadMethod="pad">
       <stop
          stop-color="#fff"
          offset="0"
@@ -119,7 +124,8 @@
          stop-color="#fff"
          stop-opacity="0"
          offset="1"
-         id="stop26" />
+         id="stop26"
+         style="stop-color:#2b2b2b;stop-opacity:1" />
     </radialGradient>
     <radialGradient
        id="p"
@@ -138,9 +144,22 @@
          offset="1"
          id="stop31" />
     </radialGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#o"
+       id="radialGradient1606"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.20513968,-0.03889507,0.02377789,0.12540899,245.75822,149.7548)"
+       cx="-257.14001"
+       cy="353"
+       fx="-257.14001"
+       fy="353"
+       r="52.319"
+       fr="0"
+       spreadMethod="pad" />
   </defs>
   <path
-     style="fill-rule:evenodd"
+     style="fill-rule:evenodd;fill:#3b3b3b;fill-opacity:1"
      inkscape:connector-curvature="0"
      id="path46"
      d="m 199.64,58.96 -5.5531,139.24 2.247,-4.9e-4 -2.4139,24.206 11.102,-0.002 -2.4157,-24.203 2.588,0.001 -5.5542,-139.24 z" />
@@ -151,13 +170,13 @@
      d="m -204.82,291.65 a 52.32,52.32 0 1 1 -104.64,0 52.32,52.32 0 1 1 104.64,0 z"
      transform="matrix(0.14492,-0.026181,0.026181,0.14492,229.7,147.41)" />
   <path
-     style="fill-rule:evenodd;stroke-width:0.14726593"
+     style="fill-rule:evenodd;stroke-width:0.14726593;fill:#2d2d2d;fill-opacity:1"
      inkscape:connector-curvature="0"
      id="path78"
      d="m 207.55317,194.75831 a 7.7049529,7.7049529 0 1 1 -15.16442,2.73958 7.7049529,7.7049529 0 1 1 15.16442,-2.73958 z" />
   <path
      inkscape:connector-curvature="0"
-     style="fill:url(#o);fill-rule:evenodd;stroke-width:0.1276436"
+     style="fill:url(#radialGradient1606);fill-rule:evenodd;stroke-width:0.1276436;fill-opacity:1"
      id="path80"
      d="m 206.58126,195.13234 a 6.6783134,6.6783134 0 1 1 -13.14383,2.3747 6.6783134,6.6783134 0 1 1 13.14383,-2.3747 z" />
 </svg>

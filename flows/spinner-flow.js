@@ -61,7 +61,7 @@ function SpinnerFlow({ seed, onClick }) {
     }) {
       var useOrbits = layoutStyle === 'orbit';
       var spinnerDataForLayers;
-      let buildSpinners = buildSpinnersForPackLayer;
+      var buildSpinners = buildSpinnersForPackLayer;
       if (useOrbits) {
         buildSpinners = buildSpinnersForOrbitLayer;
       }
@@ -70,15 +70,23 @@ function SpinnerFlow({ seed, onClick }) {
         let baseLayerSpinners = buildSpinners(currentDepth, layers[0]);
         spinnerDataForLayers = [baseLayerSpinners];
         for (let i = 1; i < layers.length; ++i) {
-          spinnerDataForLayers.push(
-            wrapInPositionObjects({
-              src: baseLayerSpinners,
-              spinnerData: layers[i].spinnerTypes.map(
-                curry(makeSpinnerForKey)(currentDepth)
-              ),
-              layerIndex: i
-            })
-          );
+          if (useOrbits) {
+            spinnerDataForLayers.push(
+              layers[i].spinnerTypes.map(
+                curry(makeOrbitingSpinnerForKey)(currentDepth)
+              )
+            );
+          } else {
+            spinnerDataForLayers.push(
+              wrapInPositionObjects({
+                src: baseLayerSpinners,
+                spinnerData: layers[i].spinnerTypes.map(
+                  curry(makeSpinnerForKey)(currentDepth)
+                ),
+                layerIndex: i
+              })
+            );
+          }
         }
       } else {
         let buildSpinners = buildSpinnersForPackLayer;
@@ -87,6 +95,17 @@ function SpinnerFlow({ seed, onClick }) {
         }
         spinnerDataForLayers = layers.map(curry(buildSpinners)(currentDepth));
       }
+
+      /*
+      if (
+        useOrbits &&
+        spinnerDataForLayers.some(data =>
+          data.some(sp => isNaN(sp.data.orbitR))
+        )
+      ) {
+        debugger;
+      }
+      */
       return spinnerDataForLayers;
     }
 
@@ -137,9 +156,13 @@ function SpinnerFlow({ seed, onClick }) {
       let layoutTable = LayoutTable({ random: seedrandom(subSeed) });
       let result;
       let layers;
-      result = layoutTable.roll();
-      // TODO: tablenest needs to preserve the array-ness of a def.
-      layers = convertToArray(result.layers);
+      do {
+        result = layoutTable.roll();
+        // TODO: tablenest needs to preserve the array-ness of a def.
+        layers = convertToArray(result.layers);
+      } while (layers[layers.length - 1].layerType === 'clock');
+      // The minute hand clock layers do not work well as sublayout top
+      // layers because they don't show well on black backgrounds.
 
       // Make all sublayouts use orbit style for now.
       spinner.sublayout = {
