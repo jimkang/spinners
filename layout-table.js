@@ -13,7 +13,7 @@ function LayoutTables({ random }) {
         5,
         r({
           size: r`size`,
-          types: r`typeOrder`,
+          types: r`typeList`,
           layers: r`layers`,
           syncPositionsAcrossLayers: f((o, p) => p.roll(3) === 0),
           layoutStyle: r`layoutStyle`
@@ -23,7 +23,7 @@ function LayoutTables({ random }) {
         1,
         r({
           size: r`size`,
-          types: r`typeOrder`,
+          types: r`typeList`,
           layers: r([
             r`clockFaceLayer`,
             r`clockHourHandLayer`,
@@ -39,30 +39,36 @@ function LayoutTables({ random }) {
       [2, r([r`layer`, r`layer`, r`layer`])],
       [1, r([r`layer`, r`layer`, r`layer`, r`layer`])]
     ],
-    typeOrder: [
-      [1, l(['literalSpinner', 'ammonite'])],
-      [1, l(['ammonite', 'literalSpinner', 'pizza'])],
-      [1, l(['cat', 'literalSpinner', 'ammonite'])],
-      [1, l(['pizza', 'ammonite', 'cat'])],
-      [1, l(['cat', 'clockFace', 'pizza'])],
-      [1, l(['ammonite', 'clockFace', 'literalSpinner', 'cat', 'pizza'])]
+    typeList: [
+      // Hard things
+      [1, l(['literalSpinner', 'ammonite', 'cd', 'wheel'])],
+      // Organic things
+      [1, l(['ammonite', 'pizza', 'cat', 'sushi', 'donut'])],
+      // Foods
+      [1, l(['pizza', 'sushi', 'donut'])],
+      // All things
+      [
+        3,
+        l([
+          'ammonite',
+          'clockFace',
+          'literalSpinner',
+          'cat',
+          'pizza',
+          'cd',
+          'wheel',
+          'sushi',
+          'donut'
+        ])
+      ]
     ],
     typeMix: [
       // One type
-      [5, f(o => range(o.size).map(() => o.types[0]))],
+      [5, f((o, p) => range(o.size).map(() => p.pick(o.types)))],
       // Two types
-      [5, f((o, p) => range(o.size).map(() => p.pick(o.types.slice(0, 2))))],
-      // Mostly one type
-      [
-        2,
-        f((o, p) =>
-          range(o.size).map(() =>
-            p.roll(5) === 0
-              ? pickFromAfterFirstIfPossible(o.types, p.pick)
-              : o.types[0]
-          )
-        )
-      ],
+      [5, f((o, p) => p.sample(o.types, 2))],
+      // Mostly one type.
+      [3, f(getMixOfMostlyOneType)],
       // Even mix
       [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
     ],
@@ -91,11 +97,30 @@ function LayoutTables({ random }) {
   }
 }
 
-function pickFromAfterFirstIfPossible(array, pick) {
-  if (array.length > 1) {
-    return pick(array.slice(1));
+const maxPickOtherTries = 5;
+
+function getMixOfMostlyOneType(o, p) {
+  var mainType = p.pick(o.types);
+  return range(o.size).map(mostlyPickMainType);
+
+  function mostlyPickMainType() {
+    return p.roll(5) === 0
+      ? pickOtherIfPossible(o.types, p.pick, mainType)
+      : mainType;
   }
-  return array[0];
+}
+
+function pickOtherIfPossible(array, pick, avoid) {
+  var picked = array[0];
+  if (array.length > 1) {
+    for (let i = 0; i < maxPickOtherTries; ++i) {
+      picked = pick(array);
+      if (picked !== avoid) {
+        break;
+      }
+    }
+  }
+  return picked;
 }
 
 module.exports = LayoutTables;

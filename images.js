@@ -79,6 +79,122 @@ module.exports = {
   pizza: {
     name: 'Pizza',
     url: 'media/pizza.png',
-    attribution: 'TODO'
+    attribution: 'Unknown'
+  },
+  pepperPizza: {
+    name: 'Pepper Pizza',
+    url: 'media/american-1239091_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Robert-Owen-Wahl-2077322/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1239091">Robert-Owen-Wahl</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1239091">Pixabay</a>'
+  },
+  pepperoniPizza: {
+    name: 'Pepperoni Pizza',
+    url: 'media/pizza_PNG43991.png',
+    attribution: 'http://pngimg.com/download/43991 Creative Commons 4.0 BY-NC'
+  },
+  cdWithNotes: {
+    name: 'CD with notes',
+    url: 'media/cd-158817_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=158817">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=158817">Pixabay</a>'
+  },
+  dvd: {
+    name: 'DVD',
+    url: 'media/dvd-152917_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=152917">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=152917">Pixabay</a>'
+  },
+  dvd2: {
+    name: 'DVD',
+    url: 'media/dvd-34919_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Clker-Free-Vector-Images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=34919">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=34919">Pixabay</a>'
+  },
+  grayCD: {
+    name: 'Gray CD',
+    url: 'media/cd-98417_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenIcons-28911/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=98417">OpenIcons</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=98417">Pixabay</a>'
+  },
+  lightCD: {
+    name: 'Light CD',
+    url: 'media/cd-1169624_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/JJuni-27151/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1169624">JJuni</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1169624">Pixabay</a>'
+  },
+  rainbowCD: {
+    name: 'Rainbow CD',
+    url: 'media/cd-1293924_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1293924">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1293924">Pixabay</a>'
+  },
+  cdROM: {
+    name: 'CD ROM',
+    url: 'media/cd-rom-4093712_1920.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/BUMIPUTRA-731298/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4093712">BUMIPUTRA</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4093712">Pixabay</a>'
+  },
+  rainbowCD2: {
+    name: 'Rainbow CD 2',
+    url: 'media/cd-81826_1920.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=81826">Gerd Altmann</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=81826">Pixabay</a>'
+  },
+  wagonWheel: {
+    name: 'Wagon wheel',
+    url: 'media/wooden-wheel-2490210_1920.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Momentmal-5324081/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2490210">Momentmal</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2490210">Pixabay</a>'
+  },
+  wheelOfFortune: {
+    name: 'Wheel of Fortune',
+    url: 'media/1024px-WheelofFortune2.png',
+    attribution:
+      'Wikipedia, public domain. https://en.wikipedia.org/wiki/File:WheelofFortune2.png'
+  },
+  wagonWheelDrawing: {
+    name: 'Wagon wheel drawing',
+    url: 'media/transport-2027545.svg',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2027545">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2027545">Pixabay</a>'
+  },
+  carWheel: {
+    name: 'Car wheel',
+    url: 'media/car_wheel_PNG23316.png',
+    attribution: 'http://pngimg.com/download/23316 Creative Commons 4.0 BY-NC'
+  },
+  sushi1: {
+    name: 'Sushi 1',
+    url: 'media/sushi1.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Einladung_zum_Essen-3625323/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2112350">Bernadette Wurzinger</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2112350">Pixabay</a>'
+  },
+  sushi2: {
+    name: 'Sushi 2',
+    url: 'media/sushi2.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Einladung_zum_Essen-3625323/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2112350">Bernadette Wurzinger</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2112350">Pixabay</a>'
+  },
+  sushi3: {
+    name: 'Sushi 3',
+    url: 'media/sushi3.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Einladung_zum_Essen-3625323/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2112350">Bernadette Wurzinger</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2112350">Pixabay</a>'
+  },
+  glazedDonut: {
+    name: 'Glazed donut',
+    url: 'media/glazed-donut-992767_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/skeeze-272447/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=992767">skeeze</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=992767">Pixabay</a>'
+  },
+  chocolateDonut: {
+    name: 'Chocolate donut',
+    url: 'media/donut_PNG31.png',
+    attribution: 'http://pngimg.com/download/32419 Creative Commons 4.0 BY-NC'
+  },
+  frostedDonut: {
+    name: 'Frosted donut',
+    url: 'media/donut_PNG61.png',
+    attribution: 'http://pngimg.com/download/32449 Creative Commons 4.0 BY-NC'
   }
 };

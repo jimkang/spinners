@@ -105,8 +105,48 @@ function SpinnerTables({ random }) {
     }),
     pizza: makeSpinnerTable({
       radius: d`d4`,
-      images: images.pizza,
+      images: [
+        [4, images.pizza],
+        [4, images.pepperPizza],
+        [3, images.pepperoniPizza]
+      ],
       speedKey: 'anySpeed'
+    }),
+    cd: makeSpinnerTable({
+      radius: d`d2+1`,
+      images: [
+        [2, images.cdWithNotes],
+        [2, images.dvd],
+        [2, images.dvd2],
+        [2, images.grayCD],
+        [2, images.lightCD],
+        [2, images.rainbowCD],
+        [2, images.rainbowCD2],
+        [2, images.cdROM]
+      ],
+      speedKey: 'anySpeed'
+    }),
+    wheel: makeSpinnerTable({
+      radius: d`d2+1`,
+      images: [
+        [2, images.wagonWheel],
+        [2, images.wagonWheelDrawing],
+        [1, images.wheelOfFortune],
+        [2, images.carWheel]
+      ],
+      speedKey: 'anySpeed'
+    }),
+    sushi: makeSpinnerTable({
+      radius: d`d2`,
+      images: [[1, images.sushi1], [1, images.sushi2], [1, images.sushi3]]
+    }),
+    donut: makeSpinnerTable({
+      radius: d`d4`,
+      images: [
+        [2, images.glazedDonut],
+        [1, images.chocolateDonut],
+        [1, images.frostedDonut]
+      ]
     })
   };
 
