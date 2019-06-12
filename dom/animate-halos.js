@@ -30,11 +30,13 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       cy: spinner.r,
       numberOfArcs
     });
-    if (spinner.data.alterationIndex > 0) {
+    const stepsToNextSeed =
+      spinner.data.alterationSchedule.length - spinner.data.alterationIndex;
+    if (stepsToNextSeed < 3) {
       originalCircleKit = wobbleCircle(
         originalCircleKit,
         probable,
-        spinner.data.alterationIndex + 1
+        stepsToNextSeed
       );
     }
     return arcsToBezierPath(originalCircleKit);
@@ -47,11 +49,13 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       cy: spinner.r,
       numberOfArcs
     });
-    if (spinner.data.alterationIndex > 0) {
+    const stepsToNextSeed =
+      spinner.data.alterationSchedule.length - spinner.data.alterationIndex;
+    if (stepsToNextSeed < 3) {
       expandedCircleKit = wobbleCircle(
         expandedCircleKit,
         probable,
-        spinner.data.alterationIndex + 1
+        stepsToNextSeed
       );
     }
     return arcsToBezierPath(expandedCircleKit);

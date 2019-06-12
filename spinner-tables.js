@@ -35,7 +35,10 @@ var alterationScheduleTable = [
   //[2, l(['moveToNextSeed'])],
   //[5, l(['change', 'change', 'moveToNextSeed'])],
   [5, l(['changeSpeed', 'changeSpeed', 'moveToNextSeed'])],
-  [5, l(['changeSize', 'changeSize', 'moveToNextSeed'])]
+  [5, l(['changeSize', 'changeSize', 'moveToNextSeed'])],
+  [5, l(['changeSpeed', 'moveToNextSeed'])],
+  [5, l(['changeSize', 'moveToNextSeed'])],
+  [5, l(['moveToNextSeed'])]
   /*
   [
     1,

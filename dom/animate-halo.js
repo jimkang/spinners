@@ -5,6 +5,7 @@ const numberOfArcs = require('./number-of-arcs');
 const expandingDuration = 1400;
 const contractingDuration = 2000;
 
+// TODO: Reconcile this with animateHalos.
 function animateHalo({
   target,
   originalRadius,
@@ -23,16 +24,14 @@ function animateHalo({
     cy: originalRadius,
     numberOfArcs
   });
-  if (target.datum().data.alterationIndex > 0) {
-    finalCircleKit = wobbleCircle(
-      finalCircleKit,
-      probable,
-      target.datum().data.alterationIndex + 1
-    );
+  var d = target.datum().data;
+  const stepsToNextSeed = d.alterationSchedule.length - d.alterationIndex;
+  if (stepsToNextSeed < 3) {
+    finalCircleKit = wobbleCircle(finalCircleKit, probable, stepsToNextSeed);
     expandedCircleKit = wobbleCircle(
       expandedCircleKit,
       probable,
-      target.datum().data.alterationIndex + 1
+      stepsToNextSeed
     );
   }
 
