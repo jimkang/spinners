@@ -249,5 +249,18 @@ module.exports = {
     url: 'media/cookie_PNG13656.png',
     attribution: 'Creative Commons 4.0 BY-NC',
     source: 'http://pngimg.com/download/13656'
+  },
+  cyclone: {
+    name: '🌀',
+    url: 'media/Phantom_Open_Emoji_1f300.svg',
+    attribution: 'Creative Commons Attribution 3.0',
+    source:
+      'https://commons.wikimedia.org/wiki/File:Phantom_Open_Emoji_1f300.svg'
+  },
+  spiralGalaxy: {
+    name: 'Milky Way Galaxy',
+    url: 'media/Milky_Way_Galaxy.png',
+    attribution: 'Nick Risinger [Public domain]',
+    source: 'https://commons.wikimedia.org/wiki/File:Milky_Way_Galaxy.jpg'
   }
 };

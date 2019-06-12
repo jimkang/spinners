@@ -10,7 +10,7 @@ function LayoutTables({ random }) {
   return tablenest({
     root: [
       [
-        5,
+        15,
         r({
           size: r`size`,
           types: r`typeList`,
@@ -41,10 +41,10 @@ function LayoutTables({ random }) {
     ],
     typeList: [
       // Hard things
-      [1, l(['literalSpinner', 'ammonite', 'cd', 'wheel', 'plate', 'gear'])],
+      [2, l(['literalSpinner', 'ammonite', 'cd', 'wheel', 'plate', 'gear'])],
       // Organic things
       [
-        1,
+        2,
         l([
           'ammonite',
           'pizza',
@@ -55,6 +55,8 @@ function LayoutTables({ random }) {
           'cookie'
         ])
       ],
+      // Intangible things
+      [1, l(['cyclone', 'galaxy'])],
       // Foods
       [1, l(['pizza', 'sushi', 'donut', 'plate', 'cookie'])],
       // All things
@@ -73,7 +75,9 @@ function LayoutTables({ random }) {
           'plate',
           'figureDrawing',
           'gear',
-          'cookie'
+          'cookie',
+          'cyclone',
+          'galaxy'
         ])
       ]
     ],

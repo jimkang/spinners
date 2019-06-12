@@ -174,6 +174,14 @@ function SpinnerTables({ random }) {
         [1, images.facetedChocolateChipCookie],
         [2, images.cookie]
       ]
+    }),
+    cyclone: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.cyclone]]
+    }),
+    galaxy: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.spiralGalaxy]]
     })
   };
 
