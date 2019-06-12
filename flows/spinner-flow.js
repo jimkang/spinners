@@ -209,7 +209,7 @@ function getArea(spinner) {
 
 function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
   var posObjs = [];
-  for (var i = 0; i < src.length; ++i) {
+  for (var i = 0; i < src.length && i < spinnerData.length; ++i) {
     let srcPosObj = src[i];
     let posObj = Object.assign({}, srcPosObj);
     posObj.data = spinnerData[i];
