@@ -166,6 +166,14 @@ function SpinnerTables({ random }) {
     gear: makeSpinnerTable({
       radius: d`d4`,
       images: [[2, images.bikeGear]]
+    }),
+    cookie: makeSpinnerTable({
+      radius: d`d4`,
+      images: [
+        [2, images.chocolateChipCookie],
+        [1, images.facetedChocolateChipCookie],
+        [2, images.cookie]
+      ]
     })
   };
 

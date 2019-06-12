@@ -231,5 +231,23 @@ module.exports = {
     url: 'media/bike-633208_1280.png',
     attribution:
       'Image by <a href="https://pixabay.com/users/LJ--749239/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=633208">Jaeyeon Lim</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=633208">Pixabay</a>'
+  },
+  facetedChocolateChipCookie: {
+    name: 'Faceted chocolate chip cookie',
+    url: 'media/chocolate-chip-cookies-304801.svg',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/Clker-Free-Vector-Images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=304801">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=304801">Pixabay</a>'
+  },
+  cookie: {
+    name: 'M&M cookie',
+    url: 'media/512px-Cookie.png',
+    attribution: 'Tiia Monto, Creative Commons Attribution-Share Alike 3.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Cookie.png'
+  },
+  chocolateChipCookie: {
+    name: 'Chocolate chip cookie',
+    url: 'media/cookie_PNG13656.png',
+    attribution: 'Creative Commons 4.0 BY-NC',
+    source: 'http://pngimg.com/download/13656'
   }
 };
