@@ -162,6 +162,10 @@ function SpinnerTables({ random }) {
     figureDrawing: makeSpinnerTable({
       radius: d`d4`,
       images: [[2, images.vitruvianMan]]
+    }),
+    gear: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[2, images.bikeGear]]
     })
   };
 

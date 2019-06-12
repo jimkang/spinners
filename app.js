@@ -46,7 +46,7 @@ function followRoute({ seed }) {
 
   function onClick(spinner) {
     var sd = spinner.data;
-    console.log('spinner clicked:', sd);
+    //console.log('spinner clicked:', sd);
     var nextSeed;
     var alteration = sd.alterationSchedule[sd.alterationIndex];
     if (sd.alterationIndex < sd.alterationSchedule.length - 1) {

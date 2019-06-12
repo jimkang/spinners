@@ -225,5 +225,11 @@ module.exports = {
     source:
       'https://en.wikipedia.org/wiki/File:Da_Vinci_Vitruve_Luc_Viatour.jpg#/media/File:Uomo_Vitruviano.jpg',
     attribution: "Public Domain Vitruvian Man, Gallerie dell'Accademia, Venice"
+  },
+  bikeGear: {
+    name: 'Bike gear',
+    url: 'media/bike-633208_1280.png',
+    attribution:
+      'Image by <a href="https://pixabay.com/users/LJ--749239/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=633208">Jaeyeon Lim</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=633208">Pixabay</a>'
   }
 };
