@@ -147,6 +147,18 @@ function SpinnerTables({ random }) {
         [1, images.chocolateDonut],
         [1, images.frostedDonut]
       ]
+    }),
+    plate: makeSpinnerTable({
+      radius: d`d2+2`,
+      images: [
+        [2, images.plate],
+        [2, images.plateDrawing],
+        [2, images.concavePlate]
+      ]
+    }),
+    figureDrawing: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[2, images.vitruvianMan]]
     })
   };
 

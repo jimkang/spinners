@@ -41,11 +41,11 @@ function LayoutTables({ random }) {
     ],
     typeList: [
       // Hard things
-      [1, l(['literalSpinner', 'ammonite', 'cd', 'wheel'])],
+      [1, l(['literalSpinner', 'ammonite', 'cd', 'wheel', 'plate'])],
       // Organic things
-      [1, l(['ammonite', 'pizza', 'cat', 'sushi', 'donut'])],
+      [1, l(['ammonite', 'pizza', 'cat', 'sushi', 'donut', 'figureDrawing'])],
       // Foods
-      [1, l(['pizza', 'sushi', 'donut'])],
+      [1, l(['pizza', 'sushi', 'donut', 'plate'])],
       // All things
       [
         3,
@@ -58,7 +58,9 @@ function LayoutTables({ random }) {
           'cd',
           'wheel',
           'sushi',
-          'donut'
+          'donut',
+          'plate',
+          'figureDrawing'
         ])
       ]
     ],

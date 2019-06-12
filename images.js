@@ -90,7 +90,8 @@ module.exports = {
   pepperoniPizza: {
     name: 'Pepperoni Pizza',
     url: 'media/pizza_PNG43991.png',
-    attribution: 'http://pngimg.com/download/43991 Creative Commons 4.0 BY-NC'
+    source: 'http://pngimg.com/download/43991',
+    attribution: 'Creative Commons 4.0 BY-NC'
   },
   cdWithNotes: {
     name: 'CD with notes',
@@ -149,8 +150,8 @@ module.exports = {
   wheelOfFortune: {
     name: 'Wheel of Fortune',
     url: 'media/1024px-WheelofFortune2.png',
-    attribution:
-      'Wikipedia, public domain. https://en.wikipedia.org/wiki/File:WheelofFortune2.png'
+    attribution: 'Wikipedia, public domain.',
+    source: 'https://en.wikipedia.org/wiki/File:WheelofFortune2.png'
   },
   wagonWheelDrawing: {
     name: 'Wagon wheel drawing',
@@ -161,7 +162,8 @@ module.exports = {
   carWheel: {
     name: 'Car wheel',
     url: 'media/car_wheel_PNG23316.png',
-    attribution: 'http://pngimg.com/download/23316 Creative Commons 4.0 BY-NC'
+    source: 'http://pngimg.com/download/23316',
+    attribution: 'Creative Commons 4.0 BY-NC'
   },
   sushi1: {
     name: 'Sushi 1',
@@ -190,11 +192,38 @@ module.exports = {
   chocolateDonut: {
     name: 'Chocolate donut',
     url: 'media/donut_PNG31.png',
-    attribution: 'http://pngimg.com/download/32419 Creative Commons 4.0 BY-NC'
+    source: 'http://pngimg.com/download/32419',
+    attribution: 'Creative Commons 4.0 BY-NC'
   },
   frostedDonut: {
     name: 'Frosted donut',
     url: 'media/donut_PNG61.png',
-    attribution: 'http://pngimg.com/download/32449 Creative Commons 4.0 BY-NC'
+    source: 'http://pngimg.com/download/32449',
+    attribution: 'Creative Commons 4.0 BY-NC'
+  },
+  plate: {
+    name: 'Plate',
+    url: 'media/Clipart_plate.svg',
+    source: 'https://commons.wikimedia.org/wiki/File:Clipart_plate.svg',
+    attribution: 'Public Domain'
+  },
+  plateDrawing: {
+    name: 'Plate drawing',
+    url: 'media/plate-with-food.svg',
+    source: 'http://www.publicdomainfiles.com/show_file.php?id=13529376018016',
+    attribution: 'Public domain'
+  },
+  concavePlate: {
+    name: 'Concave plate',
+    url: 'media/plate_PNG5324.png',
+    source: 'http://pngimg.com/download/5324',
+    attribution: 'Creative Commons 4.0 BY-NC'
+  },
+  vitruvianMan: {
+    name: 'Vitruvian Man',
+    url: 'media/uomo_vitruviano_accademia_v.svg',
+    source:
+      'https://en.wikipedia.org/wiki/File:Da_Vinci_Vitruve_Luc_Viatour.jpg#/media/File:Uomo_Vitruviano.jpg',
+    attribution: "Public Domain Vitruvian Man, Gallerie dell'Accademia, Venice"
   }
 };
