@@ -48,9 +48,11 @@ function SpinnerFlow({ seed, onClick }) {
       currentDepth: 0,
       layoutStyle
     });
-    spinnerDataForLayers.forEach(
-      curry(callRenderSpinners)(layoutStyle, layers)
-    );
+    // TODO: Should just take all layers in render call.
+    //spinnerDataForLayers.forEach(
+    //  curry(callRenderSpinners)(layoutStyle, layers)
+    //);
+    callRenderSpinners(layoutStyle, layers, spinnerDataForLayers[0]);
     scheduleHalos({ probable });
 
     function getSpinnerDataForLayers({

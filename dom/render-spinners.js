@@ -1,4 +1,5 @@
 var d3 = require('d3-selection');
+var Timer = require('d3-timer').timer;
 require('d3-transition');
 var accessor = require('accessor');
 var renderLayers = require('./render-layers');
@@ -7,6 +8,8 @@ var ep = require('errorback-promise');
 var curry = require('lodash.curry');
 var {
   diameter,
+  getLeft,
+  getTop,
   getTransform,
   getDuration,
   getAnimateStartRotation,
@@ -17,6 +20,18 @@ var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
 var addClickTarget = require('./add-click-target');
 var shouldDisplaySublayout = require('./should-display-sublayout');
+var handleError = require('handle-error-web');
+var loadImagesFromSpinners = require('./load-images-from-spinners');
+var sb = require('standard-bail')();
+
+var boardCanvas = d3.select('#board-canvas');
+var targetsCanvas = d3.select('#targets-canvas');
+
+const boardWidth = boardCanvas.attr('width');
+const boardHeight = boardCanvas.attr('height');
+
+var boardCtx = boardCanvas.node().getContext('2d');
+var timer;
 
 const transitionTime = 2000;
 
@@ -28,7 +43,46 @@ function renderSpinners({
   onClick,
   probable
 }) {
-  squarifyBoard();
+  if (timer) {
+    timer.cancel();
+  }
+
+  var imagesByURL = {};
+  loadImagesFromSpinners(
+    { imageDict: imagesByURL, spinnerData },
+    sb(startTimer, handleError)
+  );
+
+  return;
+
+  function startTimer() {
+    timer = Timer(update);
+  }
+
+  function update(elapsed) {
+    spinnerData.forEach(curry(updateSpinner)(elapsed));
+    draw();
+  }
+
+  function updateSpinner(elapsed, spinner) {}
+
+  function draw() {
+    boardCtx.save();
+    boardCtx.clearRect(0, 0, boardWidth, boardHeight);
+    spinnerData.forEach(drawSpinner);
+    boardCtx.restore();
+  }
+
+  function drawSpinner(spinner) {
+    // TODO: Layer transform
+    //boardCtx.save();
+    const x = getLeft(spinner);
+    const y = getTop(spinner);
+    //boardCtx.translate(x, y);
+    //console.log('Drawing', spinner.data.image.url);
+    boardCtx.drawImage(imagesByURL[spinner.data.image.url], 0, 0);
+    //boardCtx.restore();
+  }
 
   var spinnerRoot = d3.select('#' + layer.id);
   var spinners = spinnerRoot
@@ -164,11 +218,6 @@ function renderSpinners({
 
     addClickTarget.bind(this)(onClick, probable, spinner);
   }
-}
-
-function squarifyBoard() {
-  var boardWidth = board.node().getBoundingClientRect().width;
-  board.attr('height', boardWidth);
 }
 
 function isAPlainSpinner(s) {

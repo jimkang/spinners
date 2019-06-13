@@ -91,6 +91,26 @@ button {
 }
 */
 
+#canvases-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+}
+
+#board-canvas {
+  z-index: 1;
+  position: absolute;
+}
+
+#targets-canvas {
+  position: absolute;
+  opacity: 0;
+  z-index: 2;
+}
+
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;
