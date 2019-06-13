@@ -16,6 +16,7 @@ var {
 var board = d3.select('#board');
 var orbitPathRoot = board.select('#orbit-paths');
 var addClickTarget = require('./add-click-target');
+var shouldDisplaySublayout = require('./should-display-sublayout');
 
 const transitionTime = 2000;
 
@@ -40,7 +41,7 @@ function renderSpinners({
     .enter()
     .append('g')
     .classed('spinner', true)
-    .classed('sublayout', accessor({ path: 'data/displaysSublayout' }))
+    .classed('sublayout', shouldDisplaySublayout)
     .attr('width', 100)
     .attr('height', 100);
 
@@ -96,7 +97,7 @@ function renderSpinners({
   // click-target is on top so that it can be clicked on mobile clients.
   newSpinners.each(curry(addClickTarget)(onClick, probable));
 
-  updatableSpinners.filter(shouldRenderSublayout).each(renderSublayout);
+  updatableSpinners.filter(shouldDisplaySublayout).each(renderSublayout);
 
   updatableSpinners
     .select('.rotation-transform')
@@ -171,7 +172,7 @@ function squarifyBoard() {
 }
 
 function isAPlainSpinner(s) {
-  return !s.data.displaysSublayout;
+  return !shouldDisplaySublayout(s);
 }
 
 function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
@@ -196,9 +197,5 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
 //    }
 //  }
 // }
-
-function shouldRenderSublayout(spinner) {
-  return spinner.data.displaysSublayout && spinner.data.sublayout;
-}
 
 module.exports = renderSpinners;

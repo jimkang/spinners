@@ -201,27 +201,15 @@ module.exports = {
     source: 'http://pngimg.com/download/32449',
     attribution: 'Creative Commons 4.0 BY-NC'
   },
-  plate: {
-    name: 'Plate',
-    url: 'media/Clipart_plate.svg',
-    source: 'https://commons.wikimedia.org/wiki/File:Clipart_plate.svg',
-    attribution: 'Public Domain'
-  },
   plateDrawing: {
     name: 'Plate drawing',
     url: 'media/plate-with-food.svg',
     source: 'http://www.publicdomainfiles.com/show_file.php?id=13529376018016',
     attribution: 'Public domain'
   },
-  concavePlate: {
-    name: 'Concave plate',
-    url: 'media/plate_PNG5324.png',
-    source: 'http://pngimg.com/download/5324',
-    attribution: 'Creative Commons 4.0 BY-NC'
-  },
   vitruvianMan: {
     name: 'Vitruvian Man',
-    url: 'media/uomo_vitruviano_accademia_v.svg',
+    url: 'media/uomo_vitruviano_accademia_v.png',
     source:
       'https://en.wikipedia.org/wiki/File:Da_Vinci_Vitruve_Luc_Viatour.jpg#/media/File:Uomo_Vitruviano.jpg',
     attribution: "Public Domain Vitruvian Man, Gallerie dell'Accademia, Venice"

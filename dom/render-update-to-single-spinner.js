@@ -11,6 +11,7 @@ var {
   getOrbitDuration
 } = require('./spinner-accessors');
 var animateHalo = require('./animate-halo');
+var shouldDisplaySublayout = require('./should-display-sublayout');
 
 const transitionTime = 2000;
 
@@ -27,7 +28,7 @@ function renderUpdateToSingleSpinner({
     return;
   }
 
-  if (spinnerDatum.data.displaysSublayout) {
+  if (shouldDisplaySublayout(spinnerDatum)) {
     let orbitDatum = makeOrbitForSpinner(spinnerDatum);
     let path = d3.select('#' + orbitDatum.id);
     path
@@ -56,7 +57,7 @@ function renderUpdateToSingleSpinner({
   }
   rotationTransform.attr('dur', getDuration);
 
-  if (spinnerDatum.data.displaysSublayout) {
+  if (shouldDisplaySublayout(spinnerDatum)) {
     spinner
       .transition()
       .duration(transitionTime)

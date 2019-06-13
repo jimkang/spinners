@@ -9,6 +9,7 @@ var RandomId = require('@jimkang/randomid');
 var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
 //var updateOrbit = require('./dom/update-orbit');
 var Probable = require('probable').createProbable;
+var isSafari = require('./is-safari');
 
 var spinnerFlowKit;
 
@@ -22,10 +23,20 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed }) {
+function followRoute({ seed, maxLayers }) {
   if (!seed) {
     seedWithDate();
     return;
+  }
+
+  if (isNaN(maxLayers)) {
+    if (isSafari()) {
+      // This is a way of keeping the total number of DOM elements down.
+      // If there's a lot, things get choppy. Safari seems to stop moving things around 500 elements.
+      maxLayers = 1;
+    } else {
+      maxLayers = 10;
+    }
   }
 
   if (!spinnerFlowKit || spinnerFlowKit.getSeed() !== seed) {
@@ -38,7 +49,7 @@ function followRoute({ seed }) {
   var layoutTable = LayoutTable({ random });
   var { layers, syncPositionsAcrossLayers, layoutStyle } = layoutTable.roll();
   // TODO: tablenest needs to preserve the array-ness of a def.
-  layers = convertToArray(layers);
+  layers = convertToArray(layers).slice(0, maxLayers);
 
   //wireControls({ refresh: seedWithDate });
 

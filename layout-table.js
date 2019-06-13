@@ -58,7 +58,7 @@ function LayoutTables({ random }) {
       // Intangible things
       [1, l(['cyclone', 'galaxy'])],
       // Foods
-      [1, l(['pizza', 'sushi', 'donut', 'plate', 'cookie'])],
+      [1, l(['pizza', 'sushi', 'donut', 'cookie'])],
       // All things
       [
         3,
@@ -73,7 +73,7 @@ function LayoutTables({ random }) {
           'sushi',
           'donut',
           'plate',
-          'figureDrawing',
+          //'figureDrawing',
           'gear',
           'cookie',
           'cyclone',

@@ -153,11 +153,7 @@ function SpinnerTables({ random }) {
     }),
     plate: makeSpinnerTable({
       radius: d`d2+2`,
-      images: [
-        [2, images.plate],
-        [2, images.plateDrawing],
-        [2, images.concavePlate]
-      ]
+      images: [[2, images.plateDrawing]]
     }),
     figureDrawing: makeSpinnerTable({
       radius: d`d4`,
@@ -205,7 +201,7 @@ function SpinnerTables({ random }) {
       orbitCenter: orbitCenterTable,
       orbitDirection: orbitDirectionTable,
       alterationSchedule: alterationScheduleTable,
-      displaysSublayout: [[1, true], [2, false]]
+      displaysSublayout: [[1, 'always'], [2, 'onlyIfNotOnSafari'], [6, 'never']]
     });
   }
 }
