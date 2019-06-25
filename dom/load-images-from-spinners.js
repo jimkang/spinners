@@ -12,15 +12,19 @@ function loadImagesFromSpinners({ imageDict, spinnerData }, done) {
   function loadImage(url) {
     var img = new Image();
     img.onload = onLoad;
-    imageDict[url] = img;
+    imageDict[url] = { img };
     img.src = url;
-  }
 
-  function onLoad() {
-    outstandingLoads -= 1;
-    // TODO: Also set a time limit.
-    if (outstandingLoads < 1) {
-      done();
+    function onLoad() {
+      imageDict[url].width = +img.width;
+      imageDict[url].height = +img.height;
+      //console.log('Loaded', imageDict[url]);
+
+      outstandingLoads -= 1;
+      // TODO: Also set a time limit.
+      if (outstandingLoads < 1) {
+        done();
+      }
     }
   }
 

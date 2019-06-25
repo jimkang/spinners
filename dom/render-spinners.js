@@ -35,7 +35,7 @@ const viewBoxWidth = 100;
 
 function renderSpinners({
   spinnerData,
-  layer,
+  //layer,
   currentlyWithinASublayout = false,
   layoutStyle,
   onClick,
@@ -70,7 +70,8 @@ function renderSpinners({
   // All radiuses on spinners are specified in relation to a viewBox with a width
   // of 100.
   function updateSpinner(elapsed, spinner) {
-    const scale = scaleToViewBox(diameter(spinner));
+    const scale = getScaleForSpinner(spinner);
+
     spinner.transform = [
       scale,
       0,
@@ -79,7 +80,7 @@ function renderSpinners({
       scaleToViewBox(getLeft(spinner)),
       scaleToViewBox(getTop(spinner))
     ];
-    console.log(spinner.transform);
+    //console.log(spinner.transform);
   }
 
   function draw() {
@@ -89,16 +90,14 @@ function renderSpinners({
     boardCtx.restore();
   }
 
-  // We draw the images at 1x1 because we let the scale in the transform get it to
-  // the necessary size.
   function drawSpinner(spinner) {
     var transform = inheritedTransforms.reduce(addMatrices, spinner.transform);
-    const sDiameter = diameter(spinner);
+    var image = imagesByURL[spinner.data.image.url];
     //console.log('sDiameter', sDiameter);
     boardCtx.save();
     boardCtx.setTransform.apply(boardCtx, transform);
     //console.log('Drawing', spinner.data.image.url);
-    boardCtx.drawImage(imagesByURL[spinner.data.image.url], 0, 0, 1, 1);
+    boardCtx.drawImage(image.img, 0, 0, image.width, image.height);
     boardCtx.restore();
   }
 
@@ -111,6 +110,16 @@ function renderSpinners({
       v1[4] + v2[4],
       v1[5] + v2[5]
     ];
+  }
+
+  // The goal is to fit it into its diameter.
+  function getScaleForSpinner(spinner) {
+    var image = imagesByURL[spinner.data.image.url];
+    var longestSide = image.width;
+    if (image.height > longestSide) {
+      longestSide = image.height;
+    }
+    return (diameter(spinner) * canvasUnitsPerViewBoxUnit) / longestSide;
   }
 
   /*
