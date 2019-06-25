@@ -46,7 +46,7 @@ function renderSpinners({
   const boardHeight = boardCanvas.attr('height');
   const canvasUnitsPerViewBoxUnit = boardWidth / viewBoxWidth;
   if (timer) {
-    timer.cancel();
+    timer.stop();
   }
 
   var imagesByURL = {};

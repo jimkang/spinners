@@ -3,7 +3,7 @@ var SpinnerFlow = require('./flows/spinner-flow');
 var RouteState = require('route-state');
 var LayoutTable = require('./layout-table');
 var seedrandom = require('seedrandom');
-//var wireControls = require('./dom/wire-controls');
+var wireControls = require('./dom/wire-controls');
 var convertToArray = require('./convert-to-array');
 var RandomId = require('@jimkang/randomid');
 var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
@@ -52,7 +52,7 @@ function followRoute({ seed, maxLayers }) {
   // TODO: tablenest needs to preserve the array-ness of a def.
   layers = convertToArray(layers).slice(0, maxLayers);
 
-  //wireControls({ refresh: seedWithDate });
+  wireControls({ refresh: seedWithDate });
 
   squarifyBoard();
   spinnerFlowKit.go({ layers, syncPositionsAcrossLayers, layoutStyle });
