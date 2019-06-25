@@ -27,13 +27,11 @@ var sb = require('standard-bail')();
 var boardCanvas = d3.select('#board-canvas');
 //var targetsCanvas = d3.select('#targets-canvas');
 
-const boardWidth = boardCanvas.attr('width');
-const boardHeight = boardCanvas.attr('height');
-
 var boardCtx = boardCanvas.node().getContext('2d');
 var timer;
 
 //const transitionTime = 2000;
+const viewBoxWidth = 100;
 
 function renderSpinners({
   spinnerData,
@@ -44,6 +42,9 @@ function renderSpinners({
   probable,
   inheritedTransforms = []
 }) {
+  const boardWidth = boardCanvas.attr('width');
+  const boardHeight = boardCanvas.attr('height');
+  const canvasUnitsPerViewBoxUnit = boardWidth / viewBoxWidth;
   if (timer) {
     timer.cancel();
   }
@@ -66,8 +67,19 @@ function renderSpinners({
   }
 
   // Transform elements go: [xScale, ySkew, xSkew, yScale, xTranslate, yTranslate]
+  // All radiuses on spinners are specified in relation to a viewBox with a width
+  // of 100.
   function updateSpinner(elapsed, spinner) {
-    spinner.transform = [1, 0, 0, 1, getLeft(spinner), getTop(spinner)];
+    const scale = scaleToViewBox(diameter(spinner));
+    spinner.transform = [
+      scale,
+      0,
+      0,
+      scale,
+      scaleToViewBox(getLeft(spinner)),
+      scaleToViewBox(getTop(spinner))
+    ];
+    console.log(spinner.transform);
   }
 
   function draw() {
@@ -77,19 +89,16 @@ function renderSpinners({
     boardCtx.restore();
   }
 
+  // We draw the images at 1x1 because we let the scale in the transform get it to
+  // the necessary size.
   function drawSpinner(spinner) {
     var transform = inheritedTransforms.reduce(addMatrices, spinner.transform);
     const sDiameter = diameter(spinner);
+    //console.log('sDiameter', sDiameter);
     boardCtx.save();
     boardCtx.setTransform.apply(boardCtx, transform);
     //console.log('Drawing', spinner.data.image.url);
-    boardCtx.drawImage(
-      imagesByURL[spinner.data.image.url],
-      0,
-      0,
-      sDiameter,
-      sDiameter
-    );
+    boardCtx.drawImage(imagesByURL[spinner.data.image.url], 0, 0, 1, 1);
     boardCtx.restore();
   }
 
@@ -241,6 +250,10 @@ function renderSpinners({
     addClickTarget.bind(this)(onClick, probable, spinner);
   }
   */
+
+  function scaleToViewBox(n) {
+    return n * canvasUnitsPerViewBoxUnit;
+  }
 }
 
 function isAPlainSpinner(s) {
