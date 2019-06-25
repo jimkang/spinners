@@ -85,11 +85,13 @@ function renderSpinners({
 
     const msPerRotation = 1000 / spinner.data.speed;
     const rotation = ((2 * Math.PI * elapsed) / msPerRotation) % (2 * Math.PI);
-    console.log(elapsed, rotation);
+    //console.log(elapsed, rotation);
     const rotCos = Math.cos(rotation);
     const rotSin = Math.sin(rotation);
+    const unscaledRInCanvasUnits =
+      (spinner.r * canvasUnitsPerViewBoxUnit) / scale;
     // Rotation around the center is a translation moving the
-    // center to the upper left corner, then rotation,
+    // center to the upper left corner, then rotating around that corner,
     // then translating things back.
     // When you multiply those three 3x3 matrices together, you get
     // this:
@@ -98,14 +100,19 @@ function renderSpinners({
       rotSin,
       -rotSin,
       rotCos,
-      spinner.r * rotCos - spinner.r * rotSin - spinner.r,
-      spinner.r * rotSin + spinner.r * rotCos - spinner.r
+      -unscaledRInCanvasUnits * rotCos +
+        unscaledRInCanvasUnits * rotSin +
+        unscaledRInCanvasUnits,
+      -unscaledRInCanvasUnits * rotSin -
+        unscaledRInCanvasUnits * rotCos +
+        unscaledRInCanvasUnits
     ];
     //console.log(scaleAndTranslateTransform);
     spinner.transform = multiplyTransforms(
       scaleAndTranslateTransform,
       rotateAroundCenterTransform
     );
+    //spinner.transform = rotateAroundCenterTransform;
     //console.log(spinner.transform);
   }
 
