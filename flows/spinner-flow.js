@@ -1,5 +1,5 @@
 var renderSpinners = require('../dom/render-spinners');
-var renderLayers = require('../dom/render-layers');
+//var renderLayers = require('../dom/render-layers');
 var seedrandom = require('seedrandom');
 var SpinnerTables = require('../spinner-tables');
 var LayoutTable = require('../layout-table');
@@ -9,8 +9,8 @@ var RandomId = require('@jimkang/randomid');
 var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
 //var cloneDeep = require('lodash.clonedeep');
-var ep = require('errorback-promise');
-var scheduleHalos = require('../dom/schedule-halos');
+//var ep = require('errorback-promise');
+//var scheduleHalos = require('../dom/schedule-halos');
 
 function SpinnerFlow({ seed, onClick }) {
   var random = seedrandom(seed);
@@ -35,25 +35,21 @@ function SpinnerFlow({ seed, onClick }) {
     document.body.classList[darkBG ? 'add' : 'remove']('dark');
     document.body.classList[darkBG ? 'remove' : 'add']('light');
 
-    var renderLayerResult = await ep(renderLayers, { layerData: layers });
-    if (renderLayerResult.error) {
-      console.error(renderLayerResult.error, renderLayerResult.error.stack);
-      return;
-    }
+    //var renderLayerResult = await ep(renderLayers, { layerData: layers });
+    //if (renderLayerResult.error) {
+    //  console.error(renderLayerResult.error, renderLayerResult.error.stack);
+    //  return;
+    //}
     var spinnerDataForLayers = getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
-      layers: layers.filter(
-        curry(layersDoNotMatch)(renderLayerResult.values[0])
-      ),
+      layers,
       currentDepth: 0,
       layoutStyle
     });
-    // TODO: Should just take all layers in render call.
-    //spinnerDataForLayers.forEach(
-    //  curry(callRenderSpinners)(layoutStyle, layers)
-    //);
-    callRenderSpinners(layoutStyle, layers, spinnerDataForLayers[0]);
-    scheduleHalos({ probable });
+    spinnerDataForLayers.forEach(
+      curry(callRenderSpinners)(layoutStyle, layers)
+    );
+    //scheduleHalos({ probable });
 
     function getSpinnerDataForLayers({
       syncPositionsAcrossLayers,
@@ -227,6 +223,7 @@ function wrapInPositionObjects({ src, spinnerData, layerIndex }) {
   return posObjs;
 }
 
+/*
 function layersDoNotMatch(l1, l2) {
   if (!l1) {
     return true;
@@ -239,5 +236,6 @@ function layersDoNotMatch(l1, l2) {
   }
   return false;
 }
+*/
 
 module.exports = SpinnerFlow;

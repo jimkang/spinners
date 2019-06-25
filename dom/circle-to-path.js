@@ -64,9 +64,7 @@ function arcsToPath({ center, edgeStart, arcs }) {
 }
 
 function arcToPathCmd(arc) {
-  return `A ${arc.rx} ${arc.ry} ${arc.angle} ${arc.largeArc} ${arc.sweep} ${
-    arc.destX
-  }, ${arc.destY}\n`;
+  return `A ${arc.rx} ${arc.ry} ${arc.angle} ${arc.largeArc} ${arc.sweep} ${arc.destX}, ${arc.destY}\n`;
 }
 
 module.exports = { circleToPath, circleToArcs, arcsToPath, arcsToBezierPath };

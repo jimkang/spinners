@@ -1,31 +1,31 @@
 var d3 = require('d3-selection');
 var Timer = require('d3-timer').timer;
 require('d3-transition');
-var accessor = require('accessor');
-var renderLayers = require('./render-layers');
-var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
-var ep = require('errorback-promise');
+//var accessor = require('accessor');
+//var renderLayers = require('./render-layers');
+//var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
+//var ep = require('errorback-promise');
 var curry = require('lodash.curry');
 var {
   diameter,
   getLeft,
-  getTop,
-  getTransform,
-  getDuration,
-  getAnimateStartRotation,
-  getAnimateEndRotation,
-  getOrbitDuration
+  getTop
+  //getTransform,
+  //getDuration,
+  //getAnimateStartRotation,
+  //getAnimateEndRotation,
+  //getOrbitDuration
 } = require('./spinner-accessors');
-var board = d3.select('#board');
-var orbitPathRoot = board.select('#orbit-paths');
-var addClickTarget = require('./add-click-target');
+//var board = d3.select('#board');
+//var orbitPathRoot = board.select('#orbit-paths');
+//var addClickTarget = require('./add-click-target');
 var shouldDisplaySublayout = require('./should-display-sublayout');
 var handleError = require('handle-error-web');
 var loadImagesFromSpinners = require('./load-images-from-spinners');
 var sb = require('standard-bail')();
 
 var boardCanvas = d3.select('#board-canvas');
-var targetsCanvas = d3.select('#targets-canvas');
+//var targetsCanvas = d3.select('#targets-canvas');
 
 const boardWidth = boardCanvas.attr('width');
 const boardHeight = boardCanvas.attr('height');
@@ -33,7 +33,7 @@ const boardHeight = boardCanvas.attr('height');
 var boardCtx = boardCanvas.node().getContext('2d');
 var timer;
 
-const transitionTime = 2000;
+//const transitionTime = 2000;
 
 function renderSpinners({
   spinnerData,
@@ -41,7 +41,8 @@ function renderSpinners({
   currentlyWithinASublayout = false,
   layoutStyle,
   onClick,
-  probable
+  probable,
+  inheritedTransforms = []
 }) {
   if (timer) {
     timer.cancel();
@@ -64,7 +65,10 @@ function renderSpinners({
     draw();
   }
 
-  function updateSpinner(elapsed, spinner) {}
+  // Transform elements go: [xScale, ySkew, xSkew, yScale, xTranslate, yTranslate]
+  function updateSpinner(elapsed, spinner) {
+    spinner.transform = [1, 0, 0, 1, getLeft(spinner), getTop(spinner)];
+  }
 
   function draw() {
     boardCtx.save();
@@ -74,16 +78,34 @@ function renderSpinners({
   }
 
   function drawSpinner(spinner) {
-    // TODO: Layer transform
-    //boardCtx.save();
-    const x = getLeft(spinner);
-    const y = getTop(spinner);
-    //boardCtx.translate(x, y);
+    var transform = inheritedTransforms.reduce(addMatrices, spinner.transform);
+    const sDiameter = diameter(spinner);
+    boardCtx.save();
+    boardCtx.setTransform.apply(boardCtx, transform);
     //console.log('Drawing', spinner.data.image.url);
-    boardCtx.drawImage(imagesByURL[spinner.data.image.url], 0, 0);
-    //boardCtx.restore();
+    boardCtx.drawImage(
+      imagesByURL[spinner.data.image.url],
+      0,
+      0,
+      sDiameter,
+      sDiameter
+    );
+    boardCtx.restore();
   }
 
+  function addMatrices(v1, v2) {
+    return [
+      v1[0] + v2[0],
+      v1[1] + v2[1],
+      v1[2] + v2[2],
+      v1[3] + v2[3],
+      v1[4] + v2[4],
+      v1[5] + v2[5]
+    ];
+  }
+
+  /*
+  // Original DOM renderSpinners.
   var spinnerRoot = d3.select('#' + layer.id);
   var spinners = spinnerRoot
     .selectAll('.spinner')
@@ -218,6 +240,7 @@ function renderSpinners({
 
     addClickTarget.bind(this)(onClick, probable, spinner);
   }
+  */
 }
 
 function isAPlainSpinner(s) {
