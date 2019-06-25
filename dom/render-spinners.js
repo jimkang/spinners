@@ -66,13 +66,15 @@ function renderSpinners({
     draw();
   }
 
-  // Transform elements go: [xScale, ySkew, xSkew, yScale, xTranslate, yTranslate]
-  // All radiuses on spinners are specified in relation to a viewBox with a width
-  // of 100.
+  // Transform elements go:
+  // [xScale, ySkew, xSkew, yScale, xTranslate, yTranslate]
+  // All radiuses on spinners are specified in relation to a
+  // viewBox with a widthof 100.
+  // speed: The inverse of the speed in how many seconds it takes for
+  // a spinner to rotate all the way (2 pi radians).
   function updateSpinner(elapsed, spinner) {
     const scale = getScaleForSpinner(spinner);
-
-    spinner.transform = [
+    var scaleAndTranslateTransform = [
       scale,
       0,
       0,
@@ -80,6 +82,30 @@ function renderSpinners({
       scaleToViewBox(getLeft(spinner)),
       scaleToViewBox(getTop(spinner))
     ];
+
+    const msPerRotation = 1000 / spinner.data.speed;
+    const rotation = ((2 * Math.PI * elapsed) / msPerRotation) % (2 * Math.PI);
+    console.log(elapsed, rotation);
+    const rotCos = Math.cos(rotation);
+    const rotSin = Math.sin(rotation);
+    // Rotation around the center is a translation moving the
+    // center to the upper left corner, then rotation,
+    // then translating things back.
+    // When you multiply those three 3x3 matrices together, you get
+    // this:
+    var rotateAroundCenterTransform = [
+      rotCos,
+      rotSin,
+      -rotSin,
+      rotCos,
+      spinner.r * rotCos - spinner.r * rotSin - spinner.r,
+      spinner.r * rotSin + spinner.r * rotCos - spinner.r
+    ];
+    //console.log(scaleAndTranslateTransform);
+    spinner.transform = multiplyTransforms(
+      scaleAndTranslateTransform,
+      rotateAroundCenterTransform
+    );
     //console.log(spinner.transform);
   }
 
@@ -91,6 +117,7 @@ function renderSpinners({
   }
 
   function drawSpinner(spinner) {
+    // TODO: This should probably be multiply.
     var transform = inheritedTransforms.reduce(addMatrices, spinner.transform);
     var image = imagesByURL[spinner.data.image.url];
     //console.log('sDiameter', sDiameter);
@@ -291,5 +318,16 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
 //    }
 //  }
 // }
+
+function multiplyTransforms(a, b) {
+  return [
+    a[0] * b[0] + a[2] * b[1],
+    a[1] * b[0] + a[3] * b[1],
+    a[0] * b[2] + a[2] * b[3],
+    a[1] * b[2] + a[3] * b[3],
+    a[0] * b[4] + a[2] * b[5] + a[4],
+    a[1] * b[4] + a[3] * b[5] + a[5]
+  ];
+}
 
 module.exports = renderSpinners;
