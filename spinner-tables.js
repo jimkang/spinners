@@ -21,7 +21,7 @@ var speedTables = {
 };
 
 var orbitCenterTable = [
-  [10, { x: 50, y: 50 }],
+  [20, { x: 50, y: 50 }],
   [1, { x: 25, y: 50 }],
   [1, { x: 75, y: 50 }],
   [1, { x: 50, y: 25 }],

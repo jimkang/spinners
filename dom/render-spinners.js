@@ -88,8 +88,8 @@ function renderSpinners({
       msPerOrbit = 1000 / spinner.data.orbitSpeed;
       orbitRotation = ((2 * Math.PI * elapsed) / msPerOrbit) % (2 * Math.PI);
       let { x, y } = positionOnCircle(
-        spinner.x,
-        spinner.y,
+        spinner.data.orbitCenter.x,
+        spinner.data.orbitCenter.y,
         orbitRotation,
         spinner.data.orbitR
       );
@@ -119,26 +119,6 @@ function renderSpinners({
         unscaledRInCanvasUnits
       )
     );
-
-    if (spinner.data.orbitR) {
-      // Add orbit transform.
-      //orbitCenter
-      //orbitSpeed
-      //orbitDirection
-      // TODO: Position actually depends on how many things are in orbit.
-      var unscaledCx = viewboxUnitsToCanvasUnits(
-        spinner.data.orbitCenter.x,
-        scale
-      );
-      var unscaledCy = viewboxUnitsToCanvasUnits(
-        spinner.data.orbitCenter.y,
-        scale
-      );
-      spinner.transform = multiplyTransforms(
-        spinner.transform,
-        getRotationTransformAroundCenter(orbitRotation, unscaledCx, unscaledCy)
-      );
-    }
     //spinner.transform = rotateAroundCenterTransform;
     //console.log(spinner.transform);
   }
