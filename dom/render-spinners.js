@@ -135,7 +135,7 @@ function renderSpinners({
     var transform = inheritedTransforms.reduce(addMatrices, spinner.transform);
     var image = imagesByURL[spinner.data.image.url];
     //console.log('sDiameter', sDiameter);
-    boardCtx.save();
+    //boardCtx.save();
     boardCtx.setTransform.apply(boardCtx, transform);
     //console.log('Drawing', spinner.data.image.url);
     boardCtx.drawImage(
@@ -149,7 +149,7 @@ function renderSpinners({
       image.width,
       image.height
     );
-    boardCtx.restore();
+    //boardCtx.restore();
   }
 
   function addMatrices(v1, v2) {
