@@ -158,7 +158,17 @@ function renderSpinners({
     boardCtx.save();
     boardCtx.setTransform.apply(boardCtx, transform);
     //console.log('Drawing', spinner.data.image.url);
-    boardCtx.drawImage(image.img, 0, 0, image.width, image.height);
+    boardCtx.drawImage(
+      image.img,
+      0,
+      0,
+      image.width,
+      image.height,
+      0,
+      0,
+      image.width,
+      image.height
+    );
     boardCtx.restore();
   }
 
