@@ -3,7 +3,7 @@ var Timer = require('d3-timer').timer;
 require('d3-transition');
 //var accessor = require('accessor');
 //var renderLayers = require('./render-layers');
-//var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
+var { positionOnCircle } = require('./orbit');
 //var ep = require('errorback-promise');
 var curry = require('lodash.curry');
 var {
@@ -19,7 +19,7 @@ var {
 //var board = d3.select('#board');
 //var orbitPathRoot = board.select('#orbit-paths');
 //var addClickTarget = require('./add-click-target');
-var shouldDisplaySublayout = require('./should-display-sublayout');
+//var shouldDisplaySublayout = require('./should-display-sublayout');
 var handleError = require('handle-error-web');
 var loadImagesFromSpinners = require('./load-images-from-spinners');
 var sb = require('standard-bail')();
@@ -27,7 +27,7 @@ var sb = require('standard-bail')();
 var boardCanvas = d3.select('#board-canvas');
 //var targetsCanvas = d3.select('#targets-canvas');
 
-var boardCtx = boardCanvas.node().getContext('2d');
+var boardCtx = boardCanvas.node().getContext('2d', { alpha: false });
 var timer;
 
 //const transitionTime = 2000;
@@ -36,10 +36,10 @@ const viewBoxWidth = 100;
 function renderSpinners({
   spinnerData,
   //layer,
-  currentlyWithinASublayout = false,
-  layoutStyle,
-  onClick,
-  probable,
+  //currentlyWithinASublayout = false,
+  //layoutStyle,
+  // onClick,
+  //  probable,
   inheritedTransforms = []
 }) {
   const boardWidth = boardCanvas.attr('width');
@@ -62,6 +62,10 @@ function renderSpinners({
   }
 
   function update(elapsed) {
+    // TODO: Stop calling renderSpinners once per layer; that will
+    // always overwrite previous layers.
+    // Instead, run updates for each layer right here.
+    // Also TODO: Have updateSpinner recurse into sublayouts.
     spinnerData.forEach(curry(updateSpinner)(elapsed));
     draw();
   }
@@ -74,44 +78,67 @@ function renderSpinners({
   // a spinner to rotate all the way (2 pi radians).
   function updateSpinner(elapsed, spinner) {
     const scale = getScaleForSpinner(spinner);
+
+    var left = getLeft(spinner);
+    var top = getTop(spinner);
+    var msPerOrbit;
+    var orbitRotation;
+
+    if (spinner.data.orbitR) {
+      msPerOrbit = 1000 / spinner.data.orbitSpeed;
+      orbitRotation = ((2 * Math.PI * elapsed) / msPerOrbit) % (2 * Math.PI);
+      let { x, y } = positionOnCircle(
+        spinner.x,
+        spinner.y,
+        orbitRotation,
+        spinner.data.orbitR
+      );
+      left = x;
+      top = y;
+    }
+
     var scaleAndTranslateTransform = [
       scale,
       0,
       0,
       scale,
-      scaleToViewBox(getLeft(spinner)),
-      scaleToViewBox(getTop(spinner))
+      scaleToViewBox(left),
+      scaleToViewBox(top)
     ];
 
     const msPerRotation = 1000 / spinner.data.speed;
     const rotation = ((2 * Math.PI * elapsed) / msPerRotation) % (2 * Math.PI);
     //console.log(elapsed, rotation);
-    const rotCos = Math.cos(rotation);
-    const rotSin = Math.sin(rotation);
-    const unscaledRInCanvasUnits =
-      (spinner.r * canvasUnitsPerViewBoxUnit) / scale;
-    // Rotation around the center is a translation moving the
-    // center to the upper left corner, then rotating around that corner,
-    // then translating things back.
-    // When you multiply those three 3x3 matrices together, you get
-    // this:
-    var rotateAroundCenterTransform = [
-      rotCos,
-      rotSin,
-      -rotSin,
-      rotCos,
-      -unscaledRInCanvasUnits * rotCos +
-        unscaledRInCanvasUnits * rotSin +
-        unscaledRInCanvasUnits,
-      -unscaledRInCanvasUnits * rotSin -
-        unscaledRInCanvasUnits * rotCos +
-        unscaledRInCanvasUnits
-    ];
-    //console.log(scaleAndTranslateTransform);
+    const unscaledRInCanvasUnits = viewboxUnitsToCanvasUnits(spinner.r, scale);
+
     spinner.transform = multiplyTransforms(
       scaleAndTranslateTransform,
-      rotateAroundCenterTransform
+      getRotationTransformAroundCenter(
+        rotation,
+        unscaledRInCanvasUnits,
+        unscaledRInCanvasUnits
+      )
     );
+
+    if (spinner.data.orbitR) {
+      // Add orbit transform.
+      //orbitCenter
+      //orbitSpeed
+      //orbitDirection
+      // TODO: Position actually depends on how many things are in orbit.
+      var unscaledCx = viewboxUnitsToCanvasUnits(
+        spinner.data.orbitCenter.x,
+        scale
+      );
+      var unscaledCy = viewboxUnitsToCanvasUnits(
+        spinner.data.orbitCenter.y,
+        scale
+      );
+      spinner.transform = multiplyTransforms(
+        spinner.transform,
+        getRotationTransformAroundCenter(orbitRotation, unscaledCx, unscaledCy)
+      );
+    }
     //spinner.transform = rotateAroundCenterTransform;
     //console.log(spinner.transform);
   }
@@ -297,8 +324,13 @@ function renderSpinners({
   function scaleToViewBox(n) {
     return n * canvasUnitsPerViewBoxUnit;
   }
+
+  function viewboxUnitsToCanvasUnits(n, scale) {
+    return (n * canvasUnitsPerViewBoxUnit) / scale;
+  }
 }
 
+/*
 function isAPlainSpinner(s) {
   return !shouldDisplaySublayout(s);
 }
@@ -316,6 +348,7 @@ function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
       .classed(className, true)
   );
 }
+*/
 
 // function checkSpinnerTransform() {
 //  if (!this.getAttribute('transform')) {
@@ -334,6 +367,25 @@ function multiplyTransforms(a, b) {
     a[1] * b[2] + a[3] * b[3],
     a[0] * b[4] + a[2] * b[5] + a[4],
     a[1] * b[4] + a[3] * b[5] + a[5]
+  ];
+}
+
+// Rotation around the center is a translation moving the
+// center to the upper left corner, then rotating around that corner,
+// then translating things back.
+// When you multiply those three 3x3 matrices together, you get
+// this:
+function getRotationTransformAroundCenter(rotation, cx, cy) {
+  const rotCos = Math.cos(rotation);
+  const rotSin = Math.sin(rotation);
+
+  return [
+    rotCos,
+    rotSin,
+    -rotSin,
+    rotCos,
+    -cx * rotCos + cy * rotSin + cx,
+    -cy * rotSin - cx * rotCos + cy
   ];
 }
 

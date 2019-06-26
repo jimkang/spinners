@@ -94,5 +94,6 @@ function getOrbitIdForSpinner(spinner) {
 
 module.exports = {
   makeOrbitForSpinner,
-  getOrbitIdForSpinner
+  getOrbitIdForSpinner,
+  positionOnCircle
 };
