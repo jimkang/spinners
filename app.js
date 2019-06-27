@@ -71,8 +71,10 @@ function followRoute({ seed, maxLayers }) {
       sd.alterationIndex = 0;
     }
 
-    if (spinner.data.displaysSublayout || alteration === 'moveToNextSeed') {
-      if (spinner.data.sublayout) {
+    const couldMoveToSublayout =
+      spinner.data.displaysSublayout !== 'never' && spinner.data.sublayout;
+    if (couldMoveToSublayout || alteration === 'moveToNextSeed') {
+      if (couldMoveToSublayout) {
         nextSeed = spinner.data.sublayout.seed;
       } else {
         nextSeed = randomId(4);
