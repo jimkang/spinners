@@ -2,6 +2,10 @@ function diameter(spinner) {
   return spinner.r * 2;
 }
 
+function negativeR(spinner) {
+  return -spinner.r;
+}
+
 function getTransform(spinner) {
   return `translate(${getLeft(spinner)}, ${getTop(spinner)})`;
 }
@@ -40,6 +44,7 @@ function getOrbitDuration(d) {
 
 module.exports = {
   diameter,
+  negativeR,
   getTransform,
   getLeft,
   getTop,

@@ -16,8 +16,8 @@ function loadImagesFromSpinners({ imageDict, spinnerData }, done) {
     img.src = url;
 
     function onLoad() {
-      imageDict[url].width = ~~(img.width);
-      imageDict[url].height = ~~(img.height);
+      imageDict[url].width = ~~img.width;
+      imageDict[url].height = ~~img.height;
       //console.log('Loaded', imageDict[url]);
 
       outstandingLoads -= 1;

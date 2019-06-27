@@ -10,7 +10,6 @@ var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner
 //var updateOrbit = require('./dom/update-orbit');
 var Probable = require('probable').createProbable;
 var isSafari = require('./is-safari');
-var squarifyBoard = require('./dom/squarify-board');
 
 var spinnerFlowKit;
 
@@ -54,7 +53,6 @@ function followRoute({ seed, maxLayers }) {
 
   wireControls({ refresh: seedWithDate });
 
-  squarifyBoard();
   spinnerFlowKit.go({ layers, syncPositionsAcrossLayers, layoutStyle });
 
   function onClick(spinner) {

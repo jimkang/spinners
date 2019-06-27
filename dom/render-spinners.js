@@ -1,180 +1,27 @@
 var d3 = require('d3-selection');
-var Timer = require('d3-timer').timer;
 require('d3-transition');
-//var accessor = require('accessor');
-//var renderLayers = require('./render-layers');
-var { positionOnCircle } = require('./orbit');
-//var ep = require('errorback-promise');
+var accessor = require('accessor');
+var renderLayers = require('./render-layers');
+var ep = require('errorback-promise');
 var curry = require('lodash.curry');
-var {
-  diameter,
-  getLeft,
-  getTop
-  //getTransform,
-  //getDuration,
-  //getAnimateStartRotation,
-  //getAnimateEndRotation,
-  //getOrbitDuration
-} = require('./spinner-accessors');
-//var board = d3.select('#board');
-//var orbitPathRoot = board.select('#orbit-paths');
-//var addClickTarget = require('./add-click-target');
-//var shouldDisplaySublayout = require('./should-display-sublayout');
-var handleError = require('handle-error-web');
-var loadImagesFromSpinners = require('./load-images-from-spinners');
-var sb = require('standard-bail')();
+var { diameter, negativeR, getTransform } = require('./spinner-accessors');
+var board = d3.select('#board');
+var addClickTarget = require('./add-click-target');
+var shouldDisplaySublayout = require('./should-display-sublayout');
+var orbitScheduler = require('./orbit-scheduler');
 
-var boardCanvas = d3.select('#board-canvas');
-//var targetsCanvas = d3.select('#targets-canvas');
-
-var boardCtx = boardCanvas.node().getContext('2d', { alpha: false });
-var timer;
-
-//const transitionTime = 2000;
-const viewBoxWidth = 100;
+const transitionTime = 2000;
 
 function renderSpinners({
   spinnerData,
-  //layer,
-  //currentlyWithinASublayout = false,
-  //layoutStyle,
-  // onClick,
-  //  probable,
-  inheritedTransforms = []
+  layer,
+  currentlyWithinASublayout = false,
+  layoutStyle,
+  onClick,
+  probable
 }) {
-  const boardWidth = boardCanvas.attr('width');
-  const boardHeight = boardCanvas.attr('height');
-  const canvasUnitsPerViewBoxUnit = boardWidth / viewBoxWidth;
-  if (timer) {
-    timer.stop();
-  }
+  squarifyBoard();
 
-  var imagesByURL = {};
-  loadImagesFromSpinners(
-    { imageDict: imagesByURL, spinnerData },
-    sb(startTimer, handleError)
-  );
-
-  return;
-
-  function startTimer() {
-    timer = Timer(update);
-  }
-
-  function update(elapsed) {
-    // TODO: Stop calling renderSpinners once per layer; that will
-    // always overwrite previous layers.
-    // Instead, run updates for each layer right here.
-    // Also TODO: Have updateSpinner recurse into sublayouts.
-    spinnerData.forEach(curry(updateSpinner)(elapsed));
-    draw();
-  }
-
-  // Transform elements go:
-  // [xScale, ySkew, xSkew, yScale, xTranslate, yTranslate]
-  // All radiuses on spinners are specified in relation to a
-  // viewBox with a widthof 100.
-  // speed: The inverse of the speed in how many seconds it takes for
-  // a spinner to rotate all the way (2 pi radians).
-  function updateSpinner(elapsed, spinner) {
-    const scale = getScaleForSpinner(spinner);
-
-    var left = getLeft(spinner);
-    var top = getTop(spinner);
-    var msPerOrbit;
-    var orbitRotation;
-
-    if (spinner.data.orbitR) {
-      msPerOrbit = 1000 / spinner.data.orbitSpeed;
-      orbitRotation = ((2 * Math.PI * elapsed) / msPerOrbit) % (2 * Math.PI);
-      let { x, y } = positionOnCircle(
-        spinner.data.orbitCenter.x,
-        spinner.data.orbitCenter.y,
-        orbitRotation,
-        spinner.data.orbitR
-      );
-      left = x;
-      top = y;
-    }
-
-    var scaleAndTranslateTransform = [
-      scale,
-      0,
-      0,
-      scale,
-      scaleToViewBox(left),
-      scaleToViewBox(top)
-    ];
-
-    const msPerRotation = 1000 / spinner.data.speed;
-    const rotation = ((2 * Math.PI * elapsed) / msPerRotation) % (2 * Math.PI);
-    //console.log(elapsed, rotation);
-    const unscaledRInCanvasUnits = viewboxUnitsToCanvasUnits(spinner.r, scale);
-
-    spinner.transform = multiplyTransforms(
-      scaleAndTranslateTransform,
-      getRotationTransformAroundCenter(
-        rotation,
-        unscaledRInCanvasUnits,
-        unscaledRInCanvasUnits
-      )
-    );
-    //spinner.transform = rotateAroundCenterTransform;
-    //console.log(spinner.transform);
-  }
-
-  function draw() {
-    boardCtx.save();
-    boardCtx.clearRect(0, 0, boardWidth, boardHeight);
-    spinnerData.forEach(drawSpinner);
-    boardCtx.restore();
-  }
-
-  function drawSpinner(spinner) {
-    // TODO: This should probably be multiply.
-    var transform = inheritedTransforms.reduce(addMatrices, spinner.transform);
-    var image = imagesByURL[spinner.data.image.url];
-    //console.log('sDiameter', sDiameter);
-    boardCtx.save();
-    boardCtx.transform.apply(boardCtx, transform);
-    //console.log('Drawing', spinner.data.image.url);
-    boardCtx.drawImage(
-      image.img,
-      0,
-      0,
-      image.width,
-      image.height,
-      0,
-      0,
-      image.width,
-      image.height
-    );
-    boardCtx.restore();
-  }
-
-  function addMatrices(v1, v2) {
-    return [
-      v1[0] + v2[0],
-      v1[1] + v2[1],
-      v1[2] + v2[2],
-      v1[3] + v2[3],
-      v1[4] + v2[4],
-      v1[5] + v2[5]
-    ];
-  }
-
-  // The goal is to fit it into its diameter.
-  function getScaleForSpinner(spinner) {
-    var image = imagesByURL[spinner.data.image.url];
-    var longestSide = image.width;
-    if (image.height > longestSide) {
-      longestSide = image.height;
-    }
-    return (diameter(spinner) * canvasUnitsPerViewBoxUnit) / longestSide;
-  }
-
-  /*
-  // Original DOM renderSpinners.
   var spinnerRoot = d3.select('#' + layer.id);
   var spinners = spinnerRoot
     .selectAll('.spinner')
@@ -193,19 +40,11 @@ function renderSpinners({
   var rotationGroups = newSpinners.append('g').classed('rotation-group', true);
   rotationGroups.filter(isAPlainSpinner).append('image');
 
-  addRotationTransform({
-    spinnersSel: rotationGroups,
-    className: 'rotation-transform'
-  });
+  orbitScheduler.cancelOrbits();
+
   if (layoutStyle === 'orbit') {
-    let orbitAnimations = newSpinners
-      .append('animateMotion')
-      .classed('orbit-animation', true)
-      .attr('dur', getOrbitDuration)
-      .attr('repeatCount', 'indefinite');
-    orbitAnimations
-      .append('mpath')
-      .attr('xlink:href', s => `#${getOrbitIdForSpinner(s)}`);
+    newSpinners.classed('orbiting-spinner', true);
+    orbitScheduler.scheduleOrbits();
   }
 
   var updatableSpinners = newSpinners.merge(spinners);
@@ -218,37 +57,20 @@ function renderSpinners({
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
     .transition()
     .duration(transitionTime)
-    .attr('x', 0)
-    .attr('y', 0)
+    // Setting the position like this is a hack that compensates for
+    // CSS transforms of the .rotation-group not accepting
+    // transform-origin settings and always rotating from the
+    // top left corner.
+    .attr('x', negativeR)
+    .attr('y', negativeR)
     .attr('width', diameter)
     .attr('height', diameter);
-
-  if (layoutStyle === 'orbit') {
-    let paths = orbitPathRoot
-      .selectAll('.orbit-path')
-      .data(spinnerData.map(makeOrbitForSpinner), accessor());
-    paths.exit().remove();
-    paths
-      .enter()
-      .append('path')
-      .merge(paths)
-      .attr('id', accessor())
-      .transition()
-      .duration(transitionTime)
-      .attr('d', accessor('d'));
-  }
 
   // Do this after other subelements are added to ensure
   // click-target is on top so that it can be clicked on mobile clients.
   newSpinners.each(curry(addClickTarget)(onClick, probable));
 
   updatableSpinners.filter(shouldDisplaySublayout).each(renderSublayout);
-
-  updatableSpinners
-    .select('.rotation-transform')
-    .attr('from', getAnimateStartRotation)
-    .attr('to', getAnimateEndRotation)
-    .attr('dur', getDuration);
 
   if (layoutStyle !== 'orbit') {
     updatableSpinners
@@ -309,74 +131,15 @@ function renderSpinners({
 
     addClickTarget.bind(this)(onClick, probable, spinner);
   }
-  */
-
-  function scaleToViewBox(n) {
-    return n * canvasUnitsPerViewBoxUnit;
-  }
-
-  function viewboxUnitsToCanvasUnits(n, scale) {
-    return (n * canvasUnitsPerViewBoxUnit) / scale;
-  }
 }
 
-/*
+function squarifyBoard() {
+  var boardWidth = board.node().getBoundingClientRect().width;
+  board.attr('height', boardWidth);
+}
+
 function isAPlainSpinner(s) {
   return !shouldDisplaySublayout(s);
-}
-
-function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
-  return (
-    spinnersSel
-      .append('animateTransform')
-      .attr('attributeName', 'transform')
-      .attr('attributeType', 'XML')
-      .attr('type', type)
-      // Important for not cancelling out the translate transform:
-      .attr('additive', 'sum')
-      .attr('repeatCount', 'indefinite')
-      .classed(className, true)
-  );
-}
-*/
-
-// function checkSpinnerTransform() {
-//  if (!this.getAttribute('transform')) {
-//    var animateChild = d3.select(this).select('animateMotion');
-//    if (animateChild.empty()) {
-//      console.log(this.id, 'has no transform and no animateMotion child.');
-//    }
-//  }
-// }
-
-function multiplyTransforms(a, b) {
-  return [
-    a[0] * b[0] + a[2] * b[1],
-    a[1] * b[0] + a[3] * b[1],
-    a[0] * b[2] + a[2] * b[3],
-    a[1] * b[2] + a[3] * b[3],
-    a[0] * b[4] + a[2] * b[5] + a[4],
-    a[1] * b[4] + a[3] * b[5] + a[5]
-  ];
-}
-
-// Rotation around the center is a translation moving the
-// center to the upper left corner, then rotating around that corner,
-// then translating things back.
-// When you multiply those three 3x3 matrices together, you get
-// this:
-function getRotationTransformAroundCenter(rotation, cx, cy) {
-  const rotCos = Math.cos(rotation);
-  const rotSin = Math.sin(rotation);
-
-  return [
-    rotCos,
-    rotSin,
-    -rotSin,
-    rotCos,
-    -cx * rotCos + cy * rotSin + cx,
-    -cy * rotSin - cx * rotCos + cy
-  ];
 }
 
 module.exports = renderSpinners;
