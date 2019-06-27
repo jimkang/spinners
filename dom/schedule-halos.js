@@ -1,17 +1,18 @@
 var d3 = require('d3-selection');
+var Timeout = require('d3-timer').timeout;
 var animateHalos = require('./animate-halos');
 
 const timeToFirstHalo = 5000;
-var timeoutKey;
+var timer;
 
 function scheduleHalos({ probable }) {
   var prevDelay = 2000;
   var nextDelay = 3000;
   // Cancel any scheduled animation.
-  if (timeoutKey) {
-    clearTimeout(timeoutKey);
+  if (timer) {
+    timer.stop();
   }
-  timeoutKey = setTimeout(animateNextHalos, timeToFirstHalo);
+  timer = Timeout(animateNextHalos, timeToFirstHalo);
 
   function animateNextHalos() {
     var clickTargets = d3.selectAll('.click-target');
@@ -22,7 +23,7 @@ function scheduleHalos({ probable }) {
     }
     var clickTargetsToAnimate = clickTargets.filter(randomlyPick);
     animateHalos({ targetsSelection: clickTargetsToAnimate, probable });
-    timeoutKey = setTimeout(animateNextHalos, nextDelay);
+    timer = Timeout(animateNextHalos, nextDelay);
 
     if (nextDelay < 55000) {
       nextDelay = prevDelay + nextDelay;

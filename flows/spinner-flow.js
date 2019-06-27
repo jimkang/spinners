@@ -29,7 +29,8 @@ function SpinnerFlow({ seed, onClick }) {
   async function goSpinnerFlow({
     layers,
     layoutStyle,
-    syncPositionsAcrossLayers
+    syncPositionsAcrossLayers,
+    maxLayers = 100 // Applies to layers in sublayouts.
   }) {
     var darkBG = probable.roll(3) > 0;
     document.body.classList[darkBG ? 'add' : 'remove']('dark');
@@ -171,7 +172,7 @@ function SpinnerFlow({ seed, onClick }) {
       do {
         result = layoutTable.roll();
         // TODO: tablenest needs to preserve the array-ness of a def.
-        layers = convertToArray(result.layers);
+        layers = convertToArray(result.layers).slice(0, maxLayers);
       } while (layers[layers.length - 1].layerType === 'clock');
       // The minute hand clock layers do not work well as sublayout top
       // layers because they don't show well on black backgrounds.
