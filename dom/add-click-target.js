@@ -21,12 +21,15 @@ function addClickTarget(onClick, probable, spinner) {
       .classed('click-target', true)
       .attr('stroke-width', 0);
   }
+  // Aligning with hack in renderSpinners
+  // that needs to put the center in the upper left
+  // corner instead of in the center.
   target.attr(
     'd',
     circleToPath({
       r: spinner.r,
-      cx: spinner.r,
-      cy: spinner.r,
+      cx: 0, //spinner.r,
+      cy: 0, //spinner.r,
       numberOfArcs
     })
   );

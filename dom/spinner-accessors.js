@@ -9,13 +9,18 @@ function negativeR(spinner) {
 function getTransform(spinner) {
   return `translate(${getLeft(spinner)}, ${getTop(spinner)})`;
 }
+// getLeft and getTop are returning the upper left corner
+// to compensate for the hack which puts the x and y of
+// the image in the spinner at -r, -r instead of 0, 0.
+// (See comment in render-spinners, where updatableSpinners
+// attributes are set.
 
 function getLeft(spinner) {
-  return spinner.x - spinner.r;
+  return spinner.x; // - spinner.r;
 }
 
 function getTop(spinner) {
-  return spinner.y - spinner.r;
+  return spinner.y; // - spinner.r;
 }
 
 function getDuration(d) {

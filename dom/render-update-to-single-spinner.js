@@ -1,16 +1,8 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var accessor = require('accessor');
-var { makeOrbitForSpinner } = require('./orbit');
-var {
-  diameter,
-  getTransform,
-  getDuration,
-  getAnimateStartRotation,
-  getAnimateEndRotation,
-  getOrbitDuration
-} = require('./spinner-accessors');
-var animateHalo = require('./animate-halo');
+var { diameter, getTransform } = require('./spinner-accessors');
+var animateHalos = require('./animate-halos');
 var shouldDisplaySublayout = require('./should-display-sublayout');
 
 const transitionTime = 2000;
@@ -18,44 +10,26 @@ const transitionTime = 2000;
 // WARNING: Does not handle changes to layoutStyle!
 // Also does not rerender sublayouts.
 // TODO: Get rid of sublayout stuff entirely?
-function renderUpdateToSingleSpinner({
-  spinnerDatum,
-  interruptRotation = true,
-  probable
-}) {
+function renderUpdateToSingleSpinner({ spinnerDatum, probable }) {
   var spinner = d3.select('#' + spinnerDatum.data.id);
   if (spinner.empty()) {
     return;
   }
 
-  if (shouldDisplaySublayout(spinnerDatum)) {
-    let orbitDatum = makeOrbitForSpinner(spinnerDatum);
-    let path = d3.select('#' + orbitDatum.id);
-    path
-      .transition()
-      .duration(transitionTime)
-      .attr('d', accessor('d'));
-  } else {
+  if (!shouldDisplaySublayout(spinnerDatum)) {
     spinner
       .select('.rotation-group')
       .select('image')
       .attr('xlink:href', accessor({ path: 'data/image/url' }))
       .transition()
       .duration(transitionTime)
-      .attr('x', 0)
-      .attr('y', 0)
+      // Matching positioning in renderSpinner for hack
+      // that needs the center to be at the upper left corner.
+      .attr('x', -spinnerDatum.r)
+      .attr('y', -spinnerDatum.r)
       .attr('width', diameter)
       .attr('height', diameter);
   }
-
-  var rotationTransform = spinner.select('.rotation-transform');
-
-  if (interruptRotation) {
-    rotationTransform
-      .attr('from', getAnimateStartRotation)
-      .attr('to', getAnimateEndRotation);
-  }
-  rotationTransform.attr('dur', getDuration);
 
   if (shouldDisplaySublayout(spinnerDatum)) {
     spinner
@@ -76,17 +50,10 @@ function renderUpdateToSingleSpinner({
     .attr('cx', spinnerDatum.r)
     .attr('cy', spinnerDatum.r);
 
-  animateHalo({
-    target: clickTarget,
-    originalRadius: spinnerDatum.r,
+  animateHalos({
+    targetsSelection: clickTarget,
     probable
   });
-
-  spinner
-    .select('.orbit-animation')
-    .transition()
-    .duration(transitionTime)
-    .attr('dur', getOrbitDuration);
 }
 
 module.exports = renderUpdateToSingleSpinner;
