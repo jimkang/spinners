@@ -53,6 +53,7 @@ function renderSpinners({
     .attr('id', accessor({ path: 'data/id' }))
     .filter(isAPlainSpinner)
     .select('.rotation-group')
+    .attr('data-speed', accessor({ path: 'data/speed' }))
     .select('image')
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
     .transition()

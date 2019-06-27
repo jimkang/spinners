@@ -16,9 +16,12 @@ function renderUpdateToSingleSpinner({ spinnerDatum, probable }) {
     return;
   }
 
+  spinner
+    .select('.rotation-group')
+    .attr('data-speed', accessor({ path: 'data/speed' }));
+
   if (!shouldDisplaySublayout(spinnerDatum)) {
     spinner
-      .select('.rotation-group')
       .select('image')
       .attr('xlink:href', accessor({ path: 'data/image/url' }))
       .transition()
