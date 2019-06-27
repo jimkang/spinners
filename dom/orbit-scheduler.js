@@ -1,7 +1,6 @@
 var d3 = require('d3-selection');
 var curry = require('lodash.curry');
 var Timer = require('d3-timer').timer;
-var { positionOnCircle } = require('./orbit');
 
 var timer;
 
@@ -15,23 +14,22 @@ function scheduleOrbits() {
   timer = Timer(updateSpinnersInOrbits);
 
   function updateSpinnersInOrbits(elapsed) {
-    d3.selectAll('.orbiting-spinner').each(
-      curry(updateSpinnerInOrbit)(elapsed)
+    d3.selectAll('.orbiting-spinner').attr(
+      'transform',
+      curry(getOrbitTransform)(elapsed)
     );
   }
 }
 
-function updateSpinnerInOrbit(elapsed, spinner) {
+function getOrbitTransform(elapsed, spinner) {
   const msPerOrbit = 1000 / spinner.data.orbitSpeed;
   const orbitRotation = ((2 * Math.PI * elapsed) / msPerOrbit) % (2 * Math.PI);
-  let { x, y } = positionOnCircle(
-    spinner.data.orbitCenter.x,
-    spinner.data.orbitCenter.y,
-    orbitRotation,
-    spinner.data.orbitR
-  );
-  var spinnerSel = d3.select(this);
-  spinnerSel.attr('transform', `translate(${x}, ${y})`);
+  // Maybe saving a little unboxing by inlining positionOnCircle here.
+  const x =
+    spinner.data.orbitCenter.x + spinner.data.orbitR * Math.sin(orbitRotation);
+  const y =
+    spinner.data.orbitCenter.y + spinner.data.orbitR * Math.cos(orbitRotation);
+  return 'translate(' + x + ', ' + y + ')';
 }
 
 module.exports = { cancelOrbits, scheduleOrbits };

@@ -53,7 +53,12 @@ function followRoute({ seed, maxLayers }) {
 
   wireControls({ refresh: seedWithDate });
 
-  spinnerFlowKit.go({ layers, syncPositionsAcrossLayers, layoutStyle, maxLayers });
+  spinnerFlowKit.go({
+    layers,
+    syncPositionsAcrossLayers,
+    layoutStyle,
+    maxLayers
+  });
 
   function onClick(spinner) {
     var sd = spinner.data;

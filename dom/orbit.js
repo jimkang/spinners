@@ -83,8 +83,8 @@ function makePathDataForOrbit(spinner, orbitIndex, spinners) {
 }
 
 function positionOnCircle(cx, cy, angle, radius) {
-  var y = radius * Math.sin(angle);
-  var x = radius * Math.cos(angle);
+  const x = radius * Math.sin(angle);
+  const y = radius * Math.cos(angle);
   return { x: cx + x, y: cy + y };
 }
 
