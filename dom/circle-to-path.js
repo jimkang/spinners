@@ -1,4 +1,35 @@
 var b2d = require('basic-2d-math');
+const numberOfArcs = require('./number-of-arcs');
+var shouldDisplaySublayout = require('./should-display-sublayout');
+
+function centerDistForSpinner(spinner) {
+  const isRotatingViaCSS = !shouldDisplaySublayout(spinner); // || isNaN(spinner.data.orbitR);
+
+  // Using the upper left corner as the center of the circle
+  // in order to align with the hack in renderSpinners
+  // that needs to put the center in the upper left
+  // corner instead of in the center so it can rotate
+  // the spinner via CSS.
+  // Except for spinners that display a sublayout while also
+  // in orbit! Those do not rotate in that way, so their
+  // centers should be in the proper center at (r, r).
+  return isRotatingViaCSS ? 0 : spinner.r;
+}
+
+function pathCircleForSpinner(spinner) {
+  const centerDist = centerDistForSpinner(spinner);
+  return circleToPath({
+    r: spinner.r,
+    cx: centerDist,
+    cy: centerDist,
+    numberOfArcs
+  });
+}
+
+function arcsCircleForSpinner({ spinner, r }) {
+  const centerDist = centerDistForSpinner(spinner);
+  return circleToArcs({ r, cx: centerDist, cy: centerDist, numberOfArcs });
+}
 
 function circleToArcs({ r, cx, cy, numberOfArcs = 8 }) {
   var center = { x: cx, y: cy };
@@ -67,4 +98,11 @@ function arcToPathCmd(arc) {
   return `A ${arc.rx} ${arc.ry} ${arc.angle} ${arc.largeArc} ${arc.sweep} ${arc.destX}, ${arc.destY}\n`;
 }
 
-module.exports = { circleToPath, circleToArcs, arcsToPath, arcsToBezierPath };
+module.exports = {
+  circleToPath,
+  circleToArcs,
+  arcsToPath,
+  arcsToBezierPath,
+  pathCircleForSpinner,
+  arcsCircleForSpinner
+};

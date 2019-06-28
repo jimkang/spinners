@@ -10,6 +10,7 @@ var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner
 //var updateOrbit = require('./dom/update-orbit');
 var Probable = require('probable').createProbable;
 var isSafari = require('./is-safari');
+var shouldDisplaySublayout = require('./dom/should-display-sublayout');
 
 var spinnerFlowKit;
 
@@ -71,8 +72,7 @@ function followRoute({ seed, maxLayers }) {
       sd.alterationIndex = 0;
     }
 
-    const couldMoveToSublayout =
-      spinner.data.displaysSublayout !== 'never' && spinner.data.sublayout;
+    const couldMoveToSublayout = shouldDisplaySublayout(spinner);
     if (couldMoveToSublayout || alteration === 'moveToNextSeed') {
       if (couldMoveToSublayout) {
         nextSeed = spinner.data.sublayout.seed;
