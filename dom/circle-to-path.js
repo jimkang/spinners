@@ -88,20 +88,9 @@ function getFirstControlPt({ center, firstArc, arcAngle }) {
   return b2d.addPairs([center.x, center.y], [r, yDistToP]);
 }
 
-function arcsToPath({ center, edgeStart, arcs }) {
-  var path = `M ${center.x} ${center.y}\nm ${edgeStart.dx} ${edgeStart.dy}\n`;
-  path += arcs.map(arcToPathCmd).join(' ');
-  return path;
-}
-
-function arcToPathCmd(arc) {
-  return `A ${arc.rx} ${arc.ry} ${arc.angle} ${arc.largeArc} ${arc.sweep} ${arc.destX}, ${arc.destY}\n`;
-}
-
 module.exports = {
   circleToPath,
   circleToArcs,
-  arcsToPath,
   arcsToBezierPath,
   pathCircleForSpinner,
   arcsCircleForSpinner

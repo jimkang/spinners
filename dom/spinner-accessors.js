@@ -23,22 +23,6 @@ function getTop(spinner) {
   return spinner.y; // - spinner.r;
 }
 
-function getDuration(d) {
-  if (d.data.speed) {
-    return 1.0 / d.data.speed;
-  } else {
-    return d.data.duration;
-  }
-}
-
-function getAnimateStartRotation(spinner) {
-  return `0 ${spinner.r} ${spinner.r}`;
-}
-
-function getAnimateEndRotation(spinner) {
-  return `360 ${spinner.r} ${spinner.r}`;
-}
-
 function getOrbitDuration(d) {
   if (d.data.orbitSpeed) {
     return 1.0 / d.data.orbitSpeed;
@@ -53,8 +37,5 @@ module.exports = {
   getTransform,
   getLeft,
   getTop,
-  getDuration,
-  getAnimateStartRotation,
-  getAnimateEndRotation,
   getOrbitDuration
 };

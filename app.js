@@ -7,7 +7,6 @@ var wireControls = require('./dom/wire-controls');
 var convertToArray = require('./convert-to-array');
 var RandomId = require('@jimkang/randomid');
 var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner');
-//var updateOrbit = require('./dom/update-orbit');
 var Probable = require('probable').createProbable;
 var isSafari = require('./is-safari');
 var shouldDisplaySublayout = require('./dom/should-display-sublayout');
@@ -80,31 +79,6 @@ function followRoute({ seed, maxLayers }) {
         nextSeed = randomId(4);
       }
       routeState.addToRoute({ seed: nextSeed });
-      /*
-    } else if (
-      alteration === 'changeOrbitOrRadius' &&
-      spinner.data.ephemeralOrbitData
-    ) {
-      console.log('Changing orbit.');
-
-      let eoData = spinner.data.ephemeralOrbitData;
-      if (eoData.orbitIndex < eoData.totalOrbitsInSystem) {
-        eoData.orbitIndex += probable.rollDie(2);
-      } else {
-        eoData.orbitIndex -= probable.rollDie(3);
-      }
-      if (eoData.orbitIndex < 0) {
-        eoData.orbitIndex = 0;
-      }
-
-      spinner.data.orbitCenter.x += (-2 + probable.roll(4)) * 5;
-      spinner.data.orbitCenter.y += (-2 + probable.roll(4)) * 5;
-
-      spinner.data.orbitSpeed += (-0.2 + 0.1 * probable.roll(4));
-
-      updateOrbit(spinner);
-      renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
-    */
     } else if (alteration === 'changeSpeed') {
       spinner.data.speed += 1.0;
       renderUpdateToSingleSpinner({

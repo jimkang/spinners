@@ -86,15 +86,6 @@ function renderSpinners({
     .attr('width', diameter)
     .attr('height', diameter);
 
-  // if (layoutStyle !== 'orbit') {
-  //   setTimeout(checkSpinnerTransforms, transitionTime + 100);
-  // }
-
-  // function checkSpinnerTransforms() {
-  //   var spinners = spinnerRoot.selectAll('.spinner');
-  //   spinners.each(checkSpinnerTransform);
-  // }
-
   async function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
       // TODO: Some sort of non-recursive representation of the sublayout.
