@@ -18,6 +18,14 @@ var orbitCenterTable = [
 
 var orbitDirectionTable = [[3, 'clockwise'], [1, 'counterclockwise']];
 
+var orbitRotationOffsetTable = [
+  [1, 0],
+  [1, Math.PI / 2],
+  [1, Math.PI],
+  [1, (Math.PI / 2) * 3],
+  [1, f((o, p) => ((2 * Math.PI) / 360) * p.rollDie(360))]
+];
+
 var alterationScheduleTable = [
   //[2, l(['moveToNextSeed'])],
   //[5, l(['change', 'change', 'moveToNextSeed'])],
@@ -179,6 +187,7 @@ function SpinnerTables({ random }) {
         orbitCenter: r`orbitCenter`,
         orbitSpeed: d`d4x0.0125`,
         orbitDirection: r`orbitDirection`,
+        orbitRotationOffset: r`orbitRotationOffset`,
         displaysSublayout: r`displaysSublayout`,
         alterationSchedule: r`alterationSchedule`,
         alterationIndex: 0
@@ -187,6 +196,7 @@ function SpinnerTables({ random }) {
       speed: speedTables[speedKey],
       orbitCenter: orbitCenterTable,
       orbitDirection: orbitDirectionTable,
+      orbitRotationOffset: orbitRotationOffsetTable,
       alterationSchedule: alterationScheduleTable,
       displaysSublayout: [[1, 'always'], [2, 'onlyIfNotOnSafari'], [6, 'never']]
     });
