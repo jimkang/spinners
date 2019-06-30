@@ -91,6 +91,31 @@ button {
 }
 */
 
+.rotation-group[data-speed="0"] {
+  animation: 6s linear spin infinite;
+}
+.rotation-group[data-speed="1"] {
+  animation: 4s linear spin infinite;
+}
+.rotation-group[data-speed="2"] {
+  animation: 3s linear spin infinite;
+}
+.rotation-group[data-speed="3"] {
+  animation: 1s linear spin infinite;
+}
+.rotation-group[data-speed="4"] {
+  animation: 0.5s linear spin infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;

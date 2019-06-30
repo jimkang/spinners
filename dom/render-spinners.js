@@ -2,21 +2,13 @@ var d3 = require('d3-selection');
 require('d3-transition');
 var accessor = require('accessor');
 var renderLayers = require('./render-layers');
-var { makeOrbitForSpinner, getOrbitIdForSpinner } = require('./orbit');
 var ep = require('errorback-promise');
 var curry = require('lodash.curry');
-var {
-  diameter,
-  getTransform,
-  getDuration,
-  getAnimateStartRotation,
-  getAnimateEndRotation,
-  getOrbitDuration
-} = require('./spinner-accessors');
+var { diameter, negativeR, getTransform } = require('./spinner-accessors');
 var board = d3.select('#board');
-var orbitPathRoot = board.select('#orbit-paths');
 var addClickTarget = require('./add-click-target');
 var shouldDisplaySublayout = require('./should-display-sublayout');
+var orbitScheduler = require('./orbit-scheduler');
 
 const transitionTime = 2000;
 
@@ -48,19 +40,11 @@ function renderSpinners({
   var rotationGroups = newSpinners.append('g').classed('rotation-group', true);
   rotationGroups.filter(isAPlainSpinner).append('image');
 
-  addRotationTransform({
-    spinnersSel: rotationGroups,
-    className: 'rotation-transform'
-  });
+  orbitScheduler.cancelOrbits();
+
   if (layoutStyle === 'orbit') {
-    let orbitAnimations = newSpinners
-      .append('animateMotion')
-      .classed('orbit-animation', true)
-      .attr('dur', getOrbitDuration)
-      .attr('repeatCount', 'indefinite');
-    orbitAnimations
-      .append('mpath')
-      .attr('xlink:href', s => `#${getOrbitIdForSpinner(s)}`);
+    newSpinners.classed('orbiting-spinner', true);
+    orbitScheduler.scheduleOrbits();
   }
 
   var updatableSpinners = newSpinners.merge(spinners);
@@ -69,41 +53,25 @@ function renderSpinners({
     .attr('id', accessor({ path: 'data/id' }))
     .filter(isAPlainSpinner)
     .select('.rotation-group')
+    .attr('data-speed', accessor({ path: 'data/speed' }))
     .select('image')
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
     .transition()
     .duration(transitionTime)
-    .attr('x', 0)
-    .attr('y', 0)
+    // Setting the position like this is a hack that compensates for
+    // CSS transforms of the .rotation-group not accepting
+    // transform-origin settings and always rotating from the
+    // top left corner.
+    .attr('x', negativeR)
+    .attr('y', negativeR)
     .attr('width', diameter)
     .attr('height', diameter);
-
-  if (layoutStyle === 'orbit') {
-    let paths = orbitPathRoot
-      .selectAll('.orbit-path')
-      .data(spinnerData.map(makeOrbitForSpinner), accessor());
-    paths.exit().remove();
-    paths
-      .enter()
-      .append('path')
-      .merge(paths)
-      .attr('id', accessor())
-      .transition()
-      .duration(transitionTime)
-      .attr('d', accessor('d'));
-  }
 
   // Do this after other subelements are added to ensure
   // click-target is on top so that it can be clicked on mobile clients.
   newSpinners.each(curry(addClickTarget)(onClick, probable));
 
   updatableSpinners.filter(shouldDisplaySublayout).each(renderSublayout);
-
-  updatableSpinners
-    .select('.rotation-transform')
-    .attr('from', getAnimateStartRotation)
-    .attr('to', getAnimateEndRotation)
-    .attr('dur', getDuration);
 
   if (layoutStyle !== 'orbit') {
     updatableSpinners
@@ -117,15 +85,6 @@ function renderSpinners({
     .duration(transitionTime)
     .attr('width', diameter)
     .attr('height', diameter);
-
-  // if (layoutStyle !== 'orbit') {
-  //   setTimeout(checkSpinnerTransforms, transitionTime + 100);
-  // }
-
-  // function checkSpinnerTransforms() {
-  //   var spinners = spinnerRoot.selectAll('.spinner');
-  //   spinners.each(checkSpinnerTransform);
-  // }
 
   async function renderSublayout(spinner) {
     if (currentlyWithinASublayout) {
@@ -174,28 +133,5 @@ function squarifyBoard() {
 function isAPlainSpinner(s) {
   return !shouldDisplaySublayout(s);
 }
-
-function addRotationTransform({ spinnersSel, className, type = 'rotate' }) {
-  return (
-    spinnersSel
-      .append('animateTransform')
-      .attr('attributeName', 'transform')
-      .attr('attributeType', 'XML')
-      .attr('type', type)
-      // Important for not cancelling out the translate transform:
-      .attr('additive', 'sum')
-      .attr('repeatCount', 'indefinite')
-      .classed(className, true)
-  );
-}
-
-// function checkSpinnerTransform() {
-//  if (!this.getAttribute('transform')) {
-//    var animateChild = d3.select(this).select('animateMotion');
-//    if (animateChild.empty()) {
-//      console.log(this.id, 'has no transform and no animateMotion child.');
-//    }
-//  }
-// }
 
 module.exports = renderSpinners;

@@ -2,32 +2,25 @@ function diameter(spinner) {
   return spinner.r * 2;
 }
 
+function negativeR(spinner) {
+  return -spinner.r;
+}
+
 function getTransform(spinner) {
   return `translate(${getLeft(spinner)}, ${getTop(spinner)})`;
 }
+// getLeft and getTop are returning the upper left corner
+// to compensate for the hack which puts the x and y of
+// the image in the spinner at -r, -r instead of 0, 0.
+// (See comment in render-spinners, where updatableSpinners
+// attributes are set.
 
 function getLeft(spinner) {
-  return spinner.x - spinner.r;
+  return spinner.x; // - spinner.r;
 }
 
 function getTop(spinner) {
-  return spinner.y - spinner.r;
-}
-
-function getDuration(d) {
-  if (d.data.speed) {
-    return 1.0 / d.data.speed;
-  } else {
-    return d.data.duration;
-  }
-}
-
-function getAnimateStartRotation(spinner) {
-  return `0 ${spinner.r} ${spinner.r}`;
-}
-
-function getAnimateEndRotation(spinner) {
-  return `360 ${spinner.r} ${spinner.r}`;
+  return spinner.y; // - spinner.r;
 }
 
 function getOrbitDuration(d) {
@@ -40,11 +33,9 @@ function getOrbitDuration(d) {
 
 module.exports = {
   diameter,
+  negativeR,
   getTransform,
   getLeft,
   getTop,
-  getDuration,
-  getAnimateStartRotation,
-  getAnimateEndRotation,
   getOrbitDuration
 };
