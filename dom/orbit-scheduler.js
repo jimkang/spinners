@@ -23,7 +23,9 @@ function scheduleOrbits() {
 
 function getOrbitTransform(elapsed, spinner) {
   const msPerOrbit = 1000 / spinner.data.orbitSpeed;
-  const orbitRotation = ((2 * Math.PI * elapsed) / msPerOrbit) % (2 * Math.PI);
+  const rotationSign = spinner.data.orbitDirection === 'clockwise' ? -1 : 1;
+  const orbitRotation =
+    ((2 * Math.PI * elapsed * rotationSign) / msPerOrbit) % (2 * Math.PI);
   // Maybe saving a little unboxing by inlining positionOnCircle here.
   const x =
     spinner.data.orbitCenter.x + spinner.data.orbitR * Math.sin(orbitRotation);
