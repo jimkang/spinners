@@ -31,21 +31,21 @@ module.exports = {
   },
   officeClockFace: {
     name: 'Analog Clock',
-    url: 'media/analog-clock-face-compact.svg',
+    url: 'media/analog-clock-face.svg',
     source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
     attribution:
       'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
   },
   officeClockHourHand: {
     name: 'Analog Clock',
-    url: 'media/analog-clock-hour-hand-compact.svg',
+    url: 'media/analog-clock-hour-hand.svg',
     source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
     attribution:
       'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
   },
   officeClockMinuteHand: {
     name: 'Analog Clock',
-    url: 'media/analog-clock-minute-hand-compact.svg',
+    url: 'media/analog-clock-minute-hand.svg',
     source: 'https://pixabay.com/vectors/analog-clock-clock-time-1295631/',
     attribution:
       'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1295631">Pixabay</a>'
@@ -155,7 +155,7 @@ module.exports = {
   },
   wagonWheelDrawing: {
     name: 'Wagon wheel drawing',
-    url: 'media/transport-2027545-compact.svg',
+    url: 'media/transport-2027545.svg',
     attribution:
       'Image by <a href="https://pixabay.com/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2027545">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2027545">Pixabay</a>'
   },
@@ -222,7 +222,7 @@ module.exports = {
   },
   facetedChocolateChipCookie: {
     name: 'Faceted chocolate chip cookie',
-    url: 'media/chocolate-chip-cookies-304801-compact.svg',
+    url: 'media/chocolate-chip-cookies-304801.svg',
     attribution:
       'Image by <a href="https://pixabay.com/users/Clker-Free-Vector-Images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=304801">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=304801">Pixabay</a>'
   },
