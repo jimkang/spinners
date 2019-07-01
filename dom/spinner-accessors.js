@@ -31,11 +31,16 @@ function getOrbitDuration(d) {
   }
 }
 
+function numberOfAlterationsLeftUntilNextSeed(spinner) {
+  return spinner.data.alterationSchedule.length - spinner.data.alterationIndex;
+}
+
 module.exports = {
   diameter,
   negativeR,
   getTransform,
   getLeft,
   getTop,
-  getOrbitDuration
+  getOrbitDuration,
+  numberOfAlterationsLeftUntilNextSeed
 };

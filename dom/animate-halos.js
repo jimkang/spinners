@@ -1,5 +1,6 @@
 var { arcsCircleForSpinner, arcsToBezierPath } = require('./circle-to-path');
 var wobbleCircle = require('./wobble-circle');
+var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 
 const expandingDuration = 1400;
 const contractingDuration = 2000;
@@ -27,8 +28,7 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       spinner,
       r: spinner.r + radiusExpansion
     });
-    const stepsToNextSeed =
-      spinner.data.alterationSchedule.length - spinner.data.alterationIndex;
+    const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
     if (stepsToNextSeed < 3) {
       originalCircleKit = wobbleCircle(
         originalCircleKit,
@@ -44,8 +44,7 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       r: spinner.r,
       spinner
     });
-    const stepsToNextSeed =
-      spinner.data.alterationSchedule.length - spinner.data.alterationIndex;
+    const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
     if (stepsToNextSeed < 3) {
       expandedCircleKit = wobbleCircle(
         expandedCircleKit,
