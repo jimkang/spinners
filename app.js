@@ -82,10 +82,36 @@ function followRoute({ seed, maxLayers, maxSublayouts }) {
     if (couldMoveToSublayout || alteration === 'moveToNextSeed') {
       if (couldMoveToSublayout) {
         nextSeed = spinner.data.sublayout.seed;
+        routeState.addToRoute({ seed: nextSeed });
       } else {
         nextSeed = randomId(4);
+        // Make spinner fill the board.
+        if (probable.roll(2) === 0) {
+          spinner.r = document
+            .getElementById('board')
+            .getBoundingClientRect().width;
+          spinner.data.r = spinner.r;
+        } else {
+          // Whoosh the spinner offscreen.
+          if (probable.roll(2) === 0) {
+            spinner.x = 50 + 200 * (probable.roll(2) === 0 ? -1 : 1);
+            spinner.y =
+              50 + probable.roll(50) * (probable.roll(2) === 0 ? -1 : 1);
+          } else {
+            spinner.x =
+              50 + probable.roll(50) * (probable.roll(2) === 0 ? -1 : 1);
+            spinner.y = 50 + 200 * (probable.roll(2) === 0 ? -1 : 1);
+          }
+        }
+
+        renderUpdateToSingleSpinner({
+          spinnerDatum: spinner,
+          probable,
+          animateHalo: false
+        });
+        // Then, move to the next seed.
+        setTimeout(() => routeState.addToRoute({ seed: nextSeed }), 1000);
       }
-      routeState.addToRoute({ seed: nextSeed });
     } else if (alteration === 'changeSpeed') {
       spinner.data.speed += 1.0;
       renderUpdateToSingleSpinner({

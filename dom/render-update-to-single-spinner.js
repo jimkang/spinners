@@ -10,7 +10,11 @@ const transitionTime = 2000;
 // WARNING: Does not handle changes to layoutStyle!
 // Also does not rerender sublayouts.
 // TODO: Get rid of sublayout stuff entirely?
-function renderUpdateToSingleSpinner({ spinnerDatum, probable }) {
+function renderUpdateToSingleSpinner({
+  spinnerDatum,
+  probable,
+  animateHalo = true
+}) {
   var spinner = d3.select('#' + spinnerDatum.data.id);
   if (spinner.empty()) {
     return;
@@ -34,12 +38,11 @@ function renderUpdateToSingleSpinner({ spinnerDatum, probable }) {
       .attr('height', diameter);
   }
 
-  if (shouldDisplaySublayout(spinnerDatum)) {
-    spinner
-      .transition()
-      .duration(transitionTime)
-      .attr('transform', getTransform);
-  }
+  spinner
+    .transition()
+    .duration(transitionTime)
+    .attr('transform', getTransform);
+
   spinner
     .select('.rotation-group')
     .transition()
@@ -53,10 +56,12 @@ function renderUpdateToSingleSpinner({ spinnerDatum, probable }) {
     .attr('cx', spinnerDatum.r)
     .attr('cy', spinnerDatum.r);
 
-  animateHalos({
-    targetsSelection: clickTarget,
-    probable
-  });
+  if (animateHalos) {
+    animateHalos({
+      targetsSelection: clickTarget,
+      probable
+    });
+  }
 }
 
 module.exports = renderUpdateToSingleSpinner;
