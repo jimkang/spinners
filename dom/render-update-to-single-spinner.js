@@ -56,7 +56,7 @@ function renderUpdateToSingleSpinner({
     .attr('cx', spinnerDatum.r)
     .attr('cy', spinnerDatum.r);
 
-  if (animateHalos) {
+  if (animateHalo) {
     animateHalos({
       targetsSelection: clickTarget,
       probable
