@@ -4,6 +4,7 @@ var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 
 const expandingDuration = 1400;
 const contractingDuration = 2000;
+const maxAlterations = 3;
 
 function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
   targetsSelection.interrupt();
@@ -29,11 +30,13 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       r: spinner.r + radiusExpansion
     });
     const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
-    if (stepsToNextSeed < 3) {
+    // The closer it is to jumping to the next seed, the
+    // more unstable it should look.
+    if (stepsToNextSeed < maxAlterations) {
       originalCircleKit = wobbleCircle(
         originalCircleKit,
         probable,
-        stepsToNextSeed
+        maxAlterations - stepsToNextSeed
       );
     }
     return arcsToBezierPath(originalCircleKit);
@@ -45,11 +48,11 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       spinner
     });
     const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
-    if (stepsToNextSeed < 3) {
+    if (stepsToNextSeed < maxAlterations) {
       expandedCircleKit = wobbleCircle(
         expandedCircleKit,
         probable,
-        stepsToNextSeed
+        maxAlterations - stepsToNextSeed
       );
     }
     return arcsToBezierPath(expandedCircleKit);

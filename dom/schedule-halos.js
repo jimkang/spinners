@@ -1,6 +1,7 @@
 var d3 = require('d3-selection');
 var Timeout = require('d3-timer').timeout;
 var animateHalos = require('./animate-halos');
+var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 
 const timeToFirstHalo = 5000;
 var timer;
@@ -21,7 +22,7 @@ function scheduleHalos({ probable }) {
     if (numberOfTargetsToAnimate < 1) {
       numberOfTargetsToAnimate = 1;
     }
-    var clickTargetsToAnimate = clickTargets.filter(randomlyPick);
+    var clickTargetsToAnimate = clickTargets.filter(shouldAnimate);
     animateHalos({ targetsSelection: clickTargetsToAnimate, probable });
     timer = Timeout(animateNextHalos, nextDelay);
 
@@ -30,6 +31,14 @@ function scheduleHalos({ probable }) {
       prevDelay = nextDelay - prevDelay;
     } else {
       prevDelay = nextDelay;
+    }
+
+    function shouldAnimate(spinner) {
+      if (numberOfAlterationsLeftUntilNextSeed(spinner) < 2) {
+        return true;
+      } else {
+        return randomlyPick();
+      }
     }
 
     function randomlyPick() {

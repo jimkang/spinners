@@ -7,10 +7,15 @@ function wobbleCircle({ center, edgeStart, arcs }, probable, wobbleLevel) {
       return arc;
     }
     var newArc = Object.assign({}, arc);
-    newArc.rx = arc.rx + (probable.roll(3) - 1) * wobbleLevel * 0.33;
-    newArc.ry = newArc.rx;
-    //newArc.destX = arc.destX + (probable.roll(3) - 1) * wobbleLevel * 0.5;
-    //newArc.destY = arc.destY + (probable.roll(3) - 1) * wobbleLevel * 0.5;
+    const radiusChangeDirection = probable.roll(2) === 0 ? -1 : 1;
+    const arcChangeRatio =
+      1.0 + ((probable.rollDie(2) * wobbleLevel) / 20) * radiusChangeDirection;
+    if (probable.roll(2) === 0) {
+      newArc.rx = arc.rx * arcChangeRatio;
+    }
+    if (probable.roll(2) === 0) {
+      newArc.ry = arc.ry * arcChangeRatio;
+    }
     return newArc;
   }
 }
