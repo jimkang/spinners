@@ -222,7 +222,7 @@ module.exports = {
   },
   facetedChocolateChipCookie: {
     name: 'Faceted chocolate chip cookie',
-    url: 'media/chocolate-chip-cookies-304801.svg',
+    url: 'media/chocolate-chip-cookies-304801-compact.png',
     attribution:
       'Image by <a href="https://pixabay.com/users/Clker-Free-Vector-Images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=304801">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=304801">Pixabay</a>'
   },

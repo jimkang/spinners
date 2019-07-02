@@ -2,7 +2,12 @@ var { Tablenest, r, f, l, d } = require('tablenest');
 var range = require('d3-array').range;
 var RandomId = require('@jimkang/randomid');
 
-function LayoutTables({ random }) {
+var sizeTables = {
+  normal: [[8, d`3d6`], [4, d`d10`], [1, d`d30`]],
+  safari: [[8, d`2d6`], [4, d`d10`]]
+};
+
+function LayoutTables({ random, sizeKey = 'normal' }) {
   var tablenest = Tablenest({ random });
   var randomId = RandomId({ random });
   var getId = f(makeLayerIdString);
@@ -92,7 +97,7 @@ function LayoutTables({ random }) {
       [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
     ],
     layer: r({ id: getId, spinnerTypes: r`typeMix` }),
-    size: [[8, d`3d6`], [4, d`d10`], [1, d`d30`]],
+    size: sizeTables[sizeKey],
     clockFaceLayer: r({
       id: getId,
       layerType: 'clock',

@@ -24,7 +24,7 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed, maxLayers, maxSublayouts }) {
+function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
   if (!seed) {
     seedWithDate();
     return;
@@ -42,6 +42,13 @@ function followRoute({ seed, maxLayers, maxSublayouts }) {
   if (isNaN(maxSublayouts) && isSafari()) {
     maxSublayouts = 1;
   }
+  if (!sizeKey) {
+    if (isSafari()) {
+      sizeKey = 'safari';
+    } else {
+      sizeKey = 'normal';
+    }
+  }
 
   if (!spinnerFlowKit || spinnerFlowKit.getSeed() !== seed) {
     spinnerFlowKit = SpinnerFlow({ seed, onClick });
@@ -50,7 +57,7 @@ function followRoute({ seed, maxLayers, maxSublayouts }) {
   var random = seedrandom(seed);
   var randomId = RandomId({ random });
   var probable = Probable({ random });
-  var layoutTable = LayoutTable({ random });
+  var layoutTable = LayoutTable({ random, sizeKey });
   var { layers, syncPositionsAcrossLayers, layoutStyle } = layoutTable.roll();
   // TODO: tablenest needs to preserve the array-ness of a def.
   layers = convertToArray(layers).slice(0, maxLayers);
