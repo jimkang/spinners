@@ -23,7 +23,7 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed, maxLayers }) {
+function followRoute({ seed, maxLayers, maxSublayouts }) {
   if (!seed) {
     seedWithDate();
     return;
@@ -37,6 +37,9 @@ function followRoute({ seed, maxLayers }) {
     } else {
       maxLayers = 10;
     }
+  }
+  if (isNaN(maxSublayouts) && isSafari()) {
+    maxSublayouts = 1;
   }
 
   if (!spinnerFlowKit || spinnerFlowKit.getSeed() !== seed) {
@@ -57,7 +60,8 @@ function followRoute({ seed, maxLayers }) {
     layers,
     syncPositionsAcrossLayers,
     layoutStyle,
-    maxLayers
+    maxLayers,
+    maxSublayouts
   });
 
   function onClick(spinner) {

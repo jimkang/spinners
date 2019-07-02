@@ -30,8 +30,10 @@ function SpinnerFlow({ seed, onClick }) {
     layers,
     layoutStyle,
     syncPositionsAcrossLayers,
-    maxLayers = 100 // Applies to layers in sublayouts.
+    maxLayers = 100, // Applies to layers in sublayouts.
+    maxSublayouts = 10000
   }) {
+    var numberOfSublayoutsAdded = 0;
     var darkBG = probable.roll(3) > 0;
     document.body.classList[darkBG ? 'add' : 'remove']('dark');
     document.body.classList[darkBG ? 'remove' : 'add']('light');
@@ -134,7 +136,7 @@ function SpinnerFlow({ seed, onClick }) {
 
     function makeSpinnerForKey(currentDepth, shouldMakeSublayout, key) {
       var spinner = spinnerTables[key].roll();
-      if (shouldMakeSublayout) {
+      if (shouldMakeSublayout && numberOfSublayoutsAdded < maxSublayouts) {
         addSublayoutToSpinner({ spinner, currentDepth });
       }
       return spinner;
@@ -188,6 +190,7 @@ function SpinnerFlow({ seed, onClick }) {
       spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers(
         spinner.sublayout
       );
+      numberOfSublayoutsAdded += 1;
     }
   }
 
