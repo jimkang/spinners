@@ -86,7 +86,7 @@ function followRoute({ seed, maxLayers, maxSublayouts }) {
       } else {
         nextSeed = randomId(4);
         // Make spinner fill the board.
-        if (probable.roll(2) === 0) {
+        if (probable.roll(4) > 2) {
           spinner.r = document
             .getElementById('board')
             .getBoundingClientRect().width;
