@@ -10,6 +10,7 @@ var renderUpdateToSingleSpinner = require('./dom/render-update-to-single-spinner
 var Probable = require('probable').createProbable;
 var isSafari = require('./is-safari');
 var shouldDisplaySublayout = require('./dom/should-display-sublayout');
+var d3 = require('d3-selection');
 
 var spinnerFlowKit;
 
@@ -65,6 +66,8 @@ function followRoute({ seed, maxLayers, maxSublayouts }) {
   });
 
   function onClick(spinner) {
+    d3.event.stopPropagation();
+
     var sd = spinner.data;
     //console.log('spinner clicked:', sd);
     var nextSeed;
