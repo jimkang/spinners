@@ -11,6 +11,7 @@ var Probable = require('probable').createProbable;
 var isSafari = require('./is-safari');
 var shouldDisplaySublayout = require('./dom/should-display-sublayout');
 var d3 = require('d3-selection');
+var RefreshScheduler = require('./refresh-scheduler');
 
 var spinnerFlowKit;
 
@@ -54,6 +55,8 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
     spinnerFlowKit = SpinnerFlow({ seed, onClick });
   }
 
+  var refreshScheduler = RefreshScheduler({ refresh: seedWithDate });
+
   var random = seedrandom(seed);
   var randomId = RandomId({ random });
   var probable = Probable({ random });
@@ -62,7 +65,11 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
   // TODO: tablenest needs to preserve the array-ness of a def.
   layers = convertToArray(layers).slice(0, maxLayers);
 
-  wireControls({ refresh: seedWithDate });
+  wireControls({
+    refresh: seedWithDate,
+    scheduleRefresh: refreshScheduler.schedule,
+    unscheduleRefresh: refreshScheduler.unschedule
+  });
 
   spinnerFlowKit.go({
     layers,

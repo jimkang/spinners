@@ -1,14 +1,29 @@
-var listenersInit = false;
+var OLPE = require('one-listener-per-element');
+var { setListener } = OLPE();
 
-var refreshButton = document.getElementById('refresh-button');
+var autoupdateCheckbox = document.getElementById('autoupdate-checkbox');
 
-function wireControls({ refresh }) {
-  if (listenersInit) {
-    return;
+function wireControls({ refresh, scheduleRefresh, unscheduleRefresh }) {
+  setListener({
+    eventName: 'click',
+    listener: refresh,
+    element: document.getElementById('refresh-button')
+  });
+  setListener({
+    eventName: 'change',
+    listener: toggleSchedule,
+    element: autoupdateCheckbox
+  });
+
+  toggleSchedule();
+
+  function toggleSchedule() {
+    if (autoupdateCheckbox.checked) {
+      scheduleRefresh();
+    } else {
+      unscheduleRefresh();
+    }
   }
-  listenersInit = true;
-
-  refreshButton.addEventListener('click', refresh);
 }
 
 module.exports = wireControls;
