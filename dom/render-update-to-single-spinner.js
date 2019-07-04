@@ -8,6 +8,7 @@ var {
 } = require('./spinner-accessors');
 var animateHalos = require('./animate-halos');
 var shouldDisplaySublayout = require('./should-display-sublayout');
+var orbitScheduler = require('./orbit-scheduler');
 
 const transitionTime = 2000;
 
@@ -42,10 +43,23 @@ function renderUpdateToSingleSpinner({
       .attr('height', diameter);
   }
 
-  spinner
-    .transition()
-    .duration(transitionTime)
-    .attr('transform', getTransform);
+  if (isNaN(spinnerDatum.data.orbitR)) {
+    spinner
+      .transition()
+      .duration(transitionTime)
+      .attr('transform', getTransform);
+  } else {
+    spinner
+      .transition()
+      .duration(transitionTime)
+      .attr(
+        'transform',
+        orbitScheduler.getOrbitTransform(
+          orbitScheduler.getLastElapsed() + transitionTime,
+          spinnerDatum
+        )
+      );
+  }
 
   spinner
     .select('.rotation-group')

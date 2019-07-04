@@ -1,8 +1,11 @@
+// NOTE: This is a singleton!
+//
 var d3 = require('d3-selection');
 var curry = require('lodash.curry');
 var Timer = require('d3-timer').timer;
 
 var timer;
+var lastElapsed;
 
 function cancelOrbits() {
   if (timer) {
@@ -22,6 +25,7 @@ function scheduleOrbits() {
 }
 
 function getOrbitTransform(elapsed, spinner) {
+  lastElapsed = elapsed;
   const msPerOrbit = 1000 / spinner.data.orbitSpeed;
   const rotationSign = spinner.data.orbitDirection === 'clockwise' ? -1 : 1;
   const orbitRotation =
@@ -36,4 +40,13 @@ function getOrbitTransform(elapsed, spinner) {
   return 'translate(' + x + ', ' + y + ')';
 }
 
-module.exports = { cancelOrbits, scheduleOrbits };
+function getLastElapsed() {
+  return lastElapsed;
+}
+
+module.exports = {
+  cancelOrbits,
+  scheduleOrbits,
+  getOrbitTransform,
+  getLastElapsed
+};
