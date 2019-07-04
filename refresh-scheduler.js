@@ -1,6 +1,6 @@
 var Interval = require('d3-timer').interval;
 
-const timeBetweenRefreshes = 15000;
+const timeBetweenRefreshes = 12000;
 var timer;
 
 function RefreshScheduler({ refresh }) {

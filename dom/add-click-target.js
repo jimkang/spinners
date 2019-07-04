@@ -1,6 +1,7 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var { pathCircleForSpinner } = require('./circle-to-path');
+var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 
 function addClickTarget(onClick, probable, spinner) {
   var root = d3.select(this);
@@ -22,6 +23,7 @@ function addClickTarget(onClick, probable, spinner) {
   }
 
   target.attr('d', pathCircleForSpinner(spinner));
+  target.attr('data-stability', numberOfAlterationsLeftUntilNextSeed(spinner));
   target.on('click', onClick);
 }
 

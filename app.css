@@ -70,26 +70,75 @@ button {
 }
 
 .dark .click-target {
-  stroke: hsla(0, 0%, 100%, 0.5);
+  stroke: hsla(0, 0%, 100%, 0.25);
 }
 
 .light .click-target {
+  stroke: hsla(0, 0%, 0%, 0.25);
+}
+
+.dark .click-target[data-stability="2"] {
+  stroke: hsla(0, 0%, 100%, 0.5);
+}
+
+.light .click-target[data-stability="2"] {
   stroke: hsla(0, 0%, 0%, 0.5);
 }
 
-/*
-@keyframes halo-dark { 
-  0% { stroke-width: 1; stroke: white; }
-  40% { stroke-width: 0; stroke: black; }
-  100% { stroke-width: 1; stroke: white; }
+.click-target[data-stability="1"] {
+  animation: rainbow-saturated 2s infinite;
 }
 
-@keyframes halo-light { 
-  0% { stroke-width: 1; stroke: black; }
-  40% { stroke-width: 0; stroke: white; }
-  100% { stroke-width: 1; stroke: black; }
+@keyframes rainbow-saturated {
+  0% { stroke: hsla(319.06, 75%, 70.00%, 0.8) }
+  10% { stroke: hsla(351.76, 75%, 70.00%, 0.8) }
+  20% { stroke: hsla(32.00, 75%, 70.00%, 0.8) }
+  30% { stroke: hsla(55, 98.20%, 76.47%, 0.8) }
+  40% { stroke: hsla(120.00, 75%, 60.00%, 0.8) }
+  50% { stroke: hsla(166.92, 75%, 61.37%, 0.8) }
+  60% { stroke: hsla(189.88, 75%, 70.00%, 0.8) }
+  70% { stroke: hsla(192.47, 75%, 70.00%, 0.8) }
+  80% { stroke: hsla(202.12, 75%, 70.00%, 0.8) }
+  90% { stroke: hsla(300.00, 75%, 100%, 0.8) }
 }
-*/
+
+@keyframes rainbow-dimmer {
+  0% { stroke: hsla(120.00, 75%, 60.00%, 0.8) }
+  25% { stroke: hsla(166.92, 75%, 61.37%, 0.8) }
+  50% { stroke: hsla(189.88, 75%, 70.00%, 0.8) }
+  75% { stroke: hsla(192.47, 75%, 70.00%, 0.8) }
+}
+
+.rainbow-stop-0 {
+  stop-color: hsla(319.06, 75%, 50.00%, 0.8);
+}
+.rainbow-stop-1 {
+  stop-color: hsla(351.76, 75%, 50.00%, 0.8);
+}
+.rainbow-stop-2 {
+  stop-color: hsla(32.00, 75%, 50.00%, 0.8);
+}
+.rainbow-stop-3 {
+  stop-color: hsla(55, 98.20%, 56.47%, 0.8);
+}
+.rainbow-stop-4 {
+  stop-color: hsla(120.00, 75%, 40.00%, 0.8);
+}
+.rainbow-stop-5 {
+  stop-color: hsla(166.92, 75%, 41.37%, 0.8);
+}
+.rainbow-stop-6 {
+  stop-color: hsla(189.88, 75%, 50.00%, 0.8);
+}
+.rainbow-stop-7 {
+  stop-color: hsla(192.47, 75%, 50.00%, 0.8);
+}
+.rainbow-stop-8 {
+  stop-color: hsla(202.12, 75%, 50.00%, 0.8);
+}
+.rainbow-stop-9 {
+  stop-color: hsla(300.00, 75%, 86.08%, 0.8);
+}
 
 .rotation-group[data-speed="0"] {
   animation: 6s linear spin infinite;

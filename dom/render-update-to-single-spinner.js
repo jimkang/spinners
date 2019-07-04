@@ -1,7 +1,11 @@
 var d3 = require('d3-selection');
 require('d3-transition');
 var accessor = require('accessor');
-var { diameter, getTransform } = require('./spinner-accessors');
+var {
+  diameter,
+  getTransform,
+  numberOfAlterationsLeftUntilNextSeed
+} = require('./spinner-accessors');
 var animateHalos = require('./animate-halos');
 var shouldDisplaySublayout = require('./should-display-sublayout');
 
@@ -54,7 +58,8 @@ function renderUpdateToSingleSpinner({
     .select(`#${spinnerDatum.data.id} > .click-target`)
     .attr('r', spinnerDatum.r)
     .attr('cx', spinnerDatum.r)
-    .attr('cy', spinnerDatum.r);
+    .attr('cy', spinnerDatum.r)
+    .attr('data-stability', numberOfAlterationsLeftUntilNextSeed(spinnerDatum));
 
   if (animateHalo) {
     animateHalos({
