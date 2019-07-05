@@ -96,6 +96,7 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
     if (couldMoveToSublayout || alteration === 'moveToNextSeed') {
       if (couldMoveToSublayout) {
         nextSeed = spinner.data.sublayout.seed;
+        refreshScheduler.snooze();
         routeState.addToRoute({ seed: nextSeed });
       } else {
         nextSeed = randomId(4);
@@ -124,6 +125,7 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
           animateHalo: false
         });
         // Then, move to the next seed.
+        refreshScheduler.snooze();
         setTimeout(() => routeState.addToRoute({ seed: nextSeed }), 1000);
       }
     } else if (alteration === 'changeSpeed') {

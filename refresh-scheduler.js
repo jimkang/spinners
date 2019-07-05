@@ -1,10 +1,10 @@
 var Interval = require('d3-timer').interval;
 
-const timeBetweenRefreshes = 12000;
+const timeBetweenRefreshes = 10000; //12000;
 var timer;
 
 function RefreshScheduler({ refresh }) {
-  return { schedule, unschedule };
+  return { schedule, unschedule, snooze };
 
   function schedule() {
     if (timer) {
@@ -19,6 +19,11 @@ function RefreshScheduler({ refresh }) {
       timer.stop();
       timer = null;
     }
+  }
+
+  function snooze() {
+    unschedule();
+    schedule();
   }
 }
 
