@@ -182,6 +182,7 @@ function SpinnerTables({ random }) {
         id: getId,
         image: r`images`,
         r: radius,
+        originalR: radius,
         speed: r`speed`,
         // Orbit only comes into play if the layout style is orbit.
         orbitCenter: r`orbitCenter`,

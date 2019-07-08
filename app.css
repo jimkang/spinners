@@ -2,7 +2,7 @@ body {
   font-size: 24px;
   font-family: sans-serif;
   background-color: #fff;
-  color: #666;
+  color: #888;
   margin-bottom: 2em;
   /*! margin-left: 2em; */
   /*! margin-right: 2em; */
@@ -174,6 +174,28 @@ button {
 .controls div {
   margin-bottom: 1em;
 }
+
+.go-to-spinners-link,#spinventory-link {
+  cursor: pointer;
+}
+
+#spinventory ul {
+  list-style-type: none;
+}
+
+.item-prop-tree .label:after {
+  content: " →";
+}
+
+.item-prop-tree .label {
+  margin: 0.5em;
+  background-color: #ff8;
+}
+
+.item-prop-tree .value {
+  font-weight: bold;
+}
+
 
 @media all and (max-height: 568px) {
   body {
