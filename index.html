@@ -8,31 +8,35 @@
   <body>
     <pre id="status-message" class="hidden"></pre>
 
-    <svg width="100%" height="1000" viewBox="0 0 100 100" id="board">
-      <defs>
-        <linearGradient id="rainbow-stroke-gradient">
-          <stop class="rainbow-stop-0" offset="0%" />
-          <stop class="rainbow-stop-1" offset="10%" />
-          <stop class="rainbow-stop-2" offset="20%" />
-          <stop class="rainbow-stop-3" offset="30%" />
-          <stop class="rainbow-stop-4" offset="40%" />
-          <stop class="rainbow-stop-5" offset="50%" />
-          <stop class="rainbow-stop-6" offset="60%" />
-          <stop class="rainbow-stop-7" offset="70%" />
-          <stop class="rainbow-stop-8" offset="80%" />
-          <stop class="rainbow-stop-9" offset="90%" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <section class="controls">
-      <div>
-        <button id="refresh-button">Change!</button>
+    <section id="spinventory" class="hidden">
+      <div id="empty-spinventory-message" class="hidden">
+        You have no spinners in your Spinventory.
+        <a class="go-to-spinners-link"
+          >Click on a spinner until it disappears to add one!</a
+        >
       </div>
-      <div>
-        <input type="checkbox" id="autoupdate-checkbox" name="autoupdate">
-        <label for="autoupdate">Automatically change every so often.</label>
-      </div>
-      <div id="tip">P.S. You can click the spinners.</div>
+      <ul id="spinventory-list-root"></ul>
+
+      <section class="controls">
+        <!-- <button id="spin-spinventory-button">Spin your Spinventory</button> -->
+        <a class="go-to-spinners-link">To the Spinners!</a>
+      </section>
+    </section>
+
+    <section id="spinners">
+      <svg width="100%" height="1000" viewBox="0 0 100 100" id="board"></svg>
+
+      <section class="controls">
+        <div>
+          <button id="refresh-button">Change!</button>
+        </div>
+        <div>
+          <input type="checkbox" id="autoupdate-checkbox" name="autoupdate" />
+          <label for="autoupdate">Automatically change every so often.</label>
+        </div>
+        <div id="tip">P.S. You can click the spinners.</div>
+        <a id="spinventory-link">Your Spinventory</a>
+      </section>
     </section>
     <script src="index.js"></script>
   </body>

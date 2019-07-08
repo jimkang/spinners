@@ -12,6 +12,8 @@ var isSafari = require('./is-safari');
 var shouldDisplaySublayout = require('./dom/should-display-sublayout');
 var d3 = require('d3-selection');
 var RefreshScheduler = require('./refresh-scheduler');
+var { addSpinner } = require('./spinventory');
+var spinventoryFlow = require('./flows/spinventory-flow');
 
 var spinnerFlowKit;
 
@@ -25,7 +27,24 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
+function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
+  var refreshScheduler = RefreshScheduler({ refresh: seedWithDate });
+  wireControls({
+    refresh: seedWithDate,
+    scheduleRefresh: refreshScheduler.schedule,
+    unscheduleRefresh: refreshScheduler.unschedule,
+    goToSpinventory,
+    goToSpinners
+  });
+
+  const spinventoryOn = spinventory === 'yes';
+  spinventoryFlow({ spinventoryOn });
+
+  if (spinventoryOn) {
+    refreshScheduler.unschedule();
+    return;
+  }
+
   if (!seed) {
     seedWithDate();
     return;
@@ -55,8 +74,6 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
     spinnerFlowKit = SpinnerFlow({ seed, onClick });
   }
 
-  var refreshScheduler = RefreshScheduler({ refresh: seedWithDate });
-
   var random = seedrandom(seed);
   var randomId = RandomId({ random });
   var probable = Probable({ random });
@@ -64,12 +81,6 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
   var { layers, syncPositionsAcrossLayers, layoutStyle } = layoutTable.roll();
   // TODO: tablenest needs to preserve the array-ness of a def.
   layers = convertToArray(layers).slice(0, maxLayers);
-
-  wireControls({
-    refresh: seedWithDate,
-    scheduleRefresh: refreshScheduler.schedule,
-    unscheduleRefresh: refreshScheduler.unschedule
-  });
 
   spinnerFlowKit.go({
     layers,
@@ -125,6 +136,7 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
           animateHalo: false
         });
         // Then, move to the next seed.
+        addSpinner(spinner.data);
         refreshScheduler.snooze();
         setTimeout(() => routeState.addToRoute({ seed: nextSeed }), 1000);
       }
@@ -145,6 +157,16 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey }) {
 
 function seedWithDate() {
   routeState.addToRoute({ seed: new Date().toISOString() });
+}
+
+function goToSpinventory() {
+  routeState.removeFromRoute('seed', false);
+  routeState.addToRoute({ spinventory: 'yes' });
+}
+
+function goToSpinners() {
+  routeState.removeFromRoute('spinventory', false);
+  seedWithDate();
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
