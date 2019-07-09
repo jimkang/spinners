@@ -4,8 +4,6 @@ body {
   color: #666;
   background-color: #fff;
   margin-bottom: 2em;
-  /*! margin-left: 2em; */
-  /*! margin-right: 2em; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -30,6 +28,16 @@ a:link,a:visited {
 
 .dark a:link,a:visited {
   color: white;
+}
+
+body > section {
+  width: 100%;
+}
+
+#board {
+  border: 1px solid #888;
+  border-radius: 8px;
+  margin-bottom: 1em;
 }
 
 p {
@@ -197,6 +205,9 @@ button {
   color: white;
 }
 
+#spinventory {
+}
+
 #spinventory ul {
   list-style-type: none;
   padding-left: 0;
@@ -205,6 +216,9 @@ button {
 
 #spinventory > ul {
   margin-bottom: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #spinventory .spinner-item {
@@ -219,6 +233,7 @@ button {
   background-color: #111;
   padding: 1em;
   margin-bottom: 1em;
+  margin-right: 1em;
 }
 
 .dark #spinventory .spinner-item {
@@ -259,6 +274,7 @@ button {
   color: #333;
   text-transform: uppercase;
   margin-top: 0.25em;
+  text-align: center;
 }
 
 .dark #spinventory h1 {
