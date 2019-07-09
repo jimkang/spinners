@@ -162,11 +162,15 @@ function seedWithDate() {
 function goToSpinventory() {
   routeState.removeFromRoute('seed', false);
   routeState.addToRoute({ spinventory: 'yes' });
+  // Scroll to the top.
+  document.body.scrollIntoView(true);
 }
 
 function goToSpinners() {
   routeState.removeFromRoute('spinventory', false);
   seedWithDate();
+  // Scroll to the top.
+  document.body.scrollIntoView(true);
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
