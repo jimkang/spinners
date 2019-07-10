@@ -291,5 +291,41 @@ module.exports = {
     url: 'media/Milky_Way_Galaxy-compact.png',
     attribution: 'Nick Risinger [Public domain]',
     source: 'https://commons.wikimedia.org/wiki/File:Milky_Way_Galaxy.jpg'
+  },
+  wheelHub: {
+    id: 'wheelHub',
+    name: 'Wheel hub',
+    url: 'media/wheel-hub.png',
+    attribution: 'Photo by Jim.'
+  },
+  stopSign: {
+    id: 'stopSign',
+    name: 'Stop sign',
+    url: 'media/stop-sign.png',
+    attribution: 'Photo by Jim.'
+  },
+  sewerManholeCover: {
+    id: 'sewerManholeCover',
+    name: 'Sewer manhole cover',
+    url: 'media/sewer-manhole-cover.png',
+    attribution: 'Photo by Jim.'
+  },
+  roomba: {
+    id: 'roomba',
+    name: 'Roomba',
+    url: 'media/roomba.png',
+    attribution: 'Photo by Jim.'
+  },
+  lock: {
+    id: 'lock',
+    name: 'Lock',
+    url: 'media/lock.png',
+    attribution: 'Photo by Jim.'
+  },
+  grassyManholeCover: {
+    id: 'grassyManholeCover',
+    name: 'Grassy manhole cover',
+    url: 'media/grassy-manhole-cover.png',
+    attribution: 'Photo by Jim.'
   }
 };

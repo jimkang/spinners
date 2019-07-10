@@ -46,7 +46,21 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
     ],
     typeList: [
       // Hard things
-      [2, l(['literalSpinner', 'ammonite', 'cd', 'wheel', 'plate', 'gear'])],
+      [
+        2,
+        l([
+          'literalSpinner',
+          'ammonite',
+          'cd',
+          'wheel',
+          'plate',
+          'gear',
+          'sign',
+          'manhole',
+          'roomba',
+          'lock'
+        ])
+      ],
       // Organic things
       [
         2,
@@ -60,6 +74,8 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'cookie'
         ])
       ],
+      // Animate things
+      [1, l(['cat', 'ammonite', 'roomba'])],
       // Intangible things
       [1, l(['cyclone', 'galaxy'])],
       // Foods
@@ -78,11 +94,15 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'sushi',
           'donut',
           'plate',
-          //'figureDrawing',
+          'figureDrawing',
           'gear',
           'cookie',
           'cyclone',
-          'galaxy'
+          'galaxy',
+          'sign',
+          'manhole',
+          'roomba',
+          'lock'
         ])
       ]
     ],

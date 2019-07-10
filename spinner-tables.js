@@ -130,7 +130,8 @@ function SpinnerTables({ random }) {
         [2, images.wagonWheel],
         [2, images.wagonWheelDrawing],
         [1, images.wheelOfFortune],
-        [2, images.carWheel]
+        [2, images.carWheel],
+        [2, images.wheelHub]
       ],
       speedKey: 'anySpeed'
     }),
@@ -173,6 +174,22 @@ function SpinnerTables({ random }) {
     galaxy: makeSpinnerTable({
       radius: d`d4`,
       images: [[1, images.spiralGalaxy]]
+    }),
+    sign: makeSpinnerTable({
+      radius: d`d3+1`,
+      images: [[1, images.stopSign]]
+    }),
+    manhole: makeSpinnerTable({
+      radius: d`d3+1`,
+      images: [[1, images.sewerManholeCover], [1, images.grassyManholeCover]]
+    }),
+    roomba: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.roomba]]
+    }),
+    lock: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.lock]]
     })
   };
 
