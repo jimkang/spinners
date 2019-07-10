@@ -327,5 +327,64 @@ module.exports = {
     name: 'Grassy manhole cover',
     url: 'media/grassy-manhole-cover.png',
     attribution: 'Photo by Jim.'
+  },
+  mercury: {
+    id: 'mercury',
+    name: 'Mercury',
+    url: 'media/mercury.png',
+    attribution: 'NASA',
+    source: 'https://solarsystem.nasa.gov/planets/mercury/overview/'
+  },
+  venus: {
+    id: 'venus',
+    name: 'Venus',
+    url: 'media/venus.png',
+    attribution: 'NASA',
+    source: 'https://solarsystem.nasa.gov/planets/venus/overview/'
+  },
+  earth: {
+    id: 'earth',
+    name: 'Earth',
+    url: 'media/earthturn_600.gif',
+    attribution: 'NASA',
+    source:
+      'https://solarsystem.nasa.gov/resources/2332/as-the-world-turns/?category=planets_earth'
+  },
+  mars: {
+    id: 'mars',
+    name: 'Mars',
+    url: 'media/Mars_transparent.png',
+    attribution: 'NASA',
+    source: 'https://en.wikipedia.org/wiki/File:Mars_transparent.png'
+  },
+  jupiter: {
+    id: 'jupiter',
+    name: 'Jupiter',
+    url: 'media/Jupiter01-10_02_15.0001.png',
+    attribution: 'NASA',
+    source:
+      'https://svs.gsfc.nasa.gov/vis/a010000/a012000/a012021/frames/3840x2160_16x9_60p/Jupiter01/'
+  },
+  saturn: {
+    id: 'saturn',
+    name: 'North pole of Saturn with polar hexagon',
+    url: 'media/saturn-polar-hexagon-1490.gif',
+    attribution: 'NASA',
+    source:
+      'https://solarsystem.nasa.gov/missions/cassini/science/saturn/hexagon-in-motion/'
+  },
+  uranus: {
+    id: 'uranus',
+    name: 'Uranus',
+    url: 'media/uranus.png',
+    attribution: 'NASA',
+    source: 'https://solarsystem.nasa.gov/planets/uranus/overview/'
+  },
+  neptune: {
+    id: 'neptune',
+    name: 'Neptune',
+    url: 'media/neptune.png',
+    attribution: 'NASA',
+    source: 'https://solarsystem.nasa.gov/planets/neptune/overview/'
   }
 };

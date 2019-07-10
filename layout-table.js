@@ -78,6 +78,37 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       [1, l(['cat', 'ammonite', 'roomba'])],
       // Intangible things
       [1, l(['cyclone', 'galaxy'])],
+      // Major planets
+      [
+        1,
+        l([
+          'mercury',
+          'venus',
+          'mars',
+          'earth',
+          'jupiter',
+          'saturn',
+          'uranus',
+          'neptune'
+        ])
+      ],
+      // Space
+      [
+        1,
+        l([
+          'galaxy',
+          'mercury',
+          'venus',
+          'mars',
+          'earth',
+          'jupiter',
+          'saturn',
+          'uranus',
+          'neptune'
+        ])
+      ],
+      // Weather
+      [1, l(['cyclone', 'earth'])],
       // Foods
       [1, l(['pizza', 'sushi', 'donut', 'cookie'])],
       // All things
@@ -102,7 +133,15 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'sign',
           'manhole',
           'roomba',
-          'lock'
+          'lock',
+          'mercury',
+          'venus',
+          'mars',
+          'earth',
+          'jupiter',
+          'saturn',
+          'uranus',
+          'neptune'
         ])
       ]
     ],

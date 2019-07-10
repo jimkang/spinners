@@ -190,7 +190,15 @@ function SpinnerTables({ random }) {
     lock: makeSpinnerTable({
       radius: d`d4`,
       images: [[1, images.lock]]
-    })
+    }),
+    mercury: makeSpinnerTable({ radius: d`d2`, images: images.mercury }),
+    venus: makeSpinnerTable({ radius: d`d3`, images: images.venus }),
+    earth: makeSpinnerTable({ radius: d`d3`, images: images.earth }),
+    mars: makeSpinnerTable({ radius: d`d3`, images: images.mars }),
+    jupiter: makeSpinnerTable({ radius: d`d4`, images: images.jupiter }),
+    saturn: makeSpinnerTable({ radius: d`d4`, images: images.saturn }),
+    uranus: makeSpinnerTable({ radius: d`d4`, images: images.uranus }),
+    neptune: makeSpinnerTable({ radius: d`d4`, images: images.neptune })
   };
 
   function makeSpinnerTable({ radius, images, speedKey = 'relaxed' }) {
