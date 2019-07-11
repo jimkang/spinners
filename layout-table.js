@@ -92,7 +92,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
         ])
       ],
       // Animate things
-      [1, l(['cat', 'ammonite', 'roomba', 'starfish', 'turtle', 'fishSchool'])],
+      [1, l(['cat', 'ammonite', 'roomba', 'starfish', 'turtle'])],
       // Intangible things
       [1, l(['cyclone', 'galaxy', 'hypnoswirl'])],
       // Major planets
@@ -188,7 +188,6 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'onion',
           'flower',
           'turtle',
-          'fishSchool',
           'swimRing',
           'toiletPaperRoll',
           'hypnoswirl',
