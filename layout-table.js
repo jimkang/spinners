@@ -58,7 +58,11 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'sign',
           'manhole',
           'roomba',
-          'lock'
+          'lock',
+          'shuriken',
+
+          'turtle',
+          'stump'
         ])
       ],
       // Organic things
@@ -71,13 +75,26 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'sushi',
           'donut',
           'figureDrawing',
-          'cookie'
+          'cookie',
+          'starfish',
+          'pancake',
+          'bagelEverything',
+          'pie',
+          'tart',
+          'cake',
+          'orange',
+          'kiwi',
+          'cucumber',
+          'tomato',
+          'onion',
+          'flower',
+          'stump'
         ])
       ],
       // Animate things
-      [1, l(['cat', 'ammonite', 'roomba'])],
+      [1, l(['cat', 'ammonite', 'roomba', 'starfish', 'turtle', 'fishSchool'])],
       // Intangible things
-      [1, l(['cyclone', 'galaxy'])],
+      [1, l(['cyclone', 'galaxy', 'hypnoswirl'])],
       // Major planets
       [
         1,
@@ -110,7 +127,21 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       // Weather
       [1, l(['cyclone', 'earth'])],
       // Foods
-      [1, l(['pizza', 'sushi', 'donut', 'cookie'])],
+      [
+        4,
+        [
+          // Mains
+          [2, l(['pizza', 'sushi', 'pancake', 'bagelEverything', 'pepperoni'])],
+          // Desserts
+          [2, l(['donut', 'cookie', 'pie', 'tart', 'cake'])],
+          // Fruits
+          [1, l(['orange', 'kiwi'])],
+          // Vegetables
+          [1, l(['cucumber', 'tomato', 'onion'])]
+        ]
+      ],
+      // Household
+      [1, l(['pinwheel', 'record', 'flower', 'swimRing', 'toiletPaperRoll'])],
       // All things
       [
         3,
@@ -141,7 +172,28 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'jupiter',
           'saturn',
           'uranus',
-          'neptune'
+          'neptune',
+          'shuriken',
+          'pinwheel',
+          'starfish',
+          'pancake',
+          'bagelEverything',
+          'pie',
+          'tart',
+          'cake',
+          'orange',
+          'kiwi',
+          'cucumber',
+          'tomato',
+          'onion',
+          'flower',
+          'turtle',
+          'fishSchool',
+          'swimRing',
+          'toiletPaperRoll',
+          'hypnoswirl',
+          'stump',
+          'pepperoni'
         ])
       ]
     ],

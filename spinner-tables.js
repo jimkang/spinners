@@ -177,7 +177,7 @@ function SpinnerTables({ random }) {
     }),
     sign: makeSpinnerTable({
       radius: d`d3+1`,
-      images: [[1, images.stopSign]]
+      images: [[1, images.stopSign], [1, images.trafficCircleSign]]
     }),
     manhole: makeSpinnerTable({
       radius: d`d3+1`,
@@ -198,7 +198,84 @@ function SpinnerTables({ random }) {
     jupiter: makeSpinnerTable({ radius: d`d4`, images: images.jupiter }),
     saturn: makeSpinnerTable({ radius: d`d4`, images: images.saturn }),
     uranus: makeSpinnerTable({ radius: d`d4`, images: images.uranus }),
-    neptune: makeSpinnerTable({ radius: d`d4`, images: images.neptune })
+    neptune: makeSpinnerTable({ radius: d`d4`, images: images.neptune }),
+
+    pinwheel: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[2, images.pinwheel], [1, images.pinwheelRed]]
+    }),
+
+    shuriken: makeSpinnerTable({
+      radius: d`d4`,
+      images: [
+        [1, images.shurikenWhite],
+        [1, images.shurikenBlack],
+        [1, images.shurikenSteel]
+      ]
+    }),
+    record: makeSpinnerTable({ radius: d`d4`, images: images.record }),
+    orange: makeSpinnerTable({ radius: d`d4`, images: images.orange }),
+    cucumber: makeSpinnerTable({ radius: d`d4`, images: images.cucumber }),
+    tomato: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.tomato], [1, images.ketchup], [1, images.tomatoWhole]]
+    }),
+    kiwi: makeSpinnerTable({ radius: d`d4`, images: images.kiwi }),
+    bagelEverything: makeSpinnerTable({
+      radius: d`d4`,
+      images: images.bagelEverything
+    }),
+    pancake: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.pancakeBack], [1, images.pancakeSyrup]]
+    }),
+    onion: makeSpinnerTable({
+      radius: d`d4`,
+      images: [images.onionRing, images.slicedOnion]
+    }),
+    pie: makeSpinnerTable({ radius: d`d4`, images: images.pie }),
+
+    tart: makeSpinnerTable({ radius: d`d4`, images: images.tart }),
+
+    cake: makeSpinnerTable({ radius: d`d4`, images: images.cake }),
+
+    starfish: makeSpinnerTable({ radius: d`d4`, images: images.starfish }),
+    flower: makeSpinnerTable({
+      radius: d`d4`,
+      images: [
+        [1, images.flowerPink],
+        [1, images.flowerCarnation],
+        [1, images.flowerOrange],
+        [1, images.flowerRed],
+        [1, images.flower2],
+        [1, images.sunflower],
+        [1, images.flower3],
+        [1, images.flower4],
+        [1, images.flower5],
+        [1, images.flower6],
+        [1, images.flower7]
+      ]
+    }),
+    turtle: makeSpinnerTable({ radius: d`d4`, images: images.turtle }),
+
+    fishSchool: makeSpinnerTable({ radius: d`d4`, images: images.fishSchool }),
+
+    swimRing: makeSpinnerTable({ radius: d`d4`, images: images.swimRing }),
+
+    toiletPaperRoll: makeSpinnerTable({
+      radius: d`d4`,
+      images: images.toiletPaperRoll
+    }),
+
+    hypnoswirl: makeSpinnerTable({ radius: d`d4`, images: images.hypnoswirl }),
+    stump: makeSpinnerTable({
+      radius: d`d4`,
+      images: [[1, images.stump], [1, images.stump2]]
+    }),
+    pepperoni: makeSpinnerTable({
+      radius: d`d3`,
+      images: images.pepperoni
+    })
   };
 
   function makeSpinnerTable({ radius, images, speedKey = 'relaxed' }) {

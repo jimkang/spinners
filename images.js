@@ -386,5 +386,292 @@ module.exports = {
     url: 'media/neptune.png',
     attribution: 'NASA',
     source: 'https://solarsystem.nasa.gov/planets/neptune/overview/'
+  },
+  pinwheel: {
+    id: 'pinwheel',
+    name: 'pinwheel',
+    url: 'media/pinwheel.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  pinwheelRed: {
+    id: 'pinwheelRed',
+    name: 'pinwheel-red',
+    url: 'media/inwheel-red.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  shurikenWhite: {
+    id: 'shurikenWhite',
+    name: 'shuriken-white',
+    url: 'media/shuriken-white.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  shurikenBlack: {
+    id: 'shurikenBlack',
+    name: 'shuriken-black',
+    url: 'media/shuriken-black.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  shurikenSteel: {
+    id: 'shurikenSteel',
+    name: 'shuriken-steel',
+    url: 'media/shuriken-steel.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  record: {
+    id: 'record',
+    name: 'record',
+    url: 'media/record.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  orange: {
+    id: 'orange',
+    name: 'orange',
+    url: 'media/orange.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  cucumber: {
+    id: 'cucumber',
+    name: 'cucumber',
+    url: 'media/cucumber.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  tomato: {
+    id: 'tomato',
+    name: 'tomato',
+    url: 'media/tomato.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  ketchup: {
+    id: 'ketchup',
+    name: 'ketchup',
+    url: 'media/ketchup.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  tomatoWhole: {
+    id: 'tomatoWhole',
+    name: 'tomato-whole',
+    url: 'media/tomato-whole.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  kiwi: {
+    id: 'kiwi',
+    name: 'kiwi',
+    url: 'media/kiwi.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  bagelEverything: {
+    id: 'bagelEverything',
+    name: 'bagel-everything',
+    url: 'media/bagel-everything.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  pancakeBack: {
+    id: 'pancakeBack',
+    name: 'pancake-back',
+    url: 'media/pancake-back.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  pancakeSyrup: {
+    id: 'pancakeSyrup',
+    name: 'pancake-syrup',
+    url: 'media/pancake-syrup.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  onionRing: {
+    id: 'onionRing',
+    name: 'onion-ring',
+    url: 'media/onion-ring.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  slicedOnion: {
+    id: 'slicedOnion',
+    name: 'sliced-onion',
+    url: 'media/sliced-onion.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  pie: {
+    id: 'pie',
+    name: 'pie',
+    url: 'media/pie.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  tart: {
+    id: 'tart',
+    name: 'tart',
+    url: 'media/tart.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  cake: {
+    id: 'cake',
+    name: 'cake',
+    url: 'media/cake.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  starfish: {
+    id: 'starfish',
+    name: 'starfish',
+    url: 'media/starfish.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flowerPink: {
+    id: 'flowerPink',
+    name: 'flower-pink',
+    url: 'media/flower-pink.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flowerCarnation: {
+    id: 'flowerCarnation',
+    name: 'flower-carnation',
+    url: 'media/flower-carnation.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flowerOrange: {
+    id: 'flowerOrange',
+    name: 'flower-orange',
+    url: 'media/flower-orange.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flowerRed: {
+    id: 'flowerRed',
+    name: 'flower-red',
+    url: 'media/flower-red.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flower2: {
+    id: 'flower2',
+    name: 'flower-2',
+    url: 'media/flower-2.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  sunflower: {
+    id: 'sunflower',
+    name: 'sunflower',
+    url: 'media/sunflower.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flower3: {
+    id: 'flower3',
+    name: 'flower-3',
+    url: 'media/flower-3.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flower4: {
+    id: 'flower4',
+    name: 'flower-4',
+    url: 'media/flower-4.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flower5: {
+    id: 'flower5',
+    name: 'flower-5',
+    url: 'media/flower-5.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flower6: {
+    id: 'flower6',
+    name: 'flower-6',
+    url: 'media/flower-6.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  flower7: {
+    id: 'flower7',
+    name: 'flower-7',
+    url: 'media/flower-7.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  turtle: {
+    id: 'turtle',
+    name: 'turtle',
+    url: 'media/turtle.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  fishSchool: {
+    id: 'fishSchool',
+    name: 'fish-school',
+    url: 'media/fish-school.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  swimRing: {
+    id: 'swimRing',
+    name: 'swim-ring',
+    url: 'media/swim-ring.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  toiletPaperRoll: {
+    id: 'toilet-paper-roll',
+    name: 'toilet-paper-roll',
+    url: 'media/toilet-paper-roll.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  trafficCircleSign: {
+    id: 'traffic-circle-sign',
+    name: 'traffic-circle-sign',
+    url: 'media/traffic-circle-sign.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  hypnoswirl: {
+    id: 'hypnoswirl',
+    name: 'hypnoswirl',
+    url: 'media/hypnoswirl.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  stump: {
+    id: 'stump',
+    name: 'stump',
+    url: 'media/stump.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  stump2: {
+    id: 'stump2',
+    name: 'stump-2',
+    url: 'media/stump-2.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
+  },
+  pepperoni: {
+    id: 'pepperoni',
+    name: 'Pepperoni',
+    url: 'media/pepperoni.png',
+    attribution: 'Adobe Stock free trial',
+    description: ''
   }
 };
