@@ -60,7 +60,6 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           'roomba',
           'lock',
           'shuriken',
-
           'turtle',
           'stump'
         ])
@@ -92,12 +91,12 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
         ])
       ],
       // Animate things
-      [1, l(['cat', 'ammonite', 'roomba', 'starfish', 'turtle'])],
+      [2, l(['cat', 'ammonite', 'roomba', 'starfish', 'turtle'])],
       // Intangible things
       [1, l(['cyclone', 'galaxy', 'hypnoswirl'])],
       // Major planets
       [
-        1,
+        2,
         l([
           'mercury',
           'venus',
@@ -111,7 +110,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       ],
       // Space
       [
-        1,
+        2,
         l([
           'galaxy',
           'mercury',
@@ -128,6 +127,34 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       [1, l(['cyclone', 'earth'])],
       // Foods
       [
+        1,
+        l([
+          'pizza',
+          'sushi',
+          'pancake',
+          'bagelEverything',
+          'pepperoni',
+          // Desserts
+          'donut',
+          'cookie',
+          'pie',
+          'tart',
+          'cake',
+          // Fruits
+          'orange',
+          'kiwi',
+          // Vegetables
+          'cucumber',
+          'tomato',
+          'onion'
+        ])
+      ],
+
+      // Foods
+      // There's a bug in tablenest that only comes up after
+      // minification: The second level of tables won't be resolved here.
+      /*
+      [
         4,
         [
           // Mains
@@ -140,6 +167,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
           [1, l(['cucumber', 'tomato', 'onion'])]
         ]
       ],
+      */
       // Household
       [1, l(['pinwheel', 'record', 'flower', 'swimRing', 'toiletPaperRoll'])],
       // All things
@@ -197,14 +225,10 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       ]
     ],
     typeMix: [
-      // One type
-      [5, f((o, p) => range(o.size).map(() => p.pick(o.types)))],
-      // Two types
-      [5, f((o, p) => p.sample(o.types, 2))],
+      [5, f(evenMixOfTypes)],
+      [5, f(mixOfTwoTypes)],
       // Mostly one type.
-      [3, f(getMixOfMostlyOneType)],
-      // Even mix
-      [1, f((o, p) => range(o.size).map(() => p.pick(o.types)))]
+      [3, f(getMixOfMostlyOneType)]
     ],
     layer: r({ id: getId, spinnerTypes: r`typeMix` }),
     size: sizeTables[sizeKey],
@@ -235,13 +259,36 @@ const maxPickOtherTries = 5;
 
 function getMixOfMostlyOneType(o, p) {
   var mainType = p.pick(o.types);
-  return range(o.size).map(mostlyPickMainType);
+  var types = range(o.size).map(mostlyPickMainType);
+  //console.log('getMixOfMostlyOneType', o, types);
+  //if (types.some(t => t === undefined)) {
+  //  debugger;
+  //}
+  return types;
 
   function mostlyPickMainType() {
     return p.roll(5) === 0
       ? pickOtherIfPossible(o.types, p.pick, mainType)
       : mainType;
   }
+}
+
+function evenMixOfTypes(o, p) {
+  var types = range(o.size).map(() => p.pick(o.types));
+  //console.log('evenMixOfTypes', o, types);
+  //if (types.some(t => t === undefined)) {
+  //  debugger;
+  //}
+  return types;
+}
+
+function mixOfTwoTypes(o, p) {
+  var types = p.sample(o.types, 2);
+  //console.log('mixOfTwoTypes', types);
+  //if (types.some(t => t === undefined)) {
+  //  debugger;
+  //}
+  return types;
 }
 
 function pickOtherIfPossible(array, pick, avoid) {

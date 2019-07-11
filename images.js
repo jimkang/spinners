@@ -618,13 +618,6 @@ module.exports = {
     attribution: 'Adobe Stock free trial',
     description: ''
   },
-  fishSchool: {
-    id: 'fishSchool',
-    name: 'fish-school',
-    url: 'media/fish-school.png',
-    attribution: 'Adobe Stock free trial',
-    description: ''
-  },
   swimRing: {
     id: 'swimRing',
     name: 'swim-ring',

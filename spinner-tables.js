@@ -234,11 +234,8 @@ function SpinnerTables({ random }) {
       images: [images.onionRing, images.slicedOnion]
     }),
     pie: makeSpinnerTable({ radius: d`d4`, images: images.pie }),
-
     tart: makeSpinnerTable({ radius: d`d4`, images: images.tart }),
-
     cake: makeSpinnerTable({ radius: d`d4`, images: images.cake }),
-
     starfish: makeSpinnerTable({ radius: d`d4`, images: images.starfish }),
     flower: makeSpinnerTable({
       radius: d`d4`,
@@ -257,16 +254,11 @@ function SpinnerTables({ random }) {
       ]
     }),
     turtle: makeSpinnerTable({ radius: d`d4`, images: images.turtle }),
-
-    fishSchool: makeSpinnerTable({ radius: d`d4`, images: images.fishSchool }),
-
     swimRing: makeSpinnerTable({ radius: d`d4`, images: images.swimRing }),
-
     toiletPaperRoll: makeSpinnerTable({
       radius: d`d4`,
       images: images.toiletPaperRoll
     }),
-
     hypnoswirl: makeSpinnerTable({ radius: d`d4`, images: images.hypnoswirl }),
     stump: makeSpinnerTable({
       radius: d`d4`,
