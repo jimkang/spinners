@@ -126,7 +126,8 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       // Weather
       [1, l(['cyclone', 'earth'])],
       // Foods
-      [2, l(['pizza', 'sushi', 'pancake', 'bagelEverything', 'pepperoni'])],
+      [1, 'pizza'],
+      [1, l(['sushi', 'pancake', 'bagelEverything', 'pepperoni'])],
       // Desserts
       [1, l(['donut', 'cookie', 'pie', 'tart', 'cake'])],
       // Fruits and vegetables
