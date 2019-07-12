@@ -15,7 +15,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
   return tablenest({
     root: [
       [
-        15,
+        31,
         r({
           size: r`size`,
           types: r`typeList`,
