@@ -462,7 +462,7 @@ module.exports = {
     url: 'media/neptune.png',
     attribution: 'NASA',
     source: 'https://solarsystem.nasa.gov/planets/neptune/overview/',
-    description: ''
+    description: 'Has been acting strangely ever since Pluto got demoted.'
   },
   pinwheel: {
     id: 'pinwheel',
