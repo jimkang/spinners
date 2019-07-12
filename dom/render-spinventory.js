@@ -1,7 +1,6 @@
 var d3 = require('d3-selection');
 var accessor = require('accessor');
 var RenderAsNestedList = require('render-as-nested-list');
-var omit = require('lodash.omit');
 
 var renderAsNestedList = RenderAsNestedList({});
 var spinventorySection = d3.select('#spinventory');
@@ -46,6 +45,7 @@ function renderSpinventory({ spinners, spinventoryOn }) {
     .attr('width', originalDiameter)
     .attr('height', originalDiameter);
   newImages.append('div').classed('image-attribution', true);
+  newImages.append('div').classed('description', true);
 
   newItems.append('ul').classed('item-prop-tree', true);
 
@@ -64,6 +64,9 @@ function renderSpinventory({ spinners, spinventoryOn }) {
     .attr('data-speed', accessor('speed'));
   updateItems.select('.image-name').text(accessor({ path: 'image/name' }));
   updateItems.select('.image-attribution').html(getAttributionHTML);
+  updateItems
+    .select('.description')
+    .text(accessor({ path: 'image/description' }));
 
   updateItems.select('.item-prop-tree').each(renderItemProps);
 }
@@ -72,7 +75,7 @@ function renderItemProps(spinner) {
   while (this.firstChild) {
     this.removeChild(this.firstChild);
   }
-  renderAsNestedList({ targetListEl: this, thing: omit(spinner, 'image') });
+  renderAsNestedList({ targetListEl: this, thing: spinner.summary });
 }
 
 function getCompensateTransform(spinner) {

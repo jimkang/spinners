@@ -117,6 +117,9 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
             .getElementById('board')
             .getBoundingClientRect().width;
           spinner.data.r = spinner.r;
+
+          // Save to Spinventory.
+          addSpinner(spinner.data);
         } else {
           // Whoosh the spinner offscreen.
           if (probable.roll(2) === 0) {
@@ -136,7 +139,6 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
           animateHalo: false
         });
         // Then, move to the next seed.
-        addSpinner(spinner.data);
         refreshScheduler.snooze();
         setTimeout(() => routeState.addToRoute({ seed: nextSeed }), 1000);
       }

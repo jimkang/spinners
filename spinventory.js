@@ -15,6 +15,8 @@ if (localStorage.spinners) {
 // the position info.
 function addSpinner(spinner) {
   spinnerDict[spinner.id] = spinner;
+  // Mutating actual spinner data here; should be OK.
+  spinner.dateGot = new Date();
   saveDict();
 }
 
@@ -26,7 +28,13 @@ function getSpinners() {
   return Object.values(spinnerDict);
 }
 
+function clearSpinventory() {
+  spinnerDict = {};
+  saveDict();
+}
+
 module.exports = {
   addSpinner,
-  getSpinners
+  getSpinners,
+  clearSpinventory
 };
