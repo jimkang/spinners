@@ -231,7 +231,7 @@ function SpinnerTables({ random }) {
     }),
     onion: makeSpinnerTable({
       radius: d`d4`,
-      images: [images.onionRing, images.slicedOnion]
+      images: [[1, images.onionRing], [1, images.slicedOnion]]
     }),
     pie: makeSpinnerTable({ radius: d`d4`, images: images.pie }),
     tart: makeSpinnerTable({ radius: d`d4`, images: images.tart }),
