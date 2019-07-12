@@ -66,7 +66,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       ],
       // Organic things
       [
-        2,
+        4,
         l([
           'ammonite',
           'pizza',
@@ -126,29 +126,11 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       // Weather
       [1, l(['cyclone', 'earth'])],
       // Foods
-      [
-        1,
-        l([
-          'pizza',
-          'sushi',
-          'pancake',
-          'bagelEverything',
-          'pepperoni',
-          // Desserts
-          'donut',
-          'cookie',
-          'pie',
-          'tart',
-          'cake',
-          // Fruits
-          'orange',
-          'kiwi',
-          // Vegetables
-          'cucumber',
-          'tomato',
-          'onion'
-        ])
-      ],
+      [2, l(['pizza', 'sushi', 'pancake', 'bagelEverything', 'pepperoni'])],
+      // Desserts
+      [1, l(['donut', 'cookie', 'pie', 'tart', 'cake'])],
+      // Fruits and vegetables
+      [1, l(['orange', 'kiwi', 'cucumber', 'tomato', 'onion'])],
 
       // Foods
       // There's a bug in tablenest that only comes up after
