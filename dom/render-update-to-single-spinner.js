@@ -18,11 +18,16 @@ const transitionTime = 2000;
 function renderUpdateToSingleSpinner({
   spinnerDatum,
   probable,
-  animateHalo = true
+  animateHalo = true,
+  moveToFront
 }) {
   var spinner = d3.select('#' + spinnerDatum.data.id);
   if (spinner.empty()) {
     return;
+  }
+
+  if (moveToFront) {
+    spinner.raise();
   }
 
   spinner

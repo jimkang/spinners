@@ -141,7 +141,8 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
         renderUpdateToSingleSpinner({
           spinnerDatum: spinner,
           probable,
-          animateHalo: false
+          animateHalo: false,
+          moveToFront: true
         });
         // Then, move to the next seed.
         refreshScheduler.snooze();
@@ -160,7 +161,11 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
     } else if (alteration === 'changeSize') {
       spinner.r += 10;
       spinner.data.r = spinner.r;
-      renderUpdateToSingleSpinner({ spinnerDatum: spinner, probable });
+      renderUpdateToSingleSpinner({
+        spinnerDatum: spinner,
+        probable,
+        moveToFront: true
+      });
     }
   }
 }
