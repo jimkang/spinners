@@ -469,35 +469,38 @@ module.exports = {
     name: 'Pinwheel',
     url: 'media/pinwheel.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'A childhood favorite. Minutes of fun!'
   },
   pinwheelRed: {
     id: 'pinwheelRed',
     name: 'Red pinwheel',
     url: 'media/inwheel-red.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Because it’s red, it appears more dangerous than the regular pinwheel. Don’t worry, it’s still just a pinwheel.'
   },
   shurikenWhite: {
     id: 'shurikenWhite',
     name: 'Light shuriken',
     url: 'media/shuriken-white.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Shuriken? You sure can!'
   },
   shurikenBlack: {
     id: 'shurikenBlack',
     name: 'Dark shuriken',
     url: 'media/shuriken-black.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Some people say ninja aren’t real, but they’ve just never seen a ninja. Think about it.'
   },
   shurikenSteel: {
     id: 'shurikenSteel',
     name: 'Steel shuriken',
     url: 'media/shuriken-steel.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'It helps your aim if you do a backflip and yell “NINJUTSU!” before you throw this.'
   },
   record: {
     id: 'record',
@@ -518,21 +521,21 @@ module.exports = {
     name: 'Cucumber',
     url: 'media/cucumber.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Cucumbers, melons, pumpkins, and gourds are all cucurbits. '
   },
   tomato: {
     id: 'tomato',
     name: 'Tomato slice',
     url: 'media/tomato.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Provides 100% of the daily recommended allowance of slime.'
   },
   ketchup: {
     id: 'ketchup',
     name: 'Ketchup',
     url: 'media/ketchup.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'For dipping.'
   },
   tomatoWhole: {
     id: 'tomatoWhole',
@@ -553,195 +556,204 @@ module.exports = {
     name: 'Everything bagel',
     url: 'media/bagel-everything.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Not literally everything. Please don’t sue us.'
   },
   pancakeBack: {
     id: 'pancakeBack',
-    name: 'Flipped pancake',
+    name: 'Pancake back',
     url: 'media/pancake-back.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Also known as the “tails” side of the pancake. Often features an eagle or a national monument.'
   },
   pancakeSyrup: {
     id: 'pancakeSyrup',
     name: 'Pancake with syrup',
     url: 'media/pancake-syrup.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'That butter should at least be somewhat melted by now, right? Is this pancake cold?'
   },
   onionRing: {
     id: 'onionRing',
     name: 'Onion ring',
     url: 'media/onion-ring.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'A holy ring of Betazed.'
   },
   slicedOnion: {
     id: 'slicedOnion',
     name: 'Onion slice',
     url: 'media/sliced-onion.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Purple onions are grape flavored.'
   },
   pie: {
     id: 'pie',
     name: 'Pie',
     url: 'media/pie.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'A delicious onion pie.'
   },
   tart: {
     id: 'tart',
     name: 'Tart',
     url: 'media/tart.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Similar to a pie, but smaller and more expensive.'
   },
   cake: {
     id: 'cake',
     name: 'Cake',
     url: 'media/cake.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Nah, I’m pretty sure this is a bowl of yogurt with fruit on top.'
   },
   starfish: {
     id: 'starfish',
     name: 'Starfish',
     url: 'media/starfish.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'The friendly people at the aquarium call these “sea stars.”'
   },
   flowerPink: {
     id: 'flowerPink',
     name: 'Pink flower',
     url: 'media/flower-pink.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Each petal is an individual flower, and the middle disc is a cluster of individual flowers as well. Cool, huh?'
   },
   flowerCarnation: {
     id: 'flowerCarnation',
     name: 'Carnation',
     url: 'media/flower-carnation.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Looks more like a peony to me, but I’m no horticulturist.'
   },
   flowerOrange: {
     id: 'flowerOrange',
-    name: 'Orange flower',
+    name: 'Flower, orange',
     url: 'media/flower-orange.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Not related to “fruit-orange,” confusingly.'
   },
   flowerRed: {
     id: 'flowerRed',
     name: 'Red flower',
     url: 'media/flower-red.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'I have no idea what this flower is called. A morning glory?'
   },
   flower2: {
     id: 'flower2',
     name: '2 flower',
     url: 'media/flower-2.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'No, wait, this one is definitely a morning glory.'
   },
   sunflower: {
     id: 'sunflower',
     name: 'Sunflower',
     url: 'Sunflower flower.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Some species of sunflowers get terrifyingly large. The flowerheads move throughout the day, following your every move. At night, they strike.'
   },
   flower3: {
     id: 'flower3',
-    name: '3 flower',
+    name: 'Flower 3',
     url: 'media/flower-3.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Note the delicious baby olives nestled within.'
   },
   flower4: {
     id: 'flower4',
-    name: '4 flower',
+    name: 'Flower 4',
     url: 'media/flower-4.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Another morning glory.'
   },
   flower5: {
     id: 'flower5',
-    name: '5 flower',
+    name: 'Flower 5',
     url: 'media/flower-5.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'A particularly aggressive flower. Avoid eye contact.'
   },
   flower6: {
     id: 'flower6',
-    name: '6 flower',
+    name: 'Flower 6',
     url: 'media/flower-6.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'Also known as Flower 3.'
   },
   flower7: {
     id: 'flower7',
-    name: '7 flower',
+    name: 'Flower 7',
     url: 'media/flower-7.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'One of those whatever flowers they put in grocery store bouquets. It’s not too bad though.'
   },
   turtle: {
     id: 'turtle',
     name: 'Turtle',
     url: 'media/turtle.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Its head is withdrawn into its shell. Once it stops spinning, it will slowly walk away.'
   },
   swimRing: {
     id: 'swimRing',
     name: 'Swim ring',
     url: 'media/swim-ring.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'A lemon frosted donut.'
   },
   toiletPaperRoll: {
     id: 'toilet-paper-roll',
     name: 'Toilet paper roll',
     url: 'media/toilet-paper-roll.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: '2-ply, soft yet strong.'
   },
   trafficCircleSign: {
     id: 'traffic-circle-sign',
     name: 'Traffic circle sign',
     url: 'media/traffic-circle-sign.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'All vehicles that fail to yield will be collected for recycling.'
   },
   hypnoswirl: {
     id: 'hypnoswirl',
     name: 'Hypnoswirl',
     url: 'media/hypnoswirl.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'When I snap my fingers, you will send me a dollar.'
   },
   stump: {
     id: 'stump',
     name: 'Stump',
     url: 'media/stump.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'A beautiful tree used to grow here.'
   },
   stump2: {
     id: 'stump2',
     name: 'Another stump',
     url: 'media/stump-2.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description: 'It’s looking at me. I don’t like it.'
   },
   pepperoni: {
     id: 'pepperoni',
     name: 'Pepperoni',
     url: 'media/pepperoni.png',
     attribution: 'Adobe Stock free trial',
-    description: ''
+    description:
+      'Would you rather eat a pepperoni pizza, or a 16” slice of pepperoni?'
   }
 };
