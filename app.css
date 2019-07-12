@@ -159,6 +159,12 @@ button {
   stop-color: hsla(300.00, 75%, 86.08%, 0.8);
 }
 
+/*
+.rotation-group {
+  will-change: contents;
+}
+*/
+
 .rotation-group[data-speed="0"] {
   animation: 6s linear spin infinite;
 }
@@ -324,6 +330,12 @@ button {
 }
 
 .tip {
+}
+
+.escaped-text {
+  text-anchor: middle;
+  fill: hsla(0, 0%, 90%, 0.6);
+  font-size: 10px;
 }
 
 footer {

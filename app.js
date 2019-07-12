@@ -14,6 +14,7 @@ var d3 = require('d3-selection');
 var RefreshScheduler = require('./refresh-scheduler');
 var { addSpinner } = require('./spinventory');
 var spinventoryFlow = require('./flows/spinventory-flow');
+var showEscaped = require('./dom/show-escaped');
 
 var spinnerFlowKit;
 
@@ -111,6 +112,7 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
         routeState.addToRoute({ seed: nextSeed });
       } else {
         nextSeed = randomId(4);
+        let nextSeedDelay = 1000;
         // Make spinner fill the board.
         if (probable.roll(4) > 0) {
           spinner.r = document
@@ -121,6 +123,8 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
           // Save to Spinventory.
           addSpinner(spinner.data);
         } else {
+          showEscaped({ spinner });
+
           // Whoosh the spinner offscreen.
           if (probable.roll(2) === 0) {
             spinner.x = 50 + 200 * (probable.roll(2) === 0 ? -1 : 1);
@@ -131,6 +135,7 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
               50 + probable.roll(50) * (probable.roll(2) === 0 ? -1 : 1);
             spinner.y = 50 + 200 * (probable.roll(2) === 0 ? -1 : 1);
           }
+          nextSeedDelay += 1000;
         }
 
         renderUpdateToSingleSpinner({
@@ -140,7 +145,10 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
         });
         // Then, move to the next seed.
         refreshScheduler.snooze();
-        setTimeout(() => routeState.addToRoute({ seed: nextSeed }), 1000);
+        setTimeout(
+          () => routeState.addToRoute({ seed: nextSeed }),
+          nextSeedDelay
+        );
       }
     } else if (alteration === 'changeSpeed') {
       spinner.data.speed += 1.0;
