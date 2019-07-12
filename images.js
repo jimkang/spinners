@@ -412,11 +412,11 @@ module.exports = {
   earth: {
     id: 'earth',
     name: 'Earth',
-    url: 'media/earthturn_600.gif',
+    url: 'media/a-sky-view-of-earth-from-suomi-npp_16611703184_o~medium.png',
     attribution: 'NASA',
     description: 'Little is known about this strange far-off planet.',
     source:
-      'https://solarsystem.nasa.gov/resources/2332/as-the-world-turns/?category=planets_earth'
+      'https://images.nasa.gov/details-a-sky-view-of-earth-from-suomi-npp_16611703184_o.html'
   },
   mars: {
     id: 'mars',
