@@ -243,6 +243,7 @@ button {
   font-size: 1.2em;
   text-align: center;
   word-break: break-word;
+  margin-bottom: 1em;
 }
 
 .dark #spinventory .spinner-item {
@@ -323,6 +324,10 @@ button {
 }
 
 .tip {
+}
+
+footer {
+  margin-top: 1em;
 }
 
 @media all and (max-height: 568px) {
