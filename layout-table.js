@@ -66,7 +66,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       ],
       // Organic things
       [
-        4,
+        3,
         l([
           'ammonite',
           'pizza',
@@ -155,7 +155,7 @@ function LayoutTables({ random, sizeKey = 'normal' }) {
       [1, l(['pinwheel', 'record', 'flower', 'swimRing', 'toiletPaperRoll'])],
       // All things
       [
-        3,
+        6,
         l([
           'ammonite',
           'clockFace',
