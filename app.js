@@ -28,7 +28,14 @@ var routeState = RouteState({
   routeState.routeFromHash();
 })();
 
-function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
+function followRoute({
+  seed,
+  maxLayers,
+  maxSublayouts,
+  sizeKey,
+  spinventory,
+  hideUI
+}) {
   var refreshScheduler = RefreshScheduler({ refresh: seedWithDate });
   wireControls({
     refresh: seedWithDate,
@@ -37,6 +44,12 @@ function followRoute({ seed, maxLayers, maxSublayouts, sizeKey, spinventory }) {
     goToSpinventory,
     goToSpinners
   });
+
+  if (hideUI === 'yes') {
+    document.body.classList.add('hide-ui');
+  } else {
+    document.body.classList.remove('hide-ui');
+  }
 
   const spinventoryOn = spinventory === 'yes';
   spinventoryFlow({ spinventoryOn });
