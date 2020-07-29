@@ -114,7 +114,10 @@ button {
 }
 
 .click-target[data-stability="1"] {
+  /*
   animation: rainbow-saturated 2s infinite;
+  TODO: Maybe a subtler dark-to-light animation?
+  */
 }
 
 @keyframes rainbow-saturated {
@@ -356,4 +359,3 @@ footer {
     font-size: 18px;
   }
 }
-
