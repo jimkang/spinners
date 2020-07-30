@@ -17,7 +17,6 @@ const transitionTime = 2000;
 // TODO: Get rid of sublayout stuff entirely?
 function renderUpdateToSingleSpinner({
   spinnerDatum,
-  probable,
   animateHalo = true,
   moveToFront
 }) {
@@ -81,10 +80,7 @@ function renderUpdateToSingleSpinner({
     .attr('data-stability', numberOfAlterationsLeftUntilNextSeed(spinnerDatum));
 
   if (animateHalo) {
-    animateHalos({
-      targetsSelection: clickTarget,
-      probable
-    });
+    animateHalos({ targetsSelection: clickTarget });
   }
 }
 

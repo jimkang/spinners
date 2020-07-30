@@ -22,7 +22,8 @@ function pathCircleForSpinner(spinner) {
     r: spinner.r,
     cx: centerDist,
     cy: centerDist,
-    numberOfArcs
+    numberOfArcs,
+    extrusionR: spinner.data.extrusionR
   });
 }
 
@@ -55,35 +56,45 @@ function circleToArcs({ r, cx, cy, numberOfArcs = 8 }) {
   return { center, edgeStart, arcs };
 }
 
-function circleToPath({ r, cx, cy, numberOfArcs = 8 }) {
-  return arcsToBezierPath(circleToArcs({ r, cx, cy, numberOfArcs }));
+function circleToPath({ r, cx, cy, numberOfArcs = 8, extrusionR }) {
+  return arcsToBezierPath(
+    circleToArcs({ r, cx, cy, numberOfArcs }),
+    extrusionR
+  );
 }
 
 // Produces quadratic bezier curves.
 // Does not work well if there are less than around six arcs.
-function arcsToBezierPath({ center, edgeStart, arcs }) {
-  var path = `M ${center.x + edgeStart.dx} ${center.y + edgeStart.dy}\n`;
+function arcsToBezierPath({ center, edgeStart, arcs }, extrusionR) {
+  var path = `M ${(center.x + edgeStart.dx).toPrecision(4)} ${(
+    center.y + edgeStart.dy
+  ).toPrecision(4)}\n`;
   var firstControlPt = getFirstControlPt({
     center,
     edgeStart,
-    firstArc: arcs[0],
+    extrusionR,
     arcAngle: (2 * Math.PI) / arcs.length
   });
-  path += `Q ${firstControlPt[0]} ${firstControlPt[1]}, ${arcs[0].destX} ${
-    arcs[0].destY
-  }\n`;
+  path += `Q ${firstControlPt[0].toPrecision(
+    4
+  )} ${firstControlPt[1].toPrecision(4)}, ${arcs[0].destX.toPrecision(
+    4
+  )} ${arcs[0].destY.toPrecision(4)}\n`;
   for (let i = 1; i < arcs.length; ++i) {
-    path += `T ${arcs[i].destX} ${arcs[i].destY}\n`;
+    path += `T ${arcs[i].destX.toPrecision(4)} ${arcs[i].destY.toPrecision(
+      4
+    )}\n`;
   }
+  console.log('path', path);
   return path;
 }
 
 // See diagram for derivation: https://github.com/jimkang/spinners/blob/master/meta/how-to-find-the-first-control-point.jpg
 // Lots of assumptions here, the first being that the first arc
 // starts at cx + r, cy (0 rads) on the circle.
-function getFirstControlPt({ center, firstArc, arcAngle }) {
+function getFirstControlPt({ center, extrusionR, arcAngle }) {
   const theta = arcAngle / 2;
-  const r = firstArc.rx; // Assumes rx and ry are the same.
+  const r = extrusionR;
   const yDistToP = (r * Math.sin(theta)) / Math.cos(theta);
   return b2d.addPairs([center.x, center.y], [r, yDistToP]);
 }

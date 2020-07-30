@@ -1,12 +1,11 @@
 var { arcsCircleForSpinner, arcsToBezierPath } = require('./circle-to-path');
-var wobbleCircle = require('./wobble-circle');
 var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 
 const expandingDuration = 1400;
 const contractingDuration = 2000;
 const maxAlterations = 3;
 
-function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
+function animateHalos({ targetsSelection }) {
   targetsSelection.interrupt();
 
   targetsSelection
@@ -27,19 +26,12 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
   function getInitialPath(spinner) {
     var originalCircleKit = arcsCircleForSpinner({
       spinner,
-      r: spinner.r + radiusExpansion
+      r: spinner.r
     });
     const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
-    // The closer it is to jumping to the next seed, the
-    // more unstable it should look.
-    if (stepsToNextSeed < maxAlterations) {
-      originalCircleKit = wobbleCircle(
-        originalCircleKit,
-        probable,
-        maxAlterations - stepsToNextSeed
-      );
-    }
-    return arcsToBezierPath(originalCircleKit);
+    updateExtrusionR(spinner, stepsToNextSeed, maxAlterations);
+
+    return arcsToBezierPath(originalCircleKit, spinner.data.extrusionR);
   }
 
   function getFinalPath(spinner) {
@@ -48,14 +40,18 @@ function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
       spinner
     });
     const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
-    if (stepsToNextSeed < maxAlterations) {
-      expandedCircleKit = wobbleCircle(
-        expandedCircleKit,
-        probable,
-        maxAlterations - stepsToNextSeed
-      );
-    }
-    return arcsToBezierPath(expandedCircleKit);
+    updateExtrusionR(spinner, stepsToNextSeed, maxAlterations);
+    return arcsToBezierPath(expandedCircleKit, spinner.data.extrusionR);
+  }
+}
+
+function updateExtrusionR(spinner, stepsToNextSeed, maxAlterations) {
+  // The closer it is to jumping to the next seed, the
+  // more unstable it should look.
+  if (stepsToNextSeed < maxAlterations) {
+    spinner.data.extrusionR =
+      ((maxAlterations - stepsToNextSeed) / maxAlterations) *
+      (spinner.data.maxExtrusionRatio * spinner.data.r);
   }
 }
 

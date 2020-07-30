@@ -270,6 +270,7 @@ function SpinnerTables({ random }) {
     })
   };
 
+  // Radius is a resolvable symbol, like d`d6`.
   function makeSpinnerTable({ radius, images, speedKey = 'relaxed' }) {
     return tablenest({
       root: r({
@@ -277,6 +278,8 @@ function SpinnerTables({ random }) {
         image: r`images`,
         r: radius,
         originalR: radius,
+        maxExtrusionRatio: 1.25,
+        extrusionR: radius,
         speed: r`speed`,
         // Orbit only comes into play if the layout style is orbit.
         orbitCenter: r`orbitCenter`,

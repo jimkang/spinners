@@ -153,7 +153,6 @@ function followRoute({
 
         renderUpdateToSingleSpinner({
           spinnerDatum: spinner,
-          probable,
           animateHalo: false,
           moveToFront: true
         });
