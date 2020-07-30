@@ -2,15 +2,17 @@ var renderSpinners = require('../dom/render-spinners');
 var renderLayers = require('../dom/render-layers');
 var seedrandom = require('seedrandom');
 var SpinnerTables = require('../spinner-tables');
-var LayoutTable = require('../layout-table');
 var hierarchy = require('d3-hierarchy');
 var Probable = require('probable').createProbable;
 var RandomId = require('@jimkang/randomid');
-var convertToArray = require('../convert-to-array');
 var curry = require('lodash.curry');
 //var cloneDeep = require('lodash.clonedeep');
 var ep = require('errorback-promise');
 var scheduleHalos = require('../dom/schedule-halos');
+var {
+  makeSpinnerForKey,
+  makeOrbitingSpinnerForKey
+} = require('./spinner-makers');
 
 function SpinnerFlow({ seed, onClick }) {
   var random = seedrandom(seed);
@@ -33,7 +35,7 @@ function SpinnerFlow({ seed, onClick }) {
     maxLayers = 100, // Applies to layers in sublayouts.
     maxSublayouts = 10000
   }) {
-    var numberOfSublayoutsAdded = 0;
+    var sublayoutCounter = { numberOfSublayoutsAdded: 0 };
     var darkBG = probable.roll(3) > 0;
     document.body.classList[darkBG ? 'add' : 'remove']('dark');
     document.body.classList[darkBG ? 'remove' : 'add']('light');
@@ -77,7 +79,16 @@ function SpinnerFlow({ seed, onClick }) {
           if (useOrbits) {
             spinnerDataForLayers.push(
               layers[i].spinnerTypes.map(
-                curry(makeOrbitingSpinnerForKey)(currentDepth, isClockLayer)
+                curry(makeOrbitingSpinnerForKey)(
+                  currentDepth,
+                  isClockLayer,
+                  spinnerTables,
+                  sublayoutCounter,
+                  maxSublayouts,
+                  maxLayers,
+                  randomId,
+                  getSpinnerDataForLayers
+                )
               )
             );
           } else {
@@ -85,7 +96,16 @@ function SpinnerFlow({ seed, onClick }) {
               wrapInPositionObjects({
                 src: baseLayerSpinners,
                 spinnerData: layers[i].spinnerTypes.map(
-                  curry(makeSpinnerForKey)(currentDepth, isClockLayer)
+                  curry(makeSpinnerForKey)(
+                    currentDepth,
+                    isClockLayer,
+                    spinnerTables,
+                    sublayoutCounter,
+                    maxSublayouts,
+                    maxLayers,
+                    randomId,
+                    getSpinnerDataForLayers
+                  )
                 ),
                 layerIndex: i
               })
@@ -114,8 +134,18 @@ function SpinnerFlow({ seed, onClick }) {
     }
 
     function buildSpinnersForPackLayer(currentDepth, layer) {
+      const isClockLayer = layer.layerType !== 'clock';
       var spinners = layer.spinnerTypes.map(
-        curry(makeSpinnerForKey)(currentDepth, layer.layerType !== 'clock')
+        curry(makeSpinnerForKey)(
+          currentDepth,
+          isClockLayer,
+          spinnerTables,
+          sublayoutCounter,
+          maxSublayouts,
+          maxLayers,
+          randomId,
+          getSpinnerDataForLayers
+        )
       );
       var tree = hierarchy.hierarchy({
         id: 'root',
@@ -126,74 +156,21 @@ function SpinnerFlow({ seed, onClick }) {
     }
 
     function buildSpinnersForOrbitLayer(currentDepth, layer) {
+      const isClockLayer = layer.layerType !== 'clock';
       return layer.spinnerTypes.map(
         curry(makeOrbitingSpinnerForKey)(
           currentDepth,
-          layer.layerType !== 'clock'
+          isClockLayer,
+          spinnerTables,
+          sublayoutCounter,
+          maxSublayouts,
+          maxLayers,
+          randomId,
+          getSpinnerDataForLayers
         )
       );
     }
-
-    function makeSpinnerForKey(currentDepth, shouldMakeSublayout, key) {
-      var spinner = spinnerTables[key].roll();
-      if (shouldMakeSublayout && numberOfSublayoutsAdded < maxSublayouts) {
-        addSublayoutToSpinner({ spinner, currentDepth });
-      }
-      return spinner;
-    }
-
-    function makeOrbitingSpinnerForKey(
-      currentDepth,
-      shouldMakeSublayout,
-      key,
-      i,
-      keys
-    ) {
-      var spinner = makeSpinnerForKey(currentDepth, shouldMakeSublayout, key);
-      spinner.orbitR = (50 / keys.length) * i;
-
-      return {
-        data: spinner,
-        x: 50 + (50 / keys.length) * i,
-        y: 50,
-        r: spinner.r
-      };
-    }
-
-    function addSublayoutToSpinner({ spinner, currentDepth }) {
-      // Avoid recursing infinitely.
-      if (currentDepth > 0) {
-        //console.log('skipping');
-        return;
-      }
-
-      let subSeed = randomId(8);
-      let layoutTable = LayoutTable({ random: seedrandom(subSeed) });
-      let result;
-      let layers;
-      do {
-        result = layoutTable.roll();
-        // TODO: tablenest needs to preserve the array-ness of a def.
-        layers = convertToArray(result.layers).slice(0, maxLayers);
-      } while (layers[layers.length - 1].layerType === 'clock');
-      // The minute hand clock layers do not work well as sublayout top
-      // layers because they don't show well on black backgrounds.
-
-      // Make all sublayouts use orbit style for now.
-      spinner.sublayout = {
-        layers,
-        syncPositionsAcrossLayers: result.syncPositionsAcrossLayers,
-        layoutStyle: 'orbit', //result.layoutStyle,
-        currentDepth: currentDepth + 1,
-        seed: subSeed
-      };
-      spinner.sublayout.spinnerDataForLayers = getSpinnerDataForLayers(
-        spinner.sublayout
-      );
-      numberOfSublayoutsAdded += 1;
-    }
   }
-
   // Calling renderSpinners directly via forEach will end up passing it
   // the array of spinners as the third param, which is undesirable.
   function callRenderSpinners(layoutStyle, layers, spinnerDataForLayer, i) {
