@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-      <svg id="normal-board" width="100%" height="1000" viewBox="0 0 10 10">
+      <svg width="100%" height="1000" viewBox="0 0 10 10">
         <path id="circle" d="M 90 50
           C 90 58.28, 86.56 70, 78.28 78.28
           C 90 58.28, 86.56 70, 78.28 78.28"
@@ -17,15 +17,14 @@
         -->
       </svg>
 <script>
-var normalBoard = document.getElementById('normal-board');
 var circlePath = document.getElementById('circle');
-circlePath.setAttribute('d', getCirclePath(5, 5, 4, 9, normalBoard));
+circlePath.setAttribute('d', getCirclePath(5, 5, 4, 32));
 
-function getCirclePath(cx, cy, r, segmentCount, svg) {
+function getCirclePath(cx, cy, r, segmentCount) {
   var path = '';
   const segAngle = 2 * Math.PI / segmentCount;
   const tanRatio = Math.tan(segAngle);
-  const vMagnitudeFactor = 2/segmentCount;
+  const vMagnitudeFactor = segmentCount;
   var vecStart = [r, 0];
   var segStart = [cx + vecStart[0], cy + vecStart[1]];
   path += `M ${segStart[0]} ${segStart[1]}\n`;
@@ -36,8 +35,6 @@ function getCirclePath(cx, cy, r, segmentCount, svg) {
     let vecEnd = getSpotOnOriginCircle(segIndex * segAngle, r);
     let vecToCP2 = [vecEnd[1] * vMagnitudeFactor, -vecEnd[0] * vMagnitudeFactor];
     let segEnd = [cx + vecEnd[0], cy + vecEnd[1]];
-
-    addDot(segEnd, svg);
     let cp2 = [segEnd[0] + vecToCP2[0], segEnd[1] + vecToCP2[1]];
 
     path += `C ${cp1[0].toPrecision(3)} ${cp1[1].toPrecision(3)}, ${cp2[0].toPrecision(3)} ${cp2[1].toPrecision(3)}, ${segEnd[0].toPrecision(3)} ${segEnd[1].toPrecision(3)}\n`;
@@ -49,16 +46,17 @@ function getCirclePath(cx, cy, r, segmentCount, svg) {
 }
 
 function getSpotOnOriginCircle(angle, r) {
-  return [Math.cos(angle) * r, Math.sin(angle) * r];
-}
+  const angleTan = Math.tan(angle);
+  if (angleTan === 0) {
+    return [Math.cos(angle) * r, 0];
+  }
+  if (angleTan > 1) {
+    return [0, Math.sin(angle) * r];
+  }
 
-function addDot(pt, parent) {
-  var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  dot.setAttribute('cx', pt[0]);
-  dot.setAttribute('cy', pt[1]);
-  dot.setAttribute('r', 0.1);
-  dot.setAttribute('fill', 'hsl(110, 80%, 50%)');
-  parent.appendChild(dot);
+  const x = r * Math.sin(angle) / angleTan;
+  const y = x * angleTan;
+  return [x, y];
 }
 
 </script>
