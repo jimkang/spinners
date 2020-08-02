@@ -6,9 +6,16 @@
   </head>
   <body>
       <svg id="normal-board" width="100%" height="1000" viewBox="0 0 10 10">
+        <path class="circle" d=""
+          stroke="black" fill="transparent" stroke-width="0.1" />
+        <!--
         <path id="circle" d="M 90 50
           C 90 58.28, 86.56 70, 78.28 78.28
           C 90 58.28, 86.56 70, 78.28 78.28"
+        -->
+      </svg>
+      <svg id="wobble-board" width="100%" height="1000" viewBox="0 0 10 10">
+        <path class="circle" d=""
           stroke="black" fill="transparent" stroke-width="0.1" />
         <!--
         <path id="circle" d="M 90 50
@@ -18,8 +25,13 @@
       </svg>
 <script>
 var normalBoard = document.getElementById('normal-board');
-var circlePath = document.getElementById('circle');
+var wobbleBoard = document.getElementById('wobble-board');
+
+var circlePath = normalBoard.querySelector('.circle');
 circlePath.setAttribute('d', getCirclePath(5, 5, 4, 9, normalBoard));
+
+var wobblePath = wobbleBoard.querySelector('.circle');
+wobblePath.setAttribute('d', getCirclePath(5, 5, 4, 6, wobbleBoard));
 
 function getCirclePath(cx, cy, r, segmentCount, svg) {
   var path = '';
