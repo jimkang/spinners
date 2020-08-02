@@ -17,23 +17,36 @@
       <svg id="wobble-board" width="100%" height="1000" viewBox="0 0 10 10">
         <path class="circle" d=""
           stroke="black" fill="transparent" stroke-width="0.1" />
-        <!--
-        <path id="circle" d="M 90 50
-          C 90 58.28, 86.56 70, 78.28 78.28
-          C 90 58.28, 86.56 70, 78.28 78.28"
-        -->
+      </svg>
+      <svg id="animation-board" width="100%" height="1000" viewBox="0 0 10 10">
+        <path class="circle" d=""
+          stroke="black" fill="transparent" stroke-width="0.1" />
+      </svg>
+      <svg id="pulse-board" width="100%" height="1000" viewBox="0 0 10 10">
+        <path class="circle" d=""
+          stroke="black" fill="transparent" stroke-width="0.1" />
       </svg>
 <script>
 var normalBoard = document.getElementById('normal-board');
 var wobbleBoard = document.getElementById('wobble-board');
+var animationBoard = document.getElementById('animation-board');
+var pulseBoard = document.getElementById('pulse-board');
 
 var circlePath = normalBoard.querySelector('.circle');
 circlePath.setAttribute('d', getCirclePath(5, 5, 4, 9, normalBoard));
 
 var wobblePath = wobbleBoard.querySelector('.circle');
-wobblePath.setAttribute('d', getCirclePath(5, 5, 4, 6, wobbleBoard, 0.25));
+wobblePath.setAttribute('d', getCirclePath(5, 5, 4, 20, wobbleBoard, 0.5, -1));
 
-function getCirclePath(cx, cy, r, segmentCount, svg, wobbleLevel = 0.0) {
+var animatedPath = animationBoard.querySelector('.circle');
+var lastWobbleDirection = -1;
+window.requestAnimationFrame(setAnimatedPath);
+
+var pulsePath = pulseBoard.querySelector('.circle');
+var pulseStep = 0;
+window.requestAnimationFrame(setPulsePath);
+
+function getCirclePath(cx, cy, r, segmentCount, svg, wobbleLevel = 0.0, initialWobbleDirection = -1) {
   var path = '';
   const segAngle = 2 * Math.PI / segmentCount;
   const tanRatio = Math.tan(segAngle);
@@ -41,7 +54,7 @@ function getCirclePath(cx, cy, r, segmentCount, svg, wobbleLevel = 0.0) {
   var vecStart = [r, 0];
   var segStart = [cx + vecStart[0], cy + vecStart[1]];
   path += `M ${segStart[0]} ${segStart[1]}\n`;
-  var wobbleDirection = 1;
+  var wobbleDirection = initialWobbleDirection;
 
   for (var segIndex = 1; segIndex <= segmentCount; ++segIndex) {
     let vecToCP1 = [-vecStart[1] * vMagnitudeFactor, vecStart[0] * vMagnitudeFactor];
@@ -88,6 +101,21 @@ function wobbleCP(cp, cx, cy, wobbleLevel, wobbleDirection) {
   return cp;
 }
 
+function setAnimatedPath() {
+  animatedPath.setAttribute('d', getCirclePath(5, 5, 4, 20, animationBoard, 0.5, lastWobbleDirection));
+  lastWobbleDirection *= -1;
+  setTimeout(() => window.requestAnimationFrame(setAnimatedPath), 1000/2);
+}
+
+function setPulsePath() {
+  const pulseVal = Math.sin(pulseStep);
+  const pulseDirection = pulseVal > 0 ? 1 : -1;
+  pulsePath.setAttribute('d', getCirclePath(5, 5, 4, 20, pulseBoard, Math.abs(pulseVal), pulseDirection));
+
+  pulseStep += Math.PI/8;
+  setTimeout(() => window.requestAnimationFrame(setPulsePath), 200);
+}
+
 </script>
-  </body>
+</body>
 </html>
