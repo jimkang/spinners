@@ -31,9 +31,9 @@ var circlePath = normalBoard.querySelector('.circle');
 circlePath.setAttribute('d', getCirclePath(5, 5, 4, 9, normalBoard));
 
 var wobblePath = wobbleBoard.querySelector('.circle');
-wobblePath.setAttribute('d', getCirclePath(5, 5, 4, 6, wobbleBoard));
+wobblePath.setAttribute('d', getCirclePath(5, 5, 4, 6, wobbleBoard, 0.25));
 
-function getCirclePath(cx, cy, r, segmentCount, svg) {
+function getCirclePath(cx, cy, r, segmentCount, svg, wobbleLevel = 0.0) {
   var path = '';
   const segAngle = 2 * Math.PI / segmentCount;
   const tanRatio = Math.tan(segAngle);
@@ -41,20 +41,24 @@ function getCirclePath(cx, cy, r, segmentCount, svg) {
   var vecStart = [r, 0];
   var segStart = [cx + vecStart[0], cy + vecStart[1]];
   path += `M ${segStart[0]} ${segStart[1]}\n`;
+  var wobbleDirection = 1;
 
   for (var segIndex = 1; segIndex <= segmentCount; ++segIndex) {
     let vecToCP1 = [-vecStart[1] * vMagnitudeFactor, vecStart[0] * vMagnitudeFactor];
     let cp1 = [cx + vecStart[0] + vecToCP1[0], cy + vecStart[1] + vecToCP1[1]];
+    cp1 = wobbleCP(cp1, cx, cy, wobbleLevel, wobbleDirection);
     let vecEnd = getSpotOnOriginCircle(segIndex * segAngle, r);
     let vecToCP2 = [vecEnd[1] * vMagnitudeFactor, -vecEnd[0] * vMagnitudeFactor];
     let segEnd = [cx + vecEnd[0], cy + vecEnd[1]];
 
     addDot(segEnd, svg);
     let cp2 = [segEnd[0] + vecToCP2[0], segEnd[1] + vecToCP2[1]];
+    cp2 = wobbleCP(cp2, cx, cy, wobbleLevel, wobbleDirection);
 
     path += `C ${cp1[0].toPrecision(3)} ${cp1[1].toPrecision(3)}, ${cp2[0].toPrecision(3)} ${cp2[1].toPrecision(3)}, ${segEnd[0].toPrecision(3)} ${segEnd[1].toPrecision(3)}\n`;
 
     vecStart = vecEnd;
+    wobbleDirection *= -1;
   }
 
   return path;
@@ -71,6 +75,17 @@ function addDot(pt, parent) {
   dot.setAttribute('r', 0.1);
   dot.setAttribute('fill', 'hsl(110, 80%, 50%)');
   parent.appendChild(dot);
+}
+
+function wobbleCP(cp, cx, cy, wobbleLevel, wobbleDirection) {
+  if (wobbleLevel > 0.0) {
+    // Direction: center to cp * wobbleDirection. Magnitude: wobbleLevel
+    let centerToCP = [cp[0] - cx, cp[1] - cy];
+    const centerToCPLength = Math.sqrt(centerToCP[0] * centerToCP[0] + centerToCP[1] * centerToCP[1]);
+    let cpWobbleVec = [centerToCP[0]/centerToCPLength * wobbleDirection * wobbleLevel, centerToCP[1]/centerToCPLength * wobbleDirection * wobbleLevel];
+    return [cp[0] + cpWobbleVec[0], cp[1] + cpWobbleVec[1]];
+  }
+  return cp;
 }
 
 </script>
