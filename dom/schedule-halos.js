@@ -27,7 +27,7 @@ function scheduleHalos({ probable }) {
       numberOfTargetsToAnimate = 3;
     }
     var clickTargetsToAnimate = clickTargets.filter(shouldAnimate);
-    animateHalos({ targetsSelection: clickTargetsToAnimate, probable });
+    animateHalos({ targetsSelection: clickTargetsToAnimate });
     timer = Timeout(animateNextHalos, nextDelay);
 
     if (nextDelay < 55000) {

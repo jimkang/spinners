@@ -98,19 +98,19 @@ button {
 }
 
 .dark .click-target {
-  stroke: hsla(0, 0%, 100%, 0.25);
-}
-
-.light .click-target {
-  stroke: hsla(0, 0%, 0%, 0.25);
-}
-
-.dark .click-target[data-stability="2"] {
   stroke: hsla(0, 0%, 100%, 0.5);
 }
 
-.light .click-target[data-stability="2"] {
+.light .click-target {
   stroke: hsla(0, 0%, 0%, 0.5);
+}
+
+.dark .click-target[data-stability="2"] {
+  stroke: hsla(0, 0%, 100%, 0.75);
+}
+
+.light .click-target[data-stability="2"] {
+  stroke: hsla(0, 0%, 0%, 0.75);
 }
 
 .click-target[data-stability="1"] {

@@ -1,5 +1,4 @@
-var b2d = require('basic-2d-math');
-const numberOfArcs = require('./number-of-arcs');
+var math = require('basic-2d-math');
 var shouldDisplaySublayout = require('./should-display-sublayout');
 
 function centerDistForSpinner(spinner) {
@@ -16,82 +15,87 @@ function centerDistForSpinner(spinner) {
   return isRotatingViaCSS ? 0 : spinner.r;
 }
 
-function pathCircleForSpinner(spinner) {
+function pathCircleForSpinner(spinner, wobbleDirection, wobbleLevel) {
   const centerDist = centerDistForSpinner(spinner);
-  return circleToPath({
-    r: spinner.r,
+  return getCircleAsBezierCurvesPath({
     cx: centerDist,
     cy: centerDist,
-    numberOfArcs
+    r: spinner.r,
+    segmentCount: spinner.data.wobbleSegments,
+    wobbleLevel,
+    wobbleDirection
   });
 }
 
-function arcsCircleForSpinner({ spinner, r }) {
-  const centerDist = centerDistForSpinner(spinner);
-  return circleToArcs({ r, cx: centerDist, cy: centerDist, numberOfArcs });
-}
+function getCircleAsBezierCurvesPath({
+  cx,
+  cy,
+  r,
+  segmentCount,
+  wobbleLevel = 0.0,
+  wobbleDirection = -1
+}) {
+  var path = '';
+  const segAngle = (2 * Math.PI) / segmentCount;
+  const vMagnitudeFactor = 2 / segmentCount;
+  var vecStart = [r, 0];
+  var segStart = [cx + vecStart[0], cy + vecStart[1]];
+  path += `M ${segStart[0]} ${segStart[1]}\n`;
 
-function circleToArcs({ r, cx, cy, numberOfArcs = 8 }) {
-  var center = { x: cx, y: cy };
-  var edgeStart = { dx: r, dy: 0 };
+  for (var segIndex = 1; segIndex <= segmentCount; ++segIndex) {
+    let center = [cx, cy];
+    let vecToCP1 = math.multiplyPairBySingleValue(
+      [-vecStart[1], vecStart[0]],
+      vMagnitudeFactor
+    );
+    let cp1 = math.addPairs(math.addPairs(center, vecStart), vecToCP1);
+    cp1 = wobbleCP(cp1, cx, cy, wobbleLevel, wobbleDirection);
+    let vecEnd = getSpotOnOriginCircle(segIndex * segAngle, r);
+    let vecToCP2 = math.multiplyPairBySingleValue(
+      [vecEnd[1], -vecEnd[0]],
+      vMagnitudeFactor
+    );
+    let segEnd = math.addPairs(center, vecEnd);
 
-  const circlePortionAngle = (2 * Math.PI) / numberOfArcs;
-  var arcs = [];
-  for (let arcIndex = 0; arcIndex < numberOfArcs - 1; ++arcIndex) {
-    const rotation = (arcIndex + 1) * circlePortionAngle;
-    const destX = cx + r * Math.cos(rotation);
-    const destY = cy + r * Math.sin(rotation);
-    arcs.push({ rx: r, ry: r, angle: 0, largeArc: 0, sweep: 1, destX, destY });
+    //addDot(segEnd, svg);
+    let cp2 = math.addPairs(segEnd, vecToCP2);
+    cp2 = wobbleCP(cp2, cx, cy, wobbleLevel, wobbleDirection);
+
+    path += `C ${cp1[0].toPrecision(3)} ${cp1[1].toPrecision(
+      3
+    )}, ${cp2[0].toPrecision(3)} ${cp2[1].toPrecision(
+      3
+    )}, ${segEnd[0].toPrecision(3)} ${segEnd[1].toPrecision(3)}\n`;
+
+    vecStart = vecEnd;
+    wobbleDirection *= -1;
   }
-  arcs.push({
-    rx: r,
-    ry: r,
-    angle: 0,
-    largeArc: 0,
-    sweep: 1,
-    destX: center.x + edgeStart.dx,
-    destY: center.y + edgeStart.dy
-  });
-  return { center, edgeStart, arcs };
-}
 
-function circleToPath({ r, cx, cy, numberOfArcs = 8 }) {
-  return arcsToBezierPath(circleToArcs({ r, cx, cy, numberOfArcs }));
-}
-
-// Produces quadratic bezier curves.
-// Does not work well if there are less than around six arcs.
-function arcsToBezierPath({ center, edgeStart, arcs }) {
-  var path = `M ${center.x + edgeStart.dx} ${center.y + edgeStart.dy}\n`;
-  var firstControlPt = getFirstControlPt({
-    center,
-    edgeStart,
-    firstArc: arcs[0],
-    arcAngle: (2 * Math.PI) / arcs.length
-  });
-  path += `Q ${firstControlPt[0]} ${firstControlPt[1]}, ${arcs[0].destX} ${
-    arcs[0].destY
-  }\n`;
-  for (let i = 1; i < arcs.length; ++i) {
-    path += `T ${arcs[i].destX} ${arcs[i].destY}\n`;
-  }
   return path;
 }
 
-// See diagram for derivation: https://github.com/jimkang/spinners/blob/master/meta/how-to-find-the-first-control-point.jpg
-// Lots of assumptions here, the first being that the first arc
-// starts at cx + r, cy (0 rads) on the circle.
-function getFirstControlPt({ center, firstArc, arcAngle }) {
-  const theta = arcAngle / 2;
-  const r = firstArc.rx; // Assumes rx and ry are the same.
-  const yDistToP = (r * Math.sin(theta)) / Math.cos(theta);
-  return b2d.addPairs([center.x, center.y], [r, yDistToP]);
+function getSpotOnOriginCircle(angle, r) {
+  return [Math.cos(angle) * r, Math.sin(angle) * r];
+}
+
+// Control point for the wobbled bezier curve.
+function wobbleCP(cp, cx, cy, wobbleLevel, wobbleDirection) {
+  if (wobbleLevel > 0.0) {
+    // Direction: center to cp * wobbleDirection. Magnitude: wobbleLevel
+    let centerToCP = [cp[0] - cx, cp[1] - cy];
+    const centerToCPLength = Math.sqrt(
+      centerToCP[0] * centerToCP[0] + centerToCP[1] * centerToCP[1]
+    );
+    let cpWobbleVec = [
+      (centerToCP[0] / centerToCPLength) * wobbleDirection * wobbleLevel,
+      (centerToCP[1] / centerToCPLength) * wobbleDirection * wobbleLevel
+    ];
+    return [cp[0] + cpWobbleVec[0], cp[1] + cpWobbleVec[1]];
+  }
+  return cp;
 }
 
 module.exports = {
-  circleToPath,
-  circleToArcs,
-  arcsToBezierPath,
   pathCircleForSpinner,
-  arcsCircleForSpinner
+  getCircleAsBezierCurvesPath
 };

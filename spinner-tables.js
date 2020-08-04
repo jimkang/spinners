@@ -270,6 +270,7 @@ function SpinnerTables({ random }) {
     })
   };
 
+  // Radius is a resolvable symbol, like d`d6`.
   function makeSpinnerTable({ radius, images, speedKey = 'relaxed' }) {
     return tablenest({
       root: r({
@@ -277,7 +278,12 @@ function SpinnerTables({ random }) {
         image: r`images`,
         r: radius,
         originalR: radius,
+        wobblePulses: d`d4+5`,
+        wobblePulseDuration: d`6d6x500`,
+        // TODO: Handle odd numbers of segments.
+        wobbleSegments: r`wobbleSegments`,
         speed: r`speed`,
+        initialWobbleDirection: r`initialWobbleDirection`,
         // Orbit only comes into play if the layout style is orbit.
         orbitCenter: r`orbitCenter`,
         orbitSpeed: d`d4x0.0125`,
@@ -293,7 +299,13 @@ function SpinnerTables({ random }) {
       orbitDirection: orbitDirectionTable,
       orbitRotationOffset: orbitRotationOffsetTable,
       alterationSchedule: alterationScheduleTable,
-      displaysSublayout: [[1, 'always'], [2, 'onlyIfNotOnSafari'], [6, 'never']]
+      displaysSublayout: [
+        [1, 'always'],
+        [2, 'onlyIfNotOnSafari'],
+        [6, 'never']
+      ],
+      initialWobbleDirection: [[1, -1], [1, 1]],
+      wobbleSegments: [[1, 4], [6, d`d4x2+2`], [3, d`d10x2+8`]]
     });
   }
 }

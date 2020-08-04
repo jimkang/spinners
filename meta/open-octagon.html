@@ -1,0 +1,72 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Circles, etc.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+      <svg width="100%" height="1000" viewBox="0 0 10 10">
+        <path id="circle" d="M 9 5
+C 9 7, 9 3, 9 5
+C 9 7, 9.242640687119284 6.414213562373095, 7.82842712474619 7.82842712474619
+C 6.414213562373095 9.242640687119284, 7 9, 5 9
+C 3 9, 3.585786437626905 9.242640687119284, 2.17157287525381 7.82842712474619
+C 0.7573593128807152 6.414213562373095, 1.0000000000000002 7.000000000000001, 1 5.000000000000001
+C 0.9999999999999998 3.000000000000001, 0.7573593128807146 3.585786437626905, 2.1715728752538093 2.17157287525381
+C 3.585786437626904 0.757359312880715, 3 1, 5 1
+C 7 1, 6.414213562373095 0.7573593128807148, 7.82842712474619 2.1715728752538093
+" stroke="black" fill="transparent"></path>
+        <!--
+        <path id="circle" d="M 90 50
+          C 90 58.28, 86.56 70, 78.28 78.28
+          C 90 58.28, 86.56 70, 78.28 78.28"
+        -->
+      </svg>
+<script>
+var circlePath = document.getElementById('circle');
+circlePath.setAttribute('d', getCirclePath(5, 5, 4, 8));
+
+function getCirclePath(cx, cy, r, segmentCount) {
+  var path = '';
+  const segAngle = 2 * Math.PI / segmentCount;
+  const oppAdjRatio = Math.tan(segAngle);
+  // TODO: Why * 4 ?
+  const vMagnitudeFactor = oppAdjRatio / segmentCount * 4;
+  var vecStart = [r, 0];
+  var segStart = [cx + vecStart[0], cy + vecStart[1]];
+  path += `M ${segStart[0]} ${segStart[1]}\n`;
+
+  for (var segIndex = 0; segIndex < segmentCount; ++segIndex) {
+    let vecToCP1 = [-vecStart[1] * vMagnitudeFactor, vecStart[0] * vMagnitudeFactor];
+    let cp1 = [cx + vecStart[0] + vecToCP1[0], cy + vecStart[1] + vecToCP1[1]];
+    let vecEnd = getSpotOnOriginCircle(segIndex * segAngle, r);
+    let vecToCP2 = [vecEnd[1] * vMagnitudeFactor, -vecEnd[0] * vMagnitudeFactor];
+    let segEnd = [cx + vecEnd[0], cy + vecEnd[1]];
+    let cp2 = [segEnd[0] + vecToCP2[0], segEnd[1] + vecToCP2[1]];
+
+    path += `C ${cp1[0]} ${cp1[1]}, ${cp2[0]} ${cp2[1]}, ${segEnd[0]} ${segEnd[1]}\n`;
+
+    vecStart = vecEnd;
+  }
+
+  return path;
+}
+
+function getSpotOnOriginCircle(angle, r) {
+  const angleTan = Math.tan(angle);
+  if (angleTan === 0) {
+    return [Math.cos(angle) * r, 0];
+  }
+  if (angleTan > 1) {
+    return [0, Math.sin(angle) * r];
+  }
+
+  const x = r * Math.sin(angle) / angleTan;
+  const y = x * angleTan;
+  return [x, y];
+}
+
+</script>
+  
+
+</body></html>

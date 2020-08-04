@@ -1,62 +1,52 @@
-var { arcsCircleForSpinner, arcsToBezierPath } = require('./circle-to-path');
-var wobbleCircle = require('./wobble-circle');
-var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
+var { pathCircleForSpinner } = require('./circle-to-path');
 
-const expandingDuration = 1400;
-const contractingDuration = 2000;
-const maxAlterations = 3;
+const maxPulseValToSegmentRatio = 0.05;
 
-function animateHalos({ targetsSelection, radiusExpansion = 4, probable }) {
+function animateHalos({ targetsSelection }) {
   targetsSelection.interrupt();
 
   targetsSelection
     .transition()
-    .duration(expandingDuration)
-    .attr('d', getInitialPath)
+    .duration(getTotalDuration)
+    .attrTween('d', GetHaloPath)
     .attr('stroke-width', 0.25)
     .attr('opacity', 1.0);
 
   targetsSelection
     .transition()
-    .delay(expandingDuration)
-    .duration(contractingDuration)
-    .attr('d', getFinalPath)
+    .delay(getPrimeDuration)
+    .duration(getFadingDuration)
     .attr('stroke-width', 0)
     .attr('opacity', 0);
+}
 
-  function getInitialPath(spinner) {
-    var originalCircleKit = arcsCircleForSpinner({
-      spinner,
-      r: spinner.r + radiusExpansion
-    });
-    const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
-    // The closer it is to jumping to the next seed, the
-    // more unstable it should look.
-    if (stepsToNextSeed < maxAlterations) {
-      originalCircleKit = wobbleCircle(
-        originalCircleKit,
-        probable,
-        maxAlterations - stepsToNextSeed
-      );
+function GetHaloPath(spinner) {
+  // t is going to be a value between 0.0 and 1.0,
+  // representing how far along it is in the transition.
+  return function getHaloPath(t) {
+    const pulseVal = Math.sin(t * spinner.data.wobblePulses * 2 * Math.PI);
+    const pulseDirection = pulseVal > 0 ? 1 : -1;
+    let pulseMagnitude = Math.abs(pulseVal);
+    if (
+      pulseMagnitude / spinner.data.wobblePulses >
+      maxPulseValToSegmentRatio
+    ) {
+      pulseMagnitude = spinner.data.wobblePulses * maxPulseValToSegmentRatio;
     }
-    return arcsToBezierPath(originalCircleKit);
-  }
 
-  function getFinalPath(spinner) {
-    var expandedCircleKit = arcsCircleForSpinner({
-      r: spinner.r,
-      spinner
-    });
-    const stepsToNextSeed = numberOfAlterationsLeftUntilNextSeed(spinner);
-    if (stepsToNextSeed < maxAlterations) {
-      expandedCircleKit = wobbleCircle(
-        expandedCircleKit,
-        probable,
-        maxAlterations - stepsToNextSeed
-      );
-    }
-    return arcsToBezierPath(expandedCircleKit);
-  }
+    return pathCircleForSpinner(spinner, pulseDirection, pulseMagnitude);
+  };
+}
+
+function getTotalDuration(spinner) {
+  return spinner.data.wobblePulses * spinner.data.wobblePulseDuration;
+}
+function getPrimeDuration(spinner) {
+  return getTotalDuration(spinner) * 0.67;
+}
+
+function getFadingDuration(spinner) {
+  return getTotalDuration(spinner) * 0.33;
 }
 
 module.exports = animateHalos;
