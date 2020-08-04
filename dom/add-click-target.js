@@ -22,7 +22,10 @@ function addClickTarget(onClick, probable, spinner) {
       .attr('stroke-width', 0);
   }
 
-  target.attr('d', pathCircleForSpinner(spinner));
+  target.attr(
+    'd',
+    pathCircleForSpinner(spinner, spinner.data.initialWobbleDirection, 0)
+  );
   target.attr('data-stability', numberOfAlterationsLeftUntilNextSeed(spinner));
   target.on('click', onClick);
 }
