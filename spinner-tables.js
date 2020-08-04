@@ -279,7 +279,8 @@ function SpinnerTables({ random }) {
         r: radius,
         originalR: radius,
         wobblePulses: d`d4+5`,
-        wobblePulseDuration: d`6d6x500`,
+        wobblePulseDuration: d`d12x250`,
+        wobbleIntensity: r`wobbleIntensity`,
         // TODO: Handle odd numbers of segments.
         wobbleSegments: r`wobbleSegments`,
         speed: r`speed`,
@@ -305,7 +306,8 @@ function SpinnerTables({ random }) {
         [6, 'never']
       ],
       initialWobbleDirection: [[1, -1], [1, 1]],
-      wobbleSegments: [[1, 4], [6, d`d4x2+2`], [3, d`d10x2+8`]]
+      wobbleSegments: [[1, 4], [5, d`d4x2+2`], [4, d`d10x2+8`]],
+      wobbleIntensity: [[19, d`d25x0.01`], [1, d`d25`]]
     });
   }
 }

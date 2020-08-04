@@ -4,7 +4,7 @@ var animateHalos = require('./animate-halos');
 var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 var isSafari = require('../is-safari');
 
-const timeToFirstHalo = 5000;
+const timeToFirstHalo = 4000;
 var timer;
 
 function scheduleHalos({ probable }) {
