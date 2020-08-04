@@ -117,7 +117,7 @@ function setPulsePath(t) {
 
   lastPulseT = t;
 
-  const pulseVal = Math.sin(pulseStep);
+  const pulseVal = Math.sin(t);
   const pulseDirection = pulseVal > 0 ? 1 : -1;
   pulsePath.setAttribute('d', getCirclePath(5, 5, 4, 20, pulseBoard, Math.abs(pulseVal), pulseDirection));
 
