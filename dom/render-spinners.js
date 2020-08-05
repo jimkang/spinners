@@ -1,5 +1,5 @@
 var d3 = require('d3-selection');
-require('d3-transition');
+//require('d3-transition');
 var accessor = require('accessor');
 var renderLayers = require('./render-layers');
 var ep = require('errorback-promise');
@@ -10,7 +10,7 @@ var addClickTarget = require('./add-click-target');
 var shouldDisplaySublayout = require('./should-display-sublayout');
 var orbitScheduler = require('./orbit-scheduler');
 
-const transitionTime = 2000;
+//const transitionTime = 500;
 
 function renderSpinners({
   spinnerData,
@@ -56,8 +56,8 @@ function renderSpinners({
     .attr('data-speed', accessor({ path: 'data/speed' }))
     .select('image')
     .attr('xlink:href', accessor({ path: 'data/image/url' }))
-    .transition()
-    .duration(transitionTime)
+    //.transition()
+    //.duration(transitionTime)
     // Setting the position like this is a hack that compensates for
     // CSS transforms of the .rotation-group not accepting
     // transform-origin settings and always rotating from the
@@ -75,14 +75,14 @@ function renderSpinners({
 
   if (layoutStyle !== 'orbit') {
     updatableSpinners
-      .transition()
-      .duration(transitionTime)
+      //.transition()
+      //.duration(transitionTime)
       .attr('transform', getTransform);
   }
   updatableSpinners
     .select('.rotation-group')
-    .transition()
-    .duration(transitionTime)
+    //.transition()
+    //.duration(transitionTime)
     .attr('width', diameter)
     .attr('height', diameter);
 

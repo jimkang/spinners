@@ -10,8 +10,7 @@ function showEscaped({ spinner }) {
 
   escapedText
     .transition()
-    .delay(700)
-    .duration(1000)
+    .delay(1000)
     .attr('opacity', 0)
     .remove();
 }

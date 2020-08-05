@@ -1,5 +1,4 @@
 var d3 = require('d3-selection');
-require('d3-transition');
 var { pathCircleForSpinner } = require('./circle-to-path');
 var { numberOfAlterationsLeftUntilNextSeed } = require('./spinner-accessors');
 

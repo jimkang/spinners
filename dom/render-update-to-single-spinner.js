@@ -3,14 +3,13 @@ require('d3-transition');
 var accessor = require('accessor');
 var {
   diameter,
-  getTransform,
   numberOfAlterationsLeftUntilNextSeed
 } = require('./spinner-accessors');
 var animateHalos = require('./animate-halos');
 var shouldDisplaySublayout = require('./should-display-sublayout');
 var orbitScheduler = require('./orbit-scheduler');
 
-const transitionTime = 2000;
+const transitionTime = 500;
 
 // WARNING: Does not handle changes to layoutStyle!
 // Also does not rerender sublayouts.
@@ -37,8 +36,8 @@ function renderUpdateToSingleSpinner({
     spinner
       .select('image')
       .attr('xlink:href', accessor({ path: 'data/image/url' }))
-      .transition()
-      .duration(transitionTime)
+      //.transition()
+      //.duration(transitionTime)
       // Matching positioning in renderSpinner for hack
       // that needs the center to be at the upper left corner.
       .attr('x', -spinnerDatum.r)
@@ -48,14 +47,13 @@ function renderUpdateToSingleSpinner({
   }
 
   if (isNaN(spinnerDatum.data.orbitR)) {
-    spinner
-      .transition()
-      .duration(transitionTime)
-      .attr('transform', getTransform);
+    spinner.transition();
+    //.duration(transitionTime)
+    //.attr('transform', getTransform);
   } else {
     spinner
-      .transition()
-      .duration(transitionTime)
+      //.transition()
+      //.duration(transitionTime)
       .attr(
         'transform',
         orbitScheduler.getOrbitTransform(
@@ -67,8 +65,8 @@ function renderUpdateToSingleSpinner({
 
   spinner
     .select('.rotation-group')
-    .transition()
-    .duration(transitionTime)
+    //.transition()
+    //.duration(transitionTime)
     .attr('width', diameter)
     .attr('height', diameter);
 

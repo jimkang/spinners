@@ -6,9 +6,9 @@ var findWhere = require('lodash.findwhere');
 var board = d3.select('#board');
 var transformPartRegex = /(\w+)\(([\d, .\w]+)\)/g;
 
-const promoteTransitionTime = 5000;
-const normalTransitionTime = 5000;
-const fadeTransitionTime = 2000;
+const promoteTransitionTime = 1500;
+//const normalTransitionTime = 500;
+const fadeTransitionTime = 500;
 
 function renderLayers(
   { layerData, parentSelection = board, scale = 1.0, offsetX = 0, offsetY = 0 },
@@ -84,11 +84,7 @@ function renderLayers(
       // sublayout. It's already set up.
       .filter(notPromoted);
 
-    updateLayers
-      .attr('id', accessor())
-      .transition()
-      .duration(normalTransitionTime)
-      .attr('transform', destTransform);
+    updateLayers.attr('id', accessor()).attr('transform', destTransform);
 
     done(null, promotedSublayoutLayerDatum);
   }
