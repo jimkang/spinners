@@ -15,6 +15,7 @@ var RefreshScheduler = require('./refresh-scheduler');
 var { addSpinner } = require('./spinventory');
 var spinventoryFlow = require('./flows/spinventory-flow');
 var showEscaped = require('./dom/show-escaped');
+var { version } = require('./package.json');
 
 var spinnerFlowKit;
 
@@ -36,6 +37,8 @@ function followRoute({
   spinventory,
   hideUI
 }) {
+  renderVersion();
+
   var refreshScheduler = RefreshScheduler({ refresh: seedWithDate });
   wireControls({
     refresh: seedWithDate,
@@ -202,4 +205,8 @@ function goToSpinners() {
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
   handleError(error);
+}
+
+function renderVersion() {
+  document.getElementById('version-info').textContent = version;
 }

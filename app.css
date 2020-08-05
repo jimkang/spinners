@@ -354,6 +354,14 @@ footer {
   margin-top: 1em;
 }
 
+#version-info {
+  position: absolute;
+  right: 1.5em;
+  top: 1.5em;
+  font-size: 0.5em;
+  color: #666;
+}
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;

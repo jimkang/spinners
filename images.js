@@ -656,7 +656,7 @@ module.exports = {
   sunflower: {
     id: 'sunflower',
     name: 'Sunflower',
-    url: 'Sunflower flower.png',
+    url: 'media/sunflower.png',
     attribution: 'Adobe Stock free trial',
     description:
       'Some species of sunflowers get terrifyingly large. The flowerheads move throughout the day, following your every move. At night, they strike.'

@@ -20,7 +20,7 @@ function pathCircleForSpinner(spinner, wobbleDirection, wobbleLevel) {
   return getCircleAsBezierCurvesPath({
     cx: centerDist,
     cy: centerDist,
-    r: spinner.r,
+    r: spinner.r * 1.2,
     segmentCount: spinner.data.wobbleSegments,
     wobbleLevel,
     wobbleDirection
