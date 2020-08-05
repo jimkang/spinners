@@ -9,7 +9,7 @@ pushall: sync
 	git push origin master
 
 deploy:
-	make build && git commit -a -m"Build" && make pushall
+	npm version patch && make build && git commit -a -m"Build" && make pushall
 
 run:
 	wzrd app.js:index.js -- \
@@ -26,4 +26,3 @@ prettier:
 sync:
 	rsync -a $(HOMEDIR)/ $(USER)@$(SERVER):/$(APPDIR) --exclude node_modules/ \
 		--exclude art/ --omit-dir-times --no-perms
-
