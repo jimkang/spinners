@@ -21,7 +21,7 @@ function pathCircleForSpinner(spinner, wobbleDirection, wobbleLevel) {
     cx: centerDist,
     cy: centerDist,
     r: spinner.r * 1.2,
-    segmentCount: spinner.data.wobbleSegments,
+    segmentCount: spinner.data.wobble.segments,
     wobbleLevel,
     wobbleDirection
   });

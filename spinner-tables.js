@@ -1,6 +1,7 @@
 var { Tablenest, r, f, d, l } = require('tablenest');
 var images = require('./images');
 var RandomId = require('@jimkang/randomid');
+var wobbleTable = require('./wobble-table');
 
 var speedTables = {
   relaxed: [[1, 1], [1, 2]],
@@ -278,14 +279,10 @@ function SpinnerTables({ random }) {
         image: r`images`,
         r: radius,
         originalR: radius,
-        wobblePulses: d`d4+5`,
-        wobblePulseDuration: d`d12x250`,
-        wobbleIntensity: r`wobbleIntensity`,
-        // TODO: Handle odd numbers of segments.
-        wobbleSegments: r`wobbleSegments`,
         speed: r`speed`,
         initialWobbleDirection: r`initialWobbleDirection`,
         // Orbit only comes into play if the layout style is orbit.
+        wobble: r`wobble`,
         orbitCenter: r`orbitCenter`,
         orbitSpeed: d`d4x0.0125`,
         orbitDirection: r`orbitDirection`,
@@ -305,9 +302,8 @@ function SpinnerTables({ random }) {
         [2, 'onlyIfNotOnSafari'],
         [6, 'never']
       ],
-      initialWobbleDirection: [[1, -1], [1, 1]],
-      wobbleSegments: [[1, 4], [5, d`d4x2+2`], [4, d`d10x2+8`]],
-      wobbleIntensity: [[19, d`d25x0.01`], [1, d`d25`]]
+      wobble: wobbleTable,
+      initialWobbleDirection: [[1, -1], [1, 1]]
     });
   }
 }

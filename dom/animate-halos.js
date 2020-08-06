@@ -24,32 +24,31 @@ function animateHalo(spinner) {
 
   const startTime = performance.now();
   var pulseCount = 0;
-  const wobbleIntensity = spinner.data.wobbleIntensity;
 
   requestAnimationFrame(setHaloPath);
 
   function setHaloPath(t) {
     const elapsed = t - startTime;
     const pulsePortion =
-      (elapsed % spinner.data.wobblePulseDuration) /
-      spinner.data.wobblePulseDuration;
+      (elapsed % spinner.data.wobble.pulseDuration) /
+      spinner.data.wobble.pulseDuration;
     const pulseVal = Math.sin(pulsePortion * 2 * Math.PI);
     const pulseDirection = pulseVal > 0 ? 1 : -1;
-    const pulseMagnitude = Math.abs(pulseVal) * wobbleIntensity;
+    const pulseMagnitude = Math.abs(pulseVal) * spinner.data.wobble.intensity;
 
     pathEl.setAttribute(
       'd',
       pathCircleForSpinner(spinner, pulseDirection, pulseMagnitude)
     );
-    pulseCount = ~~(elapsed / spinner.data.wobblePulseDuration);
-    if (pulseCount < spinner.data.wobblePulses) {
+    pulseCount = ~~(elapsed / spinner.data.wobble.pulseDuration);
+    if (pulseCount < spinner.data.wobble.pulses) {
       requestAnimationFrame(setHaloPath);
     }
   }
 }
 
 function getTotalDuration(spinner) {
-  return spinner.data.wobblePulses * spinner.data.wobblePulseDuration;
+  return spinner.data.wobble.pulses * spinner.data.wobble.pulseDuration;
 }
 function getPrimeDuration(spinner) {
   return getTotalDuration(spinner) * 0.75;
