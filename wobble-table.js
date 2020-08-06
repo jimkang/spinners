@@ -2,10 +2,10 @@ var { r, d } = require('tablenest');
 
 var flower = {
   name: 'flower',
-  intensity: 12,
-  pulseDuration: 3000,
-  pulses: 8,
-  segments: 16
+  intensity: d`d6+6`,
+  pulseDuration: d`d5000+1000`,
+  pulses: d`d6+4`,
+  segments: d`d10x2+4`
 };
 
 var frills = {
@@ -27,9 +27,9 @@ var slowBubble = {
 var fastBubble = {
   name: 'fastBubble',
   intensity: 0.18,
-  pulseDuration: 3000,
-  pulses: 6,
-  segments: 8
+  pulseDuration: d`d1500+500`,
+  pulses: d`d6+2`,
+  segments: d`d4x2+4`
 };
 
 var activeAmoeba = {
@@ -55,12 +55,13 @@ var atomic2 = {
   pulses: 9,
   segments: 16
 };
+
 var classicJiggle = {
   name: 'classicJiggle',
-  intensity: 0.2,
-  pulseDuration: 250,
+  intensity: d`d4x0.05`,
+  pulseDuration: d`d1500+1000`,
   pulses: 8,
-  segments: 8
+  segments: d`d3x2+8`
 };
 
 var sideToSide = {
@@ -113,16 +114,15 @@ var couldBeAnything = {
 
 var wobbleTable = [
   [1, r(couldBeAnything)],
-  [1, flower],
+  [1, r(flower)],
   [1, frills],
   [1, slowBubble],
-  [1, fastBubble],
+  [1, r(fastBubble)],
   [1, activeAmoeba],
   [1, atomic],
   [1, atomic2],
-  [1, classicJiggle],
+  [1, r(classicJiggle)],
   [1, sideToSide],
-  [1, classicJiggle],
   [1, windmill],
   [1, beeWings],
   [1, ghostly],
